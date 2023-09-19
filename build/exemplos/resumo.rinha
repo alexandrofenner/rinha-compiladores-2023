@@ -1,0 +1,17 @@
+//  Exemplo de Sintaxe Resumida
+
+//  Fibonacci 
+fn fib(n) => (n < 2) ? n : ~(n - 1) + ~(n - 2);
+print("Fibonacci: ", fib(10));
+
+//  Fatorial
+fn fat(n) => (n <= 0) ? 1 : n * ~(n - 1);
+print("Fatorial: ", fat(7));
+
+//  Sum
+fn sum(n) => (n == 1) ? n : n + ~(n - 1);
+print("Sum: ", sum(10));
+
+//  Combination
+fn combination(n, k) => ((k == 0) || (k == n)) ? 1 : ~(n - 1, k - 1) + ~(n - 1, k);
+print("Combination: ", combination(10, 2));
