@@ -8,10 +8,11 @@
         <Filename Value="rinha.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="8"/>
-        <CursorPos X="45" Y="19"/>
+        <CursorPos X="93" Y="22"/>
         <UsageCount Value="20"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="source/mytypes.pas"/>
@@ -38,13 +39,6 @@
         <UsageCount Value="20"/>
       </Unit>
       <Unit>
-        <Filename Value="../rinha.old/myoserrmsgs.pas"/>
-        <UnitName Value="MyOsErrMsgs"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos Y="14"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
         <Filename Value="source/myscanner.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="MyScanner"/>
@@ -62,26 +56,13 @@
         <UsageCount Value="20"/>
       </Unit>
       <Unit>
-        <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/inc/objpash.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="352"/>
-        <CursorPos X="39" Y="366"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/inc/except.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="46"/>
-        <CursorPos X="31" Y="31"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
         <Filename Value="source/mydata.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="MyData"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos Y="15"/>
+        <TopLine Value="13"/>
+        <CursorPos X="75" Y="15"/>
         <UsageCount Value="20"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="source/myoperators.pas"/>
@@ -115,11 +96,58 @@
         <CursorPos Y="10"/>
         <UsageCount Value="20"/>
       </Unit>
+      <Unit>
+        <Filename Value="../rinha.old/myoserrmsgs.pas"/>
+        <UnitName Value="MyOsErrMsgs"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="14"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/inc/objpash.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="352"/>
+        <CursorPos X="39" Y="366"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/inc/except.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
+        <CursorPos X="31" Y="31"/>
+        <UsageCount Value="10"/>
+      </Unit>
     </Units>
-    <General>
-      <ActiveWindowIndexAtStart Value="-1"/>
-    </General>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory HistoryIndex="6">
+      <Position>
+        <Filename Value="source/mydata.pas"/>
+        <Caret Line="41" Column="23" TopLine="23"/>
+      </Position>
+      <Position>
+        <Filename Value="source/mydata.pas"/>
+        <Caret Line="637" Column="3" TopLine="635"/>
+      </Position>
+      <Position>
+        <Filename Value="source/mydata.pas"/>
+        <Caret Line="472" Column="3" TopLine="458"/>
+      </Position>
+      <Position>
+        <Filename Value="source/mydata.pas"/>
+        <Caret Line="256" Column="20" TopLine="253"/>
+      </Position>
+      <Position>
+        <Filename Value="source/mydata.pas"/>
+        <Caret Line="41" Column="19" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="source/mydata.pas"/>
+        <Caret Line="641" Column="3" TopLine="639"/>
+      </Position>
+      <Position>
+        <Filename Value="source/mydata.pas"/>
+        <Caret Line="670" Column="5" TopLine="642"/>
+      </Position>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode=""/>

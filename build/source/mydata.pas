@@ -252,12 +252,14 @@ end;
 
 function MyDataToDisplay_Str(var v: TMyEngineContextVariableData): LString;
 begin
-  Exit(QtString(LString(v.vStr), '"'));
+  //Exit(QtString(LString(v.vStr), '"'));
+  Exit(LString(v.vStr));
 end;
 
 function MyDataToDisplay_Func(var v: TMyEngineContextVariableData): LString;
 begin
-  Exit('´function´');
+  //Exit('´function´');
+  Exit('<#closure>');
 end;
 
 function MyDataToDisplay_Array(var v: TMyEngineContextVariableData): LString;
@@ -266,12 +268,14 @@ var
   LCount: Integer;
 begin
   LCount := Length(TMyEngineContextVariableDataDynArray(v.vArr));
-  if (LCount = 0) then Exit('array()');
+  //if (LCount = 0) then Exit('array()');
+  if (LCount = 0) then Exit('()');
   p := PMyEngineContextVariableData(
     TMyEngineContextVariableDataDynArray(v.vArr));
 
   if (LCount = 1) then
-    Exit('array(' + p^.ToDisplay + ')');
+    //Exit('array(' + p^.ToDisplay + ')');
+  Exit('(' + p^.ToDisplay + ')');
 
   Result := '(' + p^.ToDisplay;
 
