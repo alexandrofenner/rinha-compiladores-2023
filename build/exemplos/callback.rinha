@@ -1,8 +1,0 @@
-let funcao = fn(cb) => {
-  let a = cb(fn (b) => { b * 2});
-  a
-};
-
-print("funcao: ", funcao(fn(b) => {b(4)}));
-
-
