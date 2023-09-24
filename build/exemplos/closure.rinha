@@ -1,0 +1,48 @@
+let func_a = fn() {
+  let a = 0;
+  fn() {
+    let b = 0;
+    fn() {
+      let c = 0;
+      fn() {
+        b = b + 1;
+        if (b > 4) {
+          a=a+1;
+          if (a > 5) {c=c+1};
+        };
+        (a,b,c);
+      };
+    };
+  };
+};
+
+let a = func_a()()();
+
+
+print(a());   // imprime (0,1,0)
+print(a());   // imprime (0,2,0)
+print(a());   // imprime (0,3,0)
+print(a());   // imprime (0,4,0)
+print(a());   // imprime (1,5,0)
+print(a());   // imprime (2,6,0)
+print(a());   // imprime (3,7,0)
+print(a());   // imprime (4,8,0)
+print(a());   // imprime (5,9,0)
+print(a());   // imprime (6,10,1)
+
+
+let generator = fn(start) {
+  let v_seq = start;
+  fn() => {
+    v_seq = v_seq + 1;
+    v_seq - 1;
+  };
+};
+
+let gen_a = generator(1);
+let gen_b = generator(100);
+
+print(gen_a());    // Imprime 1
+print(gen_a());    // Imprime 2
+print(gen_b());    // Imprime 100
+print(gen_b());    // Imprime 101
