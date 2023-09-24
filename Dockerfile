@@ -2,9 +2,9 @@ FROM ubuntu:latest
 
 LABEL maintainer="Alexandro Landmann Fenner"
 
-SHELL [ "/bin/bash", "-c" ]
-ENV SHELL=/bin/bash
+RUN mkdir /var/rinha
+WORKDIR /var/rinha
 
-COPY --chmod=777 build/rinhac .
+COPY --chmod=777 build/rinhac /var/rinha/rinhac
 
-CMD ["rinhac"]
+CMD ["./rinhac"]
