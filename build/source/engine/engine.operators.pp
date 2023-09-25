@@ -14,7 +14,7 @@ unit engine.operators;
 {$asmmode Intel}
 {$pointermath on}
 {$scopedenums on}
-{$r-,i-,o-}
+{$r-,i-,o-,q-}
 {$warnings off}
 {$hints off}
 {$notes off}

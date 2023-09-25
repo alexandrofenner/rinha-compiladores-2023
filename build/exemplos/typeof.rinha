@@ -1,0 +1,11 @@
+let a = "texto";
+let b = 123456;
+let c = (1,2,3);
+let d = fn(){};
+let e = true;
+
+print("typeof(a): ", typeof(a)); // imprime "string"
+print("typeof(b): ", typeof(b)); // imprime "integer"
+print("typeof(c): ", typeof(c)); // imprime "array"
+print("typeof(d): ", typeof(d)); // imprime "function"
+print("typeof(e): ", typeof(e)); // imprime "boolean"

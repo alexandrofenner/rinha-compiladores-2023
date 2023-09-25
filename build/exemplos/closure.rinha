@@ -1,36 +1,3 @@
-let func_a = fn() {
-  let a = 0;
-  fn() {
-    let b = 0;
-    fn() {
-      let c = 0;
-      fn() {
-        b = b + 1;
-        if (b > 4) {
-          a=a+1;
-          if (a > 5) {c=c+1};
-        };
-        (a,b,c);
-      };
-    };
-  };
-};
-
-let a = func_a()()();
-
-
-print(a());   // imprime (0,1,0)
-print(a());   // imprime (0,2,0)
-print(a());   // imprime (0,3,0)
-print(a());   // imprime (0,4,0)
-print(a());   // imprime (1,5,0)
-print(a());   // imprime (2,6,0)
-print(a());   // imprime (3,7,0)
-print(a());   // imprime (4,8,0)
-print(a());   // imprime (5,9,0)
-print(a());   // imprime (6,10,1)
-
-
 let generator = fn(start) {
   let v_seq = start;
   fn() => {
@@ -46,3 +13,34 @@ print(gen_a());    // Imprime 1
 print(gen_a());    // Imprime 2
 print(gen_b());    // Imprime 100
 print(gen_b());    // Imprime 101
+
+
+let fna = fn() =>
+{
+  let a = 0;
+  fn() =>
+  {
+    let b = 0;
+    fn(x) => {
+      a = a + 1;
+      b = b + 2;
+      a * b + x;
+    };
+  };
+};
+
+
+let zz = fna()();
+let yy = fna()();
+
+print("zz_0: ", zz(5));  // print 7    => (a = 1, b = 2)
+print("zz_1: ", zz(5));  // print 13   => (a = 2, b = 4)
+print("zz_2: ", zz(5));  // print 23   => (a = 3, b = 6)
+
+print("yy_0: ", yy(4));  // print 6    => (a = 1, b = 2)
+print("yy_1: ", yy(4));  // print 12   => (a = 1, b = 2)
+print("yy_2: ", yy(4));  // print 22   => (a = 1, b = 2)
+
+print("zz_3: ", zz(5));  // print 37   => (a = 4, b = 8)
+print("yy_3: ", yy(4));  // print 36   => (a = 4, b = 8)
+

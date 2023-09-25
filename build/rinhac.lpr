@@ -53,7 +53,7 @@ uses
   engine.recursivecache_n,
 
   engine.optimize,
-  engine.optimize_op2;
+  engine.optimize_op2, engine.runner.executecontext;
 
 procedure AppRun;
 var

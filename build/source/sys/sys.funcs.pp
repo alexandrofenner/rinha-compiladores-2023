@@ -28,6 +28,8 @@ function MyFuncsAsm_SumOfApTerms(const i: UInt64): UInt64;
 function MyFuncsAsm_Mdc(const a, b: Int64): Int64;
 function MyFuncsAsm_HanoiMovsCount(const d: Int64): Int64;
 
+function MyFuncsAsm_Ackermann(const m, n: Int64): Int64; assembler;
+
 function MyFuncs_IntPower(const ABase: Int64; const AExponent: Integer): Int64;
 
 implementation
@@ -268,6 +270,53 @@ asm
     shl rax, cl
     dec rax
 {$endif Linux}
+end;
+
+function MyFuncsAsm_Ackermann(const m, n: Int64): Int64;
+  assembler; nostackframe;
+asm
+    cmp rdi, 4
+    ja  AsmRet_Neg_1
+    mov rcx, Offset @tab
+    jmp [rcx + rdi * 8]
+@tab:
+    dq Offset @ak_0
+    dq Offset @ak_1
+    dq Offset @ak_2
+    dq Offset @ak_3
+    dq Offset @ak_4
+@ak_0:
+    lea rax, [rdi + 1]
+    ret
+@ak_1:
+    lea rax, [rdi + 2]
+    ret
+@ak_2:
+    inc rdi
+    mov rax, 2
+    imul rdi
+    inc rax
+    ret
+@ak_3:
+    mov rax, 5
+    test rsi, rsi
+    jz @z
+@ak_3_a:
+    shl rax, 1
+    add rax, 3
+    dec rsi
+    jnz @ak_3_a
+    ret
+@ak_4:
+    cmp rsi, 2
+    jnb AsmRet_Neg_1
+    cmp rsi, 0
+    je  @ak_4_13
+    mov rax, 65533
+    ret
+@ak_4_13:
+    mov rax, 13
+@z:
 end;
 
 function MyFuncs_IntPower(const ABase: Int64; const AExponent: Integer): Int64;

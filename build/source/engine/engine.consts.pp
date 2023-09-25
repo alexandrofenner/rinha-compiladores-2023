@@ -53,6 +53,7 @@ const
   EngCtxFnTpId_Eighth = 22;
   EngCtxFnTpId_Ninth = 23;
   EngCtxFnTpId_Tenth = 24;
+  EngCtxFnTpId_Ackermann = 25;
 
   { Engine Context BlockItem Type Id }
   EngCtxBlkItemTpId_None = 0;

@@ -23,7 +23,8 @@ interface
 
 uses
   sys.types,
-  data.types;
+  data.types,
+  engine.consts;
 
 type
   PPEngineContextValue = ^PEngineContextValue;
@@ -393,6 +394,17 @@ type
   public
     FRefCount: Integer;
   end;
+
+const
+  c_False: TEngineContextValueConstBool = (
+    FBase: (FTypeId: EngCtxValueTpId_ConstBool);
+    FConstValue: False);
+  c_True: TEngineContextValueConstBool = (
+    FBase: (FTypeId: EngCtxValueTpId_ConstBool);
+    FConstValue: True);
+  c_EngCtxValueConstArrayEmpty: TEngineContextValueConstArray = (
+    FBase: (FTypeId: EngCtxValueTpId_ConstArray);
+    FConstValue: nil);
 
 implementation
 

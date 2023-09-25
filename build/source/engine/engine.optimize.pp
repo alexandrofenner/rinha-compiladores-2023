@@ -976,12 +976,179 @@ begin
   Exit(EngineFunction_SetTypeId(AFunction^, EngCtxFnTpId_Mdc));
 end;
 
+function TryOptimizeFunction_2_Ackermann(
+  const AFunction: PEngineContextFunction): Boolean;
+var
+  LBlock: PEngineContextBlock;
+  LItem: PEngineContextBlockItem;
+  LIf: PEngineContextBlockItemIf absolute LItem;
+  LIfBlk0: PEngineContextBlock;
+  LIfBlk1: PEngineContextBlock;
+
+  function IsOp2Sub1(const AValue: PEngineContextValue;
+    AVarIndex: Integer): Boolean;
+  var
+    LOp2: PEngineContextValueOp2 absolute AValue;
+  begin
+    if ((AValue = nil) or (AValue.FTypeId <> EngCtxValueTpId_Op2)) then Exit(False);
+    if (LOp2.FOp <> tkop_Sub) then Exit(False);
+    if (not __ValueIsVar0(LOp2.FLeft, AVarIndex)) then Exit(False);
+    if (not __ValueIsIntConst(LOp2.FRight, 1)) then Exit(False);
+    Exit(True);
+  end;
+
+  function IsVldIfExpression(const BValue: PEngineContextValue;
+    const BVarIndex: Integer): Boolean;
+  var
+    MOp2: PEngineContextValueOp2 absolute BValue;
+    MFlg: Byte;
+
+    function MChk(const CValue: PEngineContextValue): Boolean;
+    begin
+      if (CValue = nil) then Exit(False);
+      if __ValueIsVar0(CValue, BVarIndex) then
+      begin
+        MFlg := (MFlg or 1);
+        Exit(True);
+      end;
+      if __ValueIsIntConst(CValue, 0) then
+      begin
+        MFlg := (MFlg or 2);
+        Exit(True);
+      end;
+      Exit(False);
+    end;
+
+  begin
+    if ((BValue = nil) or (BValue.FTypeId <> EngCtxValueTpId_Op2)) then Exit(False);
+    MFlg := 0;
+    if not (MChk(MOp2.FLeft) and MChk(MOp2.FRight)) then Exit(False);
+    if (MFlg <> 3) then Exit(False);
+
+    if (MOp2.FOp = tkop_Eq) then
+    begin
+      LIfBlk0 := LIf.FThen;
+      LIfBlk1 := LIf.FElse;
+      Exit(True);
+    end;
+
+    if (MOp2.FOp = tkop_Neq) then
+    begin
+      LIfBlk1 := LIf.FThen;
+      LIfBlk0 := LIf.FElse;
+      Exit(True);
+    end;
+
+    Exit(False);
+  end;
+
+  function IsVldBlck0(const BBlock: PEngineContextBlock): Boolean;
+  var
+    BItem: PEngineContextBlockItem;
+    BReturn: PEngineContextBlockItemReturn absolute BItem;
+    BValue: PEngineContextValue;
+    BOp2: PEngineContextValueOp2 absolute BValue;
+    BFlg: Byte;
+
+    function Chk(const CValue: PEngineContextValue): Boolean;
+    begin
+      if (CValue = nil) then Exit(False);
+      if __ValueIsVar0(CValue, 1) then
+      begin
+        BFlg := (BFlg or 1);
+        Exit(True);
+      end;
+      if __ValueIsIntConst(CValue, 1) then
+      begin
+        BFlg := (BFlg or 2);
+        Exit(True);
+      end;
+      Exit(False);
+    end;
+
+  begin
+    if (BBlock = nil) then Exit(False);
+
+    BItem := BBlock.FItemsFirst;
+    if ((BItem = nil) or (BItem.FNext <> nil)) then Exit(False);
+    if (BItem.FTypeId <> EngCtxBlkItemTpId_Return) then Exit(False);
+
+    BValue := BReturn.FSourceValue;
+    if ((BValue = nil) or (BValue.FTypeId <> EngCtxValueTpId_Op2)
+    or (BOp2.FOp <> tkop_Add)) then Exit(False);
+
+    BFlg := 0;
+    if (not (Chk(BOp2.FLeft) and Chk(BOp2.FRight))) then Exit(False);
+    Exit(BFlg = 3);
+  end;
+
+  function IsVldBlck1(const BBlock: PEngineContextBlock): Boolean;
+  var
+    BItem: PEngineContextBlockItem;
+    BIf: PEngineContextBlockItemIf absolute BItem;
+    BReturn: PEngineContextBlockItemReturn absolute BItem;
+    BValue: PEngineContextValue;
+    BValueFunction: PEngineContextValueFunction absolute BValue;
+  begin
+    if (BBlock = nil) then Exit(False);
+
+    BItem := BBlock.FItemsFirst;
+    if ((BItem = nil) or (BItem.FNext <> nil)) then Exit(False);
+    if (BItem.FTypeId <> EngCtxBlkItemTpId_If) then Exit(False);
+    LIf := BIf;
+    if (not IsVldIfExpression(BIf.FExpression, 1)) then Exit(False);
+
+    BItem := LIfBlk0.FItemsFirst;
+    if ((BItem = nil) or (BItem.FNext <> nil)) then Exit(False);
+    if (BItem.FTypeId <> EngCtxBlkItemTpId_Return) then Exit(False);
+    BValue := BReturn.FSourceValue;
+    if ((BValue = nil) or (BValue.FTypeId <> EngCtxValueTpId_Function)) then Exit(False);
+    if (BValueFunction.FFunction <> AFunction) then Exit(False);
+    if (Length(BValueFunction.FParams) <> 2) then Exit(False);
+    if (not IsOp2Sub1(BValueFunction.FParams[0], 0)) then Exit(False);
+    if (not __ValueIsIntConst(BValueFunction.FParams[1], 1)) then Exit(False);
+
+    BItem := LIfBlk1.FItemsFirst;
+    if ((BItem = nil) or (BItem.FNext <> nil)) then Exit(False);
+    if (BItem.FTypeId <> EngCtxBlkItemTpId_Return) then Exit(False);
+    BValue := BReturn.FSourceValue;
+    if ((BValue = nil) or (BValue.FTypeId <> EngCtxValueTpId_Function)) then Exit(False);
+    if (BValueFunction.FFunction <> AFunction) then Exit(False);
+    if (Length(BValueFunction.FParams) <> 2) then Exit(False);
+    if (not IsOp2Sub1(BValueFunction.FParams[0], 0)) then Exit(False);
+
+    BValue := BValueFunction.FParams[1];
+    if ((BValue = nil) or (BValue.FTypeId <> EngCtxValueTpId_Function)) then Exit(False);
+    if (BValueFunction.FFunction <> AFunction) then Exit(False);
+    if (Length(BValueFunction.FParams) <> 2) then Exit(False);
+    if (not __ValueIsVar0(BValueFunction.FParams[0], 0)) then Exit(False);
+    if (not IsOp2Sub1(BValueFunction.FParams[1], 1)) then Exit(False);
+
+    Exit(True);
+  end;
+
+begin
+  LBlock := AFunction.FBase.FBlocks;
+  if ((LBlock = nil) or (LBlock.FNext <> nil)) then Exit(False);
+
+  LItem := LBlock.FItemsFirst;
+  if ((LItem = nil) or (LItem.FNext <> nil)) then Exit(False);
+  if (LItem.FTypeId <> EngCtxBlkItemTpId_If) then Exit(False);
+
+  if (not IsVldIfExpression(LIf.FExpression, 0)) then Exit(False);
+  if (not IsVldBlck0(LIfBlk0)) then Exit(False);
+  if (not IsVldBlck1(LIfBlk1)) then Exit(False);
+
+  Exit(EngineFunction_SetTypeId(AFunction^, EngCtxFnTpId_Ackermann));
+end;
+
 function TryOptimizeFunction_2(
   const AFunction: PEngineContextFunction): Boolean;
 begin
   Exit(TryOptimizeFunction_2_Combination(AFunction) or
     TryOptimizeFunction_2_MinMax(AFunction) or
-    TryOptimizeFunction_2_MDC(AFunction));
+    TryOptimizeFunction_2_MDC(AFunction) or
+    TryOptimizeFunction_2_Ackermann(AFunction));
 end;
 
 function TryOptimizeFunction_3(

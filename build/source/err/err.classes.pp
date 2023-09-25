@@ -350,8 +350,33 @@ end;
 
 constructor EFunctionInvalidParamCount.Create(const AFunctionName: LString;
   const AReceivedParamCount, AMinExpectedParams, AMaxExpectedParams: Integer);
+var
+  LMsgPart0, LMsgPart1: LString;
 begin
+  if (AMinExpectedParams = AMaxExpectedParams) then
+  begin
+    if (AMinExpectedParams = 0) then
+      LMsgPart0 := 'A função "' + AFunctionName + '" não aceita parâmetros'
+    else if (AMinExpectedParams = 1) then
+      LMsgPart0 := 'A função "' + AFunctionName + '" espera 1 (um) parâmetro'
+    else
+      LMsgPart0 := 'A função "' + AFunctionName + '" espera ' +
+        Int32ToLString(AMinExpectedParams) + ' parâmetros';
+  end else
+  begin
+    LMsgPart0 := 'A função "' + AFunctionName + '" espera entre ' +
+      Int32ToLString(AMinExpectedParams) + ' e ' +
+      Int32ToLString(AMaxExpectedParams) + ' parâmetros';
+  end;
 
+  if (AReceivedParamCount <= 0) then
+    LMsgPart1 := 'nenhum parâmetro foi recebido'
+  else if (AReceivedParamCount = 1) then
+    LMsgPart1 := '1 (um) parâmetro foi recebido'
+  else
+    LMsgPart1 := Int32ToLString(AReceivedParamCount) + ' parâmetros foram recebidos';
+
+  FMessage := LMsgPart0 + '. Mas ' + LMsgPart1 + '.';
 end;
 
 end.
