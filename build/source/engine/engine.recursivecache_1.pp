@@ -22,6 +22,7 @@ unit engine.recursivecache_1;
 interface
 
 uses
+  sys.procs,
   data.types,
   data.procs,
   engine.types,
@@ -48,24 +49,66 @@ type
 function EngineRecursiveCacheEntry_TryGet_1(
   var This: TEngineRecursiveCacheEntry;
   const Args: TFennerDataDynArray;
-  var AResult: TFennerData): Boolean;
-var
-  i: Integer;
-  k: Int64;
-  p: PRecord1;
-begin
-  if (Args[0].vId <> dttp_Int) then Exit(False);
-  k := Args[0].vInt;
-  for i := 0 to (This.FContentCount - 1) do
-  begin
-    p := This.FContentArray[i];
-    if (p.k = k) then
-    begin
-      FennerData_SetAsInteger(AResult, p.v);
-      Exit(True);
-    end;
-  end;
-  Exit(False);
+  var AResult: TFennerData): Boolean; assembler; nostackframe;
+//var
+//  i: Integer;
+//  k: Int64;
+//  p: PRecord1;
+//begin
+//  if (Args[0].vId <> dttp_Int) then Exit(False);
+//  k := Args[0].vInt;
+//  for i := 0 to (This.FContentCount - 1) do
+//  begin
+//    p := This.FContentArray[i];
+//    if (p.k = k) then
+//    begin
+//      FennerData_SetAsInteger(AResult, p.v);
+//      Exit(True);
+//    end;
+//  end;
+//  Exit(False);
+asm
+  // rdi -> This
+  // rsi -> Args
+  // rdx -> AResult
+
+    mov cl, [rsi + TFennerData.vId]
+    cmp cl, dttp_Int
+    jne AsmRet_0
+
+    push rdx
+
+  // r8 -> valor que está sendo procurado
+    mov r8, [rsi + TFennerData.vInt]
+
+  // r9 -> Quantidade de itens no registro de cache
+    xor r9, r9
+    mov r9d, [rdi + TEngineRecursiveCacheEntry.FContentCount]
+
+  // rdx -> índice que está sendo percorrido
+    xor rdx, rdx
+  // rcx -> array os registros de cache
+    lea rcx, [rdi + TEngineRecursiveCacheEntry.FContentArray]
+
+@loop:
+    cmp rdx, r9
+    jnb @end_loop
+
+    mov rax, [rcx + rdx * 8]
+    cmp [rax], r8
+    je  @found
+
+    inc rdx
+    jmp @loop
+@found:
+    mov rsi, [rax + 8]
+    pop rdi
+
+    call FennerData_SetAsInteger
+    jmp AsmRet_Neg_1
+@end_loop:
+    pop rax
+    jmp AsmRet_0
 end;
 
 procedure EngineRecursiveCacheEntry_Put_1(

@@ -8,7 +8,7 @@
 (*  discord: alexandrofenner                                                  *)
 (*                                                                            *)
 (******************************************************************************)
-unit sys.types;
+unit data._array;
 
 {$mode Delphi}{$H+}
 {$asmmode Intel}
@@ -21,21 +21,17 @@ unit sys.types;
 
 interface
 
-type
-  TSysCharSet = set of AnsiChar;
+uses
+  data.types;
 
-  LString = AnsiString;
-
-  TDynArrayOfPointer = TArray<Pointer>;
-
-const
-  cs_Bool: array[Boolean] of LString = ('false', 'true');
-
-var
-  s_True: LString absolute cs_Bool[True];
-  s_False: LString absolute cs_Bool[False];
+function FennerDataArray_IsEquals(const l, r: TFennerDataDynArray): Boolean;
 
 implementation
+
+function FennerDataArray_IsEquals(const l, r: TFennerDataDynArray): Boolean;
+begin
+  Exit(False);
+end;
 
 end.
 

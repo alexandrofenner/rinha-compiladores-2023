@@ -136,67 +136,27 @@ asm
     add rdx, rsi
     dec rdi
     jmp @loop
-
-{$ifdef MSWindows}
-@exit:
-    pop rsi
-    pop rdi
-    ret
-@ret_rsi:
-    mov rax, rsi
-    jmp @exit
-@ret_rdx:
-    mov rax, rdx
-    jmp @exit
-{$endif MSWindows}
 end;
 
 function MyFuncsAsm_SumOfApTerms(const i: UInt64): UInt64;
-{$ifdef fpc} assembler; nostackframe; {$endif}
+  assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif Delphi}
-
-    {$ifdef Linux}
     mov rax, rdi
     inc rax
     imul rax, rdi
     shr rax, 1
-    {$else}
-    mov rax, rcx
-    inc rax
-    imul rax, rcx
-    shr rax, 1
-    {$endif}
 end;
 
 function MyFuncsAsm_Mdc(const a, b: Int64): Int64;
-{$ifdef fpc} assembler; nostackframe; {$endif}
+  assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif Delphi}
-
-    {$ifdef MSWindows}
-    push rdi
-    push rsi
-    mov rdi, rcx
-    mov rsi, rdx
-    {$endif MSWindows}
-
     cmp rdi, rsi
     jnl @a
     xchg rdi, rsi
 @a:
     cmp rsi, 0
-    {$ifdef MSWindows}
-    jl @Win_Neg1
-    je @Win_Ret_Rdi
-    {$else}
     jl AsmRet_Neg_1
     je AsmRet_Rsi
-    {$endif}
 
 @b:
     { max -> rdi
@@ -206,11 +166,7 @@ asm
     idiv rsi
 
     cmp rdx, 0
-    {$ifdef MSWindows}
-    je @Win_Ret_Rsi
-    {$else}
     je AsmRet_Rsi
-    {$endif}
     mov rdi, rdx
 
     { max -> rsi
@@ -223,32 +179,11 @@ asm
     je AsmRet_Rdi
     mov rsi, rdi
     jmp @b
-
-    {$ifdef MSWindows}
-@Win_Ret:
-    pop rsi
-    pop rdi
-    ret
-@Win_Neg1:
-    xor rax, rax
-    jmp @Win_Ret
-@Win_Ret_Rdi:
-    mov rax, rdi
-    jmp @Win_Ret
-@Win_Ret_Rsi:
-    mov rax, rsi
-    jmp @Win_Ret
-    {$endif MSWindows}
 end;
 
 function MyFuncsAsm_HanoiMovsCount(const d: Int64): Int64;
-{$ifdef fpc} assembler; nostackframe; {$endif}
+  assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif Delphi}
-
-{$ifdef Linux}
     cmp rdi, 0
     jle AsmRet_0
     cmp rdi, 64
@@ -259,17 +194,6 @@ asm
     mov cl, dil
     shl rax, cl
     dec rax
-{$else}
-    cmp rcx, 0
-    jle AsmRet_0
-    cmp rcx, 64
-    ja AsmRet_0
-    je AsmRet_Neg_1
-    xor rax, rax
-    mov al, 1
-    shl rax, cl
-    dec rax
-{$endif Linux}
 end;
 
 function MyFuncsAsm_Ackermann(const m, n: Int64): Int64;

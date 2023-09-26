@@ -55,6 +55,17 @@ const
   EngCtxFnTpId_Tenth = 24;
   EngCtxFnTpId_Ackermann = 25;
 
+  { Engine Context Function Flag Id }
+  EngCtxFnFlgId_Recursive = 1;
+  EngCtxFnFlgId_Prohibited_Cache = 2;
+  EngCtxFnFlgId_Native = 4;
+
+  {
+    EngCtxFnFlgId_Recursive -> Indica que é uma função recursiva
+    EngCtxFnFlgId_Prohibited_Cache -> Indica que o cache é proibido para esta função
+    EngCtxFnFlgId_Native -> Indica que é uma função de código nativo
+  }
+
   { Engine Context BlockItem Type Id }
   EngCtxBlkItemTpId_None = 0;
   EngCtxBlkItemTpId_LetConstBool = 1;

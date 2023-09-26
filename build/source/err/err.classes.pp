@@ -159,6 +159,14 @@ type
     constructor Create;
   end;
 
+  { EInvalidOperation }
+
+  EInvalidOperation = class(Exception)
+  public
+    { cdtor }
+    constructor Create(const AMessage: LString);
+  end;
+
 function HandleException: LString; overload;
 function HandleException(const AEObj: TObject): LString; overload;
 
@@ -213,6 +221,13 @@ begin
     '. Posição(' + Int32ToLString(ATk.Length) + ')'#10 +
     Token_GetSource(ATk^)
   );
+end;
+
+{ EInvalidOperation }
+
+constructor EInvalidOperation.Create(const AMessage: LString);
+begin
+  FMessage := AMessage;
 end;
 
 { EParamIsntInteger }

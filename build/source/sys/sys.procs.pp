@@ -35,6 +35,8 @@ procedure AsmRet_Rsi; assembler;
 procedure LStrRefClr(var s: Pointer);
 procedure LStrCpy(var d: Pointer; const s: Pointer);
 
+procedure PtrArrCpy(var d: Pointer; const s: Pointer);
+
 implementation
 
 procedure AsmRet; assembler; nostackframe;
@@ -75,6 +77,11 @@ end;
 procedure LStrCpy(var d: Pointer; const s: Pointer);
 begin
   LString(d) := LString(s);
+end;
+
+procedure PtrArrCpy(var d: Pointer; const s: Pointer);
+begin
+  TDynArrayOfPointer(d) := TDynArrayOfPointer(s);
 end;
 
 end.

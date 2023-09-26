@@ -10,8 +10,8 @@ uses
 
   data.types,
   data.stack,
-
   data.procs,
+  data._array,
 
   scanner.types,
   scanner.reswords,
@@ -52,8 +52,8 @@ uses
   engine.recursivecache_23,
   engine.recursivecache_n,
 
-  engine.optimize,
-  engine.optimize_op2, engine.runner.executecontext;
+  engine.optimize, engine.optimize_op2, engine.runner.executecontext,
+  engine.contextvalues, engine.validatefunc, engine.context;
 
 procedure AppRun;
 var

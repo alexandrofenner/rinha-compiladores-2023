@@ -8,7 +8,7 @@
 (*  discord: alexandrofenner                                                  *)
 (*                                                                            *)
 (******************************************************************************)
-unit sys.types;
+unit engine.context;
 
 {$mode Delphi}{$H+}
 {$asmmode Intel}
@@ -21,21 +21,41 @@ unit sys.types;
 
 interface
 
-type
-  TSysCharSet = set of AnsiChar;
+uses
+  engine.types,
+  engine.consts;
 
-  LString = AnsiString;
-
-  TDynArrayOfPointer = TArray<Pointer>;
-
-const
-  cs_Bool: array[Boolean] of LString = ('false', 'true');
-
-var
-  s_True: LString absolute cs_Bool[True];
-  s_False: LString absolute cs_Bool[False];
+function EngineContext_CreateBlock(
+  var AContext: TEngineContext): PEngineContextBlock;
 
 implementation
+
+function EngineContext_CreateBlock(
+  var AContext: TEngineContext): PEngineContextBlock;
+var
+  LCurrent, LNext: PEngineContextBlock;
+begin
+  LCurrent := AContext.FBlocks;
+  if (LCurrent = nil) then
+  begin
+    LCurrent := AllocMem(SizeOf(TEngineContextBlock));
+    LCurrent.FContext := @AContext;
+    AContext.FBlocks := LCurrent;
+    Exit(LCurrent);
+  end;
+
+  repeat
+    LNext := LCurrent.FNext;
+    if (LNext = nil) then
+    begin
+      LNext := AllocMem(SizeOf(TEngineContextBlock));
+      LNext.FContext := @AContext;
+      LCurrent.FNext := LNext;
+      Exit(LNext);
+    end;
+    LCurrent := LNext;
+  until False;
+end;
 
 end.
 

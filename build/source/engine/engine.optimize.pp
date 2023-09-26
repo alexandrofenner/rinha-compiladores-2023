@@ -837,7 +837,6 @@ var
     MValueFunctionByValue: PEngineContextValueFunctionByValue absolute MValue;
     NValueByVariable: PEngineContextValueByVariable absolute NValue;
     NCtx: PEngineContext;
-//    NVar: PMyEngineContextVariable;
     NLetFn: PEngineContextBlockItemLetConstFunction;
     NFn: PEngineContextFunction;
     MFlag: Byte;

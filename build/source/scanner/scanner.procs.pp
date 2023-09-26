@@ -150,14 +150,19 @@ end;
 
 procedure TokenStack_CopyBy(var SubTokenStack, From: TTokenStack;
   const Index, Count: Integer);
+var
+  LCount: Integer;
 begin
-  if (Count > 0) then
+  LCount := (From.Count - Index);
+  if (LCount > Count) then LCount := Count;
+
+  if (LCount > 0) then
   begin
-    SetLength(SubTokenStack.DynArray, Count);
-    SubTokenStack.Count := Count;
-    SubTokenStack.Capacity := Count;
+    SetLength(SubTokenStack.DynArray, LCount);
+    SubTokenStack.Count := LCount;
+    SubTokenStack.Capacity := LCount;
     System.Move(From.DynArray[Index],
-      SubTokenStack.DynArray[0], (Count * SizeOf(PToken)));
+      SubTokenStack.DynArray[0], (LCount * SizeOf(PToken)));
   end else
   begin
     SubTokenStack.Count := 0;

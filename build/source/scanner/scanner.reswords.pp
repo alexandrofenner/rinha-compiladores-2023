@@ -29,17 +29,9 @@ uses
   scanner.types,
   sys.procs;
 
-procedure _AsmTryGetReservedId2; {$ifdef fpc} assembler; nostackframe; {$endif}
+procedure _AsmTryGetReservedId2; assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif}
-
-    {$ifdef Linux}
     mov cx, [rdi]
-    {$else}
-    mov cx, [rcx]
-    {$endif}
     cmp cx, 26217     { 'if' }
     je  @if
     jb  AsmRet_0
@@ -52,18 +44,9 @@ asm
     mov al, tkrw_If
 end;
 
-procedure _AsmTryGetReservedId3; {$ifdef fpc} assembler; nostackframe; {$endif}
+procedure _AsmTryGetReservedId3; assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif}
-
-    {$ifdef Linux}
     mov ecx, [rdi]
-    {$else}
-    mov ecx, [rcx]
-    {$endif}
-
     and ecx, $ffffff
 
     cmp ecx, 7628140  { 'let' }
@@ -72,17 +55,9 @@ asm
     mov al, tkrw_Let
 end;
 
-procedure _AsmTryGetReservedId4; {$ifdef fpc} assembler; nostackframe; {$endif}
+procedure _AsmTryGetReservedId4; assembler; nostackframe;
 asm
-{$ifdef delphi}
-.noframe
-{$endif}
-
-    {$ifdef Linux}
     mov ecx, [rdi]
-    {$else}
-    mov ecx, [rcx]
-    {$endif}
     cmp ecx, 1702063205   { 'else' }
     je  @_else
     jb  AsmRet_0
@@ -96,18 +71,9 @@ asm
     mov al, tkrw_Else
 end;
 
-procedure _AsmTryGetReservedId5; {$ifdef fpc} assembler; nostackframe; {$endif}
+procedure _AsmTryGetReservedId5; assembler; nostackframe;
 asm
-{$ifdef delphi}
-.noframe
-{$endif}
-
-    {$ifdef Linux}
     mov rcx, [rdi]
-    {$else}
-    mov rcx, [rcx]
-    {$endif}
-
     cmp ecx, 1852404336 { 'prin' }
     je @_prin
 
@@ -211,17 +177,9 @@ asm
     jmp AsmRet_0
 end;
 
-procedure _AsmTryGetReservedId6; {$ifdef fpc} assembler; nostackframe; {$endif}
+procedure _AsmTryGetReservedId6; assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif}
-
-    {$ifdef Linux}
     mov rcx, [rdi]
-    {$else}
-    mov rcx, [rcx]
-    {$endif}
 
     cmp ecx, 1868785011 { 'seco' }
     je @_seco
@@ -272,17 +230,9 @@ asm
     jmp AsmRet_0
 end;
 
-procedure _AsmTryGetReservedId7; {$ifdef fpc} assembler; nostackframe; {$endif}
+procedure _AsmTryGetReservedId7; assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif}
-
-    {$ifdef Linux}
     mov rcx, [rdi]
-    {$else}
-    mov rcx, [rcx]
-    {$endif}
 
     cmp ecx, 1702258035   { 'seve' }
     je @_seve
@@ -300,26 +250,13 @@ asm
     jmp AsmRet_0
 end;
 
-procedure _AsmTryGetReservedId10; {$ifdef fpc} assembler; nostackframe; {$endif}
+procedure _AsmTryGetReservedId10; assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif}
-
-    {$ifdef Linux}
     mov dx, [rdi + 8]
-    {$else}
-    mov dx, [rcx + 8]
-    {$endif}
     cmp dx, 28005       { 'em' }
     jne AsmRet_0
 
-    {$ifdef Linux}
     mov rcx, [rdi]
-    {$else}
-    mov rcx, [rcx]
-    {$endif}
-
     cmp ecx, 1634890337 { 'arra' }
     jne AsmRet_0
 
@@ -330,26 +267,13 @@ asm
     mov al, tkrw_Array_GetItem
 end;
 
-procedure _AsmTryGetReservedId12; {$ifdef fpc} assembler; nostackframe; {$endif}
+procedure _AsmTryGetReservedId12; assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif}
-
-    {$ifdef Linux}
     mov edx, [rdi + 8]
-    {$else}
-    mov edx, [rcx + 8]
-    {$endif}
     cmp edx, 1752459118 { 'ngth' }
     jne AsmRet_0
 
-    {$ifdef Linux}
     mov rcx, [rdi]
-    {$else}
-    mov rcx, [rcx]
-    {$endif}
-
     cmp ecx, 1634890337 { 'arra' }
     jne AsmRet_0
 
@@ -361,23 +285,12 @@ asm
 end;
 
 function AsmTryGetReservedId(const p: PAnsiChar; c: Integer): Byte;
-  {$ifdef fpc} assembler; nostackframe; {$endif}
+  assembler; nostackframe;
 asm
-{$ifdef Delphi}
-.noframe
-{$endif}
-
-    {$ifdef Linux}
     cmp rsi, 12
     ja  AsmRet_0
     mov rax, offset @table
     jmp [rax + rsi * 8]
-    {$else}
-    cmp rdx, 12
-    ja  AsmRet_0
-    mov rax, offset @table
-    jmp [rax + rdx * 8]
-    {$endif}
 
 @table:
     dq offset AsmRet_0

@@ -155,6 +155,7 @@ type
     FConstDeclr: PEngineContextValueConstFunction;
     FDeclrName: LString;
     FTypeId: Byte;
+    FFlags: Word;
     FRecursiveTypeId: Integer;
   end;
 
@@ -396,12 +397,14 @@ type
   end;
 
 const
-  c_False: TEngineContextValueConstBool = (
+  c_EngCtxValueConstFalse: TEngineContextValueConstBool = (
     FBase: (FTypeId: EngCtxValueTpId_ConstBool);
     FConstValue: False);
-  c_True: TEngineContextValueConstBool = (
+
+  c_EngCtxValueConstTrue: TEngineContextValueConstBool = (
     FBase: (FTypeId: EngCtxValueTpId_ConstBool);
     FConstValue: True);
+
   c_EngCtxValueConstArrayEmpty: TEngineContextValueConstArray = (
     FBase: (FTypeId: EngCtxValueTpId_ConstArray);
     FConstValue: nil);

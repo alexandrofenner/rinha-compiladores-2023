@@ -22,6 +22,7 @@ unit engine.recursivecache_2;
 interface
 
 uses
+  sys.procs,
   data.types,
   data.procs,
   engine.types,
@@ -49,8 +50,8 @@ type
 function EngineRecursiveCacheEntry_TryGet_2(
   var This: TEngineRecursiveCacheEntry;
   const Args: TFennerDataDynArray;
-  var AResult: TFennerData): Boolean;
-var
+  var AResult: TFennerData): Boolean; assembler; nostackframe;
+{var
   i: Integer;
   k0, k1: Int64;
   p: PRecord2;
@@ -69,6 +70,63 @@ begin
     end;
   end;
   Exit(False);
+end;}
+asm
+// rdi -> This
+// rsi -> Args
+// rdx -> AResult
+
+    mov cl, [rsi + TFennerData.vId]
+    cmp cl, dttp_Int
+    jne AsmRet_0
+
+  // r8 -> valor que está sendo procurado (index: 0)
+    mov r8, [rsi + TFennerData.vInt]
+
+    add rsi, SizeOf(TFennerData)
+    mov cl, [rsi + TFennerData.vId]
+    cmp cl, dttp_Int
+    jne AsmRet_0
+
+    push rdx
+
+  // r9 -> valor que está sendo procurado (index: 1)
+    mov r9, [rsi + TFennerData.vInt]
+
+  // r10 -> quantidade de registros no cache
+    push r10
+    xor r10, r10
+    mov r10d, [rdi + TEngineRecursiveCacheEntry.FContentCount]
+
+  // rdx -> índice que está sendo percorrido
+    xor rdx, rdx
+  // rcx -> array os registros de cache
+    lea rcx, [rdi + TEngineRecursiveCacheEntry.FContentArray]
+
+@loop:
+    cmp rdx, r10
+    jnb @end_loop
+
+    mov rax, [rcx + rdx * 8]
+    cmp [rax], r8             // Compara o valor (index: 0)
+    jne @next
+    cmp [rax + 8], r9         // Compara o valor (index: 1)
+    je @found
+@next:
+    inc rdx
+    jmp @loop
+
+@found:
+    mov rsi, [rax + 16]
+    pop r10
+    pop rdi
+
+    call FennerData_SetAsInteger
+    jmp AsmRet_Neg_1
+@end_loop:
+    pop r10
+    pop rax
+    jmp AsmRet_0
 end;
 
 procedure EngineRecursiveCacheEntry_Put_2(

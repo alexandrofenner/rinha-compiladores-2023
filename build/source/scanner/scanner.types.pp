@@ -121,6 +121,7 @@ type
       1: (p: Pointer);
   end;
 
+  PTokenStack = ^TTokenStack;
   TTokenStack = record
   public
     DynArray: TArray<PToken>;
@@ -148,6 +149,23 @@ const
     'print', 'first', 'second', 'third', 'fourth',
     'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth',
     'array_item', 'array_length', 'typeof', 'max', 'min');
+
+  sTkOpersInfo: array[tkop_Add..tkop_Fact] of LString = (
+    '(+) adição',
+    '(-) subtração',
+    '(*) multiplicação',
+    '(/) divisão',
+    '(%) módulo',
+    '(==) igualdade',
+    '(!=) diferença',
+    '(<) menor',
+    '(>) maior',
+    '(<=) menor ou igual',
+    '(>=) maior ou igual',
+    '(&&) "E" booleânico',
+    '(||) "Ou" booleânico',
+    '(**) potência',
+    '(!) fatorial');
 
 implementation
 

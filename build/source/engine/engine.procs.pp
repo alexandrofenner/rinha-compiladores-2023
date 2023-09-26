@@ -85,13 +85,6 @@ function EngineContextValue_IsConst(var This: TEngineContextValue): Boolean;
 function EngineContextValue_StackIndex(var This: TEngineContextValue;
   var AItem: TEngineRunnerItem): Integer; assembler;
 
-function EngineContextValueConstBool_Create(
-  const AValue: Boolean): PEngineContextValueConstBool;
-function EngineContextValueConstInt_Create(
-  const AValue: Int64): PEngineContextValueConstInt;
-function EngineContextValueConstStr_Create(
-  const AValue: LString): PEngineContextValueConstString;
-
 function EngineContextValueFunction_Create(
   const AFunction: PEngineContextFunction;
   const AParams: TArray<PEngineContextValue>): PEngineContextValueFunction;
@@ -172,10 +165,12 @@ implementation
 
 uses
   sys.func_combination,
+  engine.contextvalues,
   engine.optimize,
   engine.optimize_op2,
   engine.checkrecursive,
   engine.recursivecache,
+  engine.validatefunc,
   engine.runner.executecontext;
 
 type
@@ -735,19 +730,32 @@ begin
       LCaller := TEngineCaller.Create(AContext, nil, ATokenStack.DynArray[0]);
       try
         LValue := LTk.p;
-        if (LValue.FTypeId = EngCtxValueTpId_Array) then
-        begin
-          LCaller.AddParams(PEngineContextValueArray(LValue));
-          AReturnValue := LCaller.Build;
-          TokenStack_Delete(ATokenStack, 0, 2);
-          Exit(True);
-        end else
-        if (LValue.FTypeId = EngCtxValueTpId_ConstArray) then
-        begin
-          LCaller.AddParams2(PEngineContextValueConstArray(LValue));
-          AReturnValue := LCaller.Build;
-          TokenStack_Delete(ATokenStack, 0, 2);
-          Exit(True);
+        case LValue.FTypeId of
+          EngCtxValueTpId_Array:
+            begin
+              LCaller.AddParams(PEngineContextValueArray(LValue));
+              AReturnValue := LCaller.Build;
+              TokenStack_Delete(ATokenStack, 0, 2);
+              Exit(True);
+            end;
+          EngCtxValueTpId_ConstArray:
+            begin
+              LCaller.AddParams2(PEngineContextValueConstArray(LValue));
+              AReturnValue := LCaller.Build;
+              TokenStack_Delete(ATokenStack, 0, 2);
+              Exit(True);
+            end;
+          else
+          //EngCtxValueTpId_ConstBool,
+          //EngCtxValueTpId_ConstInt,
+          //EngCtxValueTpId_ConstString,
+          //EngCtxValueTpId_ConstFunction:
+            begin
+              LCaller.AddParam(LValue);
+              AReturnValue := LCaller.Build;
+              TokenStack_Delete(ATokenStack, 0, 2);
+              Exit(True);
+            end;
         end;
       finally
         Free_EngineCaller(LCaller);
@@ -1579,6 +1587,8 @@ begin
   EngineFunction_GetDeclrName(LFunction^);
   if (not EngineFunction_TryOptimize(LFunction^)) then
     EngineFunction_SetTypeId(LFunction^, EngCtxFnTpId_AST);
+
+  EngineFunction_Validate(LFunction);
   EngineFunction_CheckRecursive(LFunction^);
 
   Exit(Pointer(LValue));
@@ -1754,16 +1764,21 @@ begin
   LFunc := EngineContext_CreateSysFunc(This, AName, ATypeId);
   LFunc.FMinParamsCount := AParamCount;
   LFunc.FMaxParamsCount := AParamCount;
+  LFunc.FFlags := EngCtxFnFlgId_Native;
 end;
 
-procedure EngineContext_CreateSysFunc_MultiCount(var This: TEngineContextGlobal;
-  const AName: LString; const ATypeId: Byte);
+procedure EngineContext_CreateSysFunc_MultiCount(
+  var This: TEngineContextGlobal;
+  const AName: LString; const ATypeId: Byte;
+  const AMinParamsCount: Integer;
+  const AFlags: word);
 var
   LFunc: PEngineContextFunction;
 begin
   LFunc := EngineContext_CreateSysFunc(This, AName, ATypeId);
-  LFunc.FMinParamsCount := 1;
+  LFunc.FMinParamsCount := AMinParamsCount;
   LFunc.FMaxParamsCount := $ffff;
+  LFunc.FFlags := (AFlags or EngCtxFnFlgId_Native);
 end;
 
 procedure EngineContext_CreateSysFunc_ArrayGetItems(
@@ -1787,54 +1802,116 @@ begin
   EngineContext_CreateSysFunc_Def(This, 'array_length', EngCtxFnTpId_Array_Length, 1);
   EngineContext_CreateSysFunc_Def(This, 'array_item',  EngCtxFnTpId_Array_Item, 2);
   EngineContext_CreateSysFunc_Def(This, 'typeof', EngCtxFnTpId_TypeOf, 1);
-  EngineContext_CreateSysFunc_MultiCount(This, 'print', EngCtxFnTpId_Print);
-  EngineContext_CreateSysFunc_Multicount(This, 'min', EngCtxFnTpId_Min);
-  EngineContext_CreateSysFunc_Multicount(This, 'max', EngCtxFnTpId_Max);
+  EngineContext_CreateSysFunc_MultiCount(
+    This, 'print', EngCtxFnTpId_Print, 0, EngCtxFnFlgId_Prohibited_Cache);
+  EngineContext_CreateSysFunc_Multicount(
+    This, 'min', EngCtxFnTpId_Min, 2, 0);
+  EngineContext_CreateSysFunc_Multicount(
+    This, 'max', EngCtxFnTpId_Max, 2, 0);
 end;
 
 procedure EngineContext_Parse(var This: TEngineContext;
-  var TokenStack: TTokenStack; var Index: Integer);
-var
-  LBlock: PEngineContextBlock;
-  LIndex: Integer;
-begin
-  LBlock := This.FBlocks;
-  if (LBlock = nil) then
-  begin
-    LBlock := AllocMem(SizeOf(TEngineContextBlock));
-    LBlock.FContext := @This;
-    This.FBlocks := LBlock;
-  end;
+  var TokenStack: TTokenStack; var Index: Integer); assembler; nostackframe;
+//var
+//  LBlock: PEngineContextBlock;
+//  LIndex: Integer;
+//begin
+//  LBlock := This.FBlocks;
+//  if (LBlock = nil) then
+//  begin
+//    LBlock := AllocMem(SizeOf(TEngineContextBlock));
+//    LBlock.FContext := @This;
+//    This.FBlocks := LBlock;
+//  end;
+//
+//  LIndex := Index;
+//  while (LIndex < TokenStack.Count) do
+//    ReadItemBlockItem(TokenStack, @This, LBlock, LIndex);
+//  Index := LIndex;
+//end;
+asm
+    push rdi { This:[rsp] }
+    push rsi { This:[rsp+8], TokenStack:[rsp] }
+    push rdx { This:[rsp+16], TokenStack:[rsp+8], Index:[rsp] }
+    mov  rdx, [rdx]
+    push rdx { This:[rsp+24], TokenStack:[rsp+16], @Index:[rsp+8], ^Index:[rsp]}
 
-  LIndex := Index;
-  while (LIndex < TokenStack.Count) do
-    ReadItemBlockItem(TokenStack, @This, LBlock, LIndex);
-  Index := LIndex;
+    mov rax, [rdi + TEngineContext.FBlocks]
+    test rax, rax
+    jnz @a
+
+    mov rdi, SizeOf(TEngineContextBlock)
+    call AllocMem
+
+    mov rdi, [rsp + 24]
+    mov [rax + TEngineContextBlock.FContext], rdi
+    mov [rdi + TEngineContext.FBlocks], rax
+
+    mov rsi, [rsp + 16]
+    mov rdx, [rsp]
+@a:
+    push rax { This:[rsp + 32],
+               TokenStack:[rsp + 24],
+               @Index:[rsp + 16],
+               ^Index:[rsp + 8],
+               LBlock:[rsp] }
+
+    lea r9,  [rsi + TTokenStack.Count]
+    xor r8,  r8
+    mov r8d, [r9]
+
+    push r8  { This:[rsp + 40],
+               TokenStack:[rsp + 32],
+               @Index:[rsp + 24],
+               ^Index:[rsp + 16],
+               LBlock:[rsp + 8],
+               TkSckCount:[rsp]}
+@b:
+    cmp rdx, r8
+    jnb @c
+
+    mov rdi, [rsp + 32] { TokenStack }
+    mov rsi, [rsp + 40] { This }
+    mov rdx, [rsp + 8]  { LBlock }
+    mov rcx, [rsp + 24] { @Index }
+
+    call ReadItemBlockItem
+    mov r8, [rsp]       { recupera o valor de r8 }
+
+    mov rdx, [rsp + 24] { recupera o indice }
+    mov rdx, [rdx]
+    jmp @b
+@c:
+    add rsp, 48
 end;
 
 procedure EngineContext_ParseGlobal(var This: TEngineContext);
-var
-  LIndex: Integer;
-begin
-  LIndex := 0;
-  EngineContext_Parse(This, gvTokens, LIndex);
+  assembler; nostackframe;
+{$j+}
+const
+  Index: Integer = 0;
+{$j-}
+asm
+    xor rax, rax
+    mov rdx, Offset Index
+    mov rsi, Offset gvTokens
+    jmp EngineContext_Parse
 end;
 
 function EngineContext_RelativeIndexOf(var This: TEngineContext;
-  const AContext: PEngineContext): Integer;
-var
-  LCursor: PEngineContext;
-begin
-  if (AContext = nil) then Exit(-1);
-
-  Result := 0;
-  LCursor := @This;
-  repeat
-    if (LCursor = AContext) then Exit;
-    if (LCursor = nil) then Exit(-1);
-    LCursor := LCursor.FOwner;
-    Inc(Result);
-  until False;
+  const AContext: PEngineContext): Integer; assembler; nostackframe;
+asm
+    test rsi, rsi
+    jz AsmRet_Neg_1
+    xor rax, rax
+@a:
+    cmp rsi, rdi
+    jz AsmRet
+    test rdi, rdi
+    jz AsmRet_Neg_1
+    mov rdi, [rdi + TEngineContext.FOwner]
+    inc rax
+    jmp @a
 end;
 
 function EngineContext_FindVar(var This: TEngineContext;
@@ -2193,8 +2270,6 @@ var
   LPars: PFennerData;
   LV: PEngineContextValue;
   LVCS: PEngineContextValueConstString absolute LV;
-  LS: LString;
-  LC: Integer;
 begin
   LPars := AuxStackVarsFrameBegin(2);
   try
@@ -2205,18 +2280,13 @@ begin
       if (Length(LString(LPars[0].vStr)) > 1000) then
       begin
         LV := This.FLeft;
-        if (LV.FTypeId = EngCtxValueTpId_ConstString) then
-        begin
-          LS := LVCS.FConstValue;
-          LC := Length(LS);
-
-        end;
         EngineContextValue_Execute(LV^, AItem, LPars[0]);
       end;
     end;
 
     EngineContextValue_Execute(This.FRight^, AItem, LPars[1]);
-    cInvProcTable[This.FIndexOp + Word(LPars[0].vId) * 6 + Word(LPars[1].vId)](LPars, AResult);
+    cInvkOp(LPars, AResult,
+      This.FIndexOp + Word(LPars[0].vId) * 6 + Word(LPars[1].vId));
   finally
     AuxStackVarsFrameEnd(2);
   end;
@@ -2239,7 +2309,8 @@ begin
     end;
 
     EngineContextValue_Execute(This.FRight^, AItem, LPars[1]);
-    cInvProcTable[This.FIndexOp + Word(LPars[0].vId) * 6 + Word(LPars[1].vId)](LPars, AResult);
+    cInvkOp(LPars, AResult,
+      This.FIndexOp + Word(LPars[0].vId) * 6 + Word(LPars[1].vId));
   finally
     AuxStackVarsFrameEnd(2);
   end;
@@ -2262,7 +2333,8 @@ begin
     end;
 
     EngineContextValue_Execute(This.FRight^, AItem, LPars[1]);
-    cInvProcTable[This.FIndexOp + Word(LPars[0].vId) * 6 + Word(LPars[1].vId)](LPars, AResult);
+    cInvkOp(LPars, AResult,
+      This.FIndexOp + Word(LPars[0].vId) * 6 + Word(LPars[1].vId));
   finally
     AuxStackVarsFrameEnd(2);
   end;
@@ -2453,30 +2525,34 @@ end;
 
 function EngineContextValue_StackIndex_VariableGlobal(
   var This: TEngineContextValueByVariable;
-  var AItem: TEngineRunnerItem): Integer;
-begin
-  Exit(AItem.FGlobalStackBase + This.FVarIndex);
+  var AItem: TEngineRunnerItem): Integer; assembler; nostackframe;
+//begin
+//  Exit(AItem.FGlobalStackBase + This.FVarIndex);
+asm
+    xor rax, rax
+    mov eax, [rsi + TEngineRunnerItem.FGlobalStackBase]
+    add eax, [rdi + TEngineContextValueByVariable.FVarIndex]
 end;
 
 function EngineContextValue_StackIndex_Variable0(
   var This: TEngineContextValueByVariable;
-  var AItem: TEngineRunnerItem): Integer;
-begin
-  Exit(-1);
+  var AItem: TEngineRunnerItem): Integer; assembler; nostackframe;
+asm
+    Jmp AsmRet_Neg_1
 end;
 
 function EngineContextValue_StackIndex_VariableN(
   var This: TEngineContextValueByVariable;
-  var AItem: TEngineRunnerItem): Integer;
-begin
-  Exit(-1);
+  var AItem: TEngineRunnerItem): Integer; assembler; nostackframe;
+asm
+    Jmp AsmRet_Neg_1
 end;
 
 function EngineContextValue_StackIndex_VariableRef(
   var This: TEngineContextValueByVariable;
-  var AItem: TEngineRunnerItem): Integer;
-begin
-  Exit(-1);
+  var AItem: TEngineRunnerItem): Integer; assembler; nostackframe;
+asm
+    Jmp AsmRet_Neg_1
 end;
 
 function EngineContextValue_StackIndex(var This: TEngineContextValue;
@@ -2513,39 +2589,31 @@ asm
     dq Offset AsmRet_Neg_1        // If
 end;
 
-function EngineContextValueConstBool_Create(
-  const AValue: Boolean): PEngineContextValueConstBool;
-begin
-  if AValue then
-    Exit(@c_True)
-  else
-    Exit(@c_False);
-end;
-
-function EngineContextValueConstInt_Create(
-  const AValue: Int64): PEngineContextValueConstInt;
-begin
-  Result := AllocMem(SizeOf(TEngineContextValueConstInt));
-  Result.FBase.FTypeId := EngCtxValueTpId_ConstInt;
-  Result.FConstValue := AValue;
-end;
-
-function EngineContextValueConstStr_Create(
-  const AValue: LString): PEngineContextValueConstString;
-begin
-  Result := AllocMem(SizeOf(TEngineContextValueConstString));
-  Result.FConstValue := AValue;
-  Result.FBase.FTypeId := EngCtxValueTpId_ConstString;
-end;
-
 function EngineContextValueFunction_Create(
   const AFunction: PEngineContextFunction;
   const AParams: TArray<PEngineContextValue>): PEngineContextValueFunction;
-begin
-  Result := AllocMem(SizeOf(TEngineContextValueFunction));
-  Result.FFunction := AFunction;
-  Result.FParams := AParams;
-  Result.FBase.FTypeId := EngCtxValueTpId_Function;
+  assembler; nostackframe;
+//begin
+//  Result := AllocMem(SizeOf(TEngineContextValueFunction));
+//  Result.FFunction := AFunction;
+//  Result.FParams := AParams;
+//  Result.FBase.FTypeId := EngCtxValueTpId_Function;
+asm
+    push rsi
+    push rdi
+
+    mov rdi, SizeOf(TEngineContextValueFunction)
+    call AllocMem
+    mov [rax + TEngineContextValue.FTypeId], EngCtxValueTpId_Function
+
+    pop rdi
+    mov [rax + TEngineContextValueFunction.FFunction], rdi
+
+    pop rsi
+    lea rdi, [rax + TEngineContextValueFunction.FParams]
+    push rax
+    call PtrArrCpy
+    pop rax
 end;
 
 function EngineContextValueFunctionByValue_Create(
@@ -3345,8 +3413,6 @@ procedure EngineRunner_Initialize(var This: TEngineRunner);
 var
   I: Integer;
 begin
-  //This.FCrCount := 0;
-  //This.FCrCapacity := 0;
   This.FCrStack := nil;
   FillChar(This, SizeOf(This), 0);
   for I := Low(This.FRecursiveCaches) to High(This.FRecursiveCaches) do

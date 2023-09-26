@@ -24,1780 +24,39 @@ interface
 uses
   sys.types,
   sys.utils,
+  sys.procs,
+  sys.funcs,
   scanner.types,
   data.types,
-  data.procs;
+  data.procs,
+  data._array;
 
-type
-  TInvkProc = procedure(APars: PFennerData; var AResult: TFennerData);
-
-
-{ Operador: Add }
-
-procedure cInvAdd_None_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_None_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_None_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_None_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_None_Func(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_None_Array(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Bool_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Bool_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Bool_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Bool_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Bool_Func(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Bool_Array(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Int_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Int_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Int_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Int_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Int_Func(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Int_Array(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Str_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Str_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Str_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Str_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Str_Func(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Str_Array(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Func_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Func_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Func_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Func_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Func_Func(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Func_Array(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Array_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Array_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Array_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Array_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Array_Func(APars: PFennerData; var AResult: TFennerData);
-procedure cInvAdd_Array_Array(APars: PFennerData; var AResult: TFennerData);
-
-{ Operador: Sub }
-
-procedure cInvSub_None_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_None_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_None_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_None_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_None_Func(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_None_Array(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Bool_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Bool_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Bool_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Bool_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Bool_Func(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Bool_Array(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Int_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Int_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Int_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Int_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Int_Func(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Int_Array(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Str_None(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Str_Bool(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Str_Int(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Str_Str(APars: PFennerData; var AResult: TFennerData);
-procedure cInvSub_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvSub_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Mul }
-
-procedure cInvMul_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvMul_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Div }
-
-procedure cInvDiv_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvDiv_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Rem }
-
-procedure cInvRem_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvRem_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Eq }
-
-procedure cInvEq_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvEq_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Neq }
-
-procedure cInvNeq_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvNeq_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Lt }
-
-procedure cInvLt_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLt_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Gt }
-
-procedure cInvGt_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGt_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Lte }
-
-procedure cInvLte_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvLte_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Gte }
-
-procedure cInvGte_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvGte_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: And }
-
-procedure cInvAnd_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvAnd_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Or }
-
-procedure cInvOr_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvOr_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-{ Operador: Power }
-
-procedure cInvPower_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-procedure cInvPower_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-
-const
-  cInvProcTable: array[0..503] of TInvkProc = (
-
-  { Operador: Add }
-    cInvAdd_None_None,      //  000
-    cInvAdd_None_Bool,      //  001
-    cInvAdd_None_Int,       //  002
-    cInvAdd_None_Str,       //  003
-    cInvAdd_None_Func,      //  004
-    cInvAdd_None_Array,     //  005
-    cInvAdd_Bool_None,      //  006
-    cInvAdd_Bool_Bool,      //  007
-    cInvAdd_Bool_Int,       //  008
-    cInvAdd_Bool_Str,       //  009
-    cInvAdd_Bool_Func,      //  010
-    cInvAdd_Bool_Array,     //  011
-    cInvAdd_Int_None,       //  012
-    cInvAdd_Int_Bool,       //  013
-    cInvAdd_Int_Int,        //  014
-    cInvAdd_Int_Str,        //  015
-    cInvAdd_Int_Func,       //  016
-    cInvAdd_Int_Array,      //  017
-    cInvAdd_Str_None,       //  018
-    cInvAdd_Str_Bool,       //  019
-    cInvAdd_Str_Int,        //  020
-    cInvAdd_Str_Str,        //  021
-    cInvAdd_Str_Func,       //  022
-    cInvAdd_Str_Array,      //  023
-    cInvAdd_Func_None,      //  024
-    cInvAdd_Func_Bool,      //  025
-    cInvAdd_Func_Int,       //  026
-    cInvAdd_Func_Str,       //  027
-    cInvAdd_Func_Func,      //  028
-    cInvAdd_Func_Array,     //  029
-    cInvAdd_Array_None,     //  030
-    cInvAdd_Array_Bool,     //  031
-    cInvAdd_Array_Int,      //  032
-    cInvAdd_Array_Str,      //  033
-    cInvAdd_Array_Func,     //  034
-    cInvAdd_Array_Array,    //  035
-
-  { Operador: Sub }
-    cInvSub_None_None,      //  036
-    cInvSub_None_Bool,      //  037
-    cInvSub_None_Int,       //  038
-    cInvSub_None_Str,       //  039
-    cInvSub_None_Func,      //  040
-    cInvSub_None_Array,     //  041
-    cInvSub_Bool_None,      //  042
-    cInvSub_Bool_Bool,      //  043
-    cInvSub_Bool_Int,       //  044
-    cInvSub_Bool_Str,       //  045
-    cInvSub_Bool_Func,      //  046
-    cInvSub_Bool_Array,     //  047
-    cInvSub_Int_None,       //  048
-    cInvSub_Int_Bool,       //  049
-    cInvSub_Int_Int,        //  050
-    cInvSub_Int_Str,        //  051
-    cInvSub_Int_Func,       //  052
-    cInvSub_Int_Array,      //  053
-    cInvSub_Str_None,       //  054
-    cInvSub_Str_Bool,       //  055
-    cInvSub_Str_Int,        //  056
-    cInvSub_Str_Str,        //  057
-    cInvSub_Str_Func,       //  058
-    cInvSub_Str_Array,      //  059
-    cInvSub_Func_None,      //  060
-    cInvSub_Func_Bool,      //  061
-    cInvSub_Func_Int,       //  062
-    cInvSub_Func_Str,       //  063
-    cInvSub_Func_Func,      //  064
-    cInvSub_Func_Array,     //  065
-    cInvSub_Array_None,     //  066
-    cInvSub_Array_Bool,     //  067
-    cInvSub_Array_Int,      //  068
-    cInvSub_Array_Str,      //  069
-    cInvSub_Array_Func,     //  070
-    cInvSub_Array_Array,    //  071
-
-  { Operador: Mul }
-    cInvMul_None_None,      //  072
-    cInvMul_None_Bool,      //  073
-    cInvMul_None_Int,       //  074
-    cInvMul_None_Str,       //  075
-    cInvMul_None_Func,      //  076
-    cInvMul_None_Array,     //  077
-    cInvMul_Bool_None,      //  078
-    cInvMul_Bool_Bool,      //  079
-    cInvMul_Bool_Int,       //  080
-    cInvMul_Bool_Str,       //  081
-    cInvMul_Bool_Func,      //  082
-    cInvMul_Bool_Array,     //  083
-    cInvMul_Int_None,       //  084
-    cInvMul_Int_Bool,       //  085
-    cInvMul_Int_Int,        //  086
-    cInvMul_Int_Str,        //  087
-    cInvMul_Int_Func,       //  088
-    cInvMul_Int_Array,      //  089
-    cInvMul_Str_None,       //  090
-    cInvMul_Str_Bool,       //  091
-    cInvMul_Str_Int,        //  092
-    cInvMul_Str_Str,        //  093
-    cInvMul_Str_Func,       //  094
-    cInvMul_Str_Array,      //  095
-    cInvMul_Func_None,      //  096
-    cInvMul_Func_Bool,      //  097
-    cInvMul_Func_Int,       //  098
-    cInvMul_Func_Str,       //  099
-    cInvMul_Func_Func,      //  100
-    cInvMul_Func_Array,     //  101
-    cInvMul_Array_None,     //  102
-    cInvMul_Array_Bool,     //  103
-    cInvMul_Array_Int,      //  104
-    cInvMul_Array_Str,      //  105
-    cInvMul_Array_Func,     //  106
-    cInvMul_Array_Array,    //  107
-
-  { Operador: Div }
-    cInvDiv_None_None,      //  108
-    cInvDiv_None_Bool,
-    cInvDiv_None_Int,
-    cInvDiv_None_Str,
-    cInvDiv_None_Func,
-    cInvDiv_None_Array,
-    cInvDiv_Bool_None,
-    cInvDiv_Bool_Bool,
-    cInvDiv_Bool_Int,
-    cInvDiv_Bool_Str,
-    cInvDiv_Bool_Func,
-    cInvDiv_Bool_Array,
-    cInvDiv_Int_None,
-    cInvDiv_Int_Bool,
-    cInvDiv_Int_Int,
-    cInvDiv_Int_Str,
-    cInvDiv_Int_Func,
-    cInvDiv_Int_Array,
-    cInvDiv_Str_None,
-    cInvDiv_Str_Bool,
-    cInvDiv_Str_Int,
-    cInvDiv_Str_Str,
-    cInvDiv_Str_Func,
-    cInvDiv_Str_Array,
-    cInvDiv_Func_None,
-    cInvDiv_Func_Bool,
-    cInvDiv_Func_Int,
-    cInvDiv_Func_Str,
-    cInvDiv_Func_Func,
-    cInvDiv_Func_Array,
-    cInvDiv_Array_None,
-    cInvDiv_Array_Bool,
-    cInvDiv_Array_Int,
-    cInvDiv_Array_Str,
-    cInvDiv_Array_Func,
-    cInvDiv_Array_Array,
-
-  { Operador: Rem }
-    cInvRem_None_None,      //  144
-    cInvRem_None_Bool,
-    cInvRem_None_Int,
-    cInvRem_None_Str,
-    cInvRem_None_Func,
-    cInvRem_None_Array,
-    cInvRem_Bool_None,
-    cInvRem_Bool_Bool,
-    cInvRem_Bool_Int,
-    cInvRem_Bool_Str,
-    cInvRem_Bool_Func,
-    cInvRem_Bool_Array,
-    cInvRem_Int_None,
-    cInvRem_Int_Bool,
-    cInvRem_Int_Int,
-    cInvRem_Int_Str,
-    cInvRem_Int_Func,
-    cInvRem_Int_Array,
-    cInvRem_Str_None,
-    cInvRem_Str_Bool,
-    cInvRem_Str_Int,
-    cInvRem_Str_Str,
-    cInvRem_Str_Func,
-    cInvRem_Str_Array,
-    cInvRem_Func_None,
-    cInvRem_Func_Bool,
-    cInvRem_Func_Int,
-    cInvRem_Func_Str,
-    cInvRem_Func_Func,
-    cInvRem_Func_Array,
-    cInvRem_Array_None,
-    cInvRem_Array_Bool,
-    cInvRem_Array_Int,
-    cInvRem_Array_Str,
-    cInvRem_Array_Func,
-    cInvRem_Array_Array,
-
-  { Operador: Eq }
-    cInvEq_None_None,       //  180
-    cInvEq_None_Bool,
-    cInvEq_None_Int,
-    cInvEq_None_Str,
-    cInvEq_None_Func,
-    cInvEq_None_Array,
-    cInvEq_Bool_None,
-    cInvEq_Bool_Bool,
-    cInvEq_Bool_Int,
-    cInvEq_Bool_Str,
-    cInvEq_Bool_Func,
-    cInvEq_Bool_Array,
-    cInvEq_Int_None,
-    cInvEq_Int_Bool,
-    cInvEq_Int_Int,
-    cInvEq_Int_Str,
-    cInvEq_Int_Func,
-    cInvEq_Int_Array,
-    cInvEq_Str_None,
-    cInvEq_Str_Bool,
-    cInvEq_Str_Int,
-    cInvEq_Str_Str,
-    cInvEq_Str_Func,
-    cInvEq_Str_Array,
-    cInvEq_Func_None,
-    cInvEq_Func_Bool,
-    cInvEq_Func_Int,
-    cInvEq_Func_Str,
-    cInvEq_Func_Func,
-    cInvEq_Func_Array,
-    cInvEq_Array_None,
-    cInvEq_Array_Bool,
-    cInvEq_Array_Int,
-    cInvEq_Array_Str,
-    cInvEq_Array_Func,
-    cInvEq_Array_Array,
-
-  { Operador: Neq }
-    cInvNeq_None_None,      //  216
-    cInvNeq_None_Bool,
-    cInvNeq_None_Int,
-    cInvNeq_None_Str,
-    cInvNeq_None_Func,
-    cInvNeq_None_Array,
-    cInvNeq_Bool_None,
-    cInvNeq_Bool_Bool,
-    cInvNeq_Bool_Int,
-    cInvNeq_Bool_Str,
-    cInvNeq_Bool_Func,
-    cInvNeq_Bool_Array,
-    cInvNeq_Int_None,
-    cInvNeq_Int_Bool,
-    cInvNeq_Int_Int,
-    cInvNeq_Int_Str,
-    cInvNeq_Int_Func,
-    cInvNeq_Int_Array,
-    cInvNeq_Str_None,
-    cInvNeq_Str_Bool,
-    cInvNeq_Str_Int,
-    cInvNeq_Str_Str,
-    cInvNeq_Str_Func,
-    cInvNeq_Str_Array,
-    cInvNeq_Func_None,
-    cInvNeq_Func_Bool,
-    cInvNeq_Func_Int,
-    cInvNeq_Func_Str,
-    cInvNeq_Func_Func,
-    cInvNeq_Func_Array,
-    cInvNeq_Array_None,
-    cInvNeq_Array_Bool,
-    cInvNeq_Array_Int,
-    cInvNeq_Array_Str,
-    cInvNeq_Array_Func,
-    cInvNeq_Array_Array,
-
-  { Operador: Lt }
-    cInvLt_None_None,       //  252
-    cInvLt_None_Bool,
-    cInvLt_None_Int,
-    cInvLt_None_Str,
-    cInvLt_None_Func,
-    cInvLt_None_Array,
-    cInvLt_Bool_None,
-    cInvLt_Bool_Bool,
-    cInvLt_Bool_Int,
-    cInvLt_Bool_Str,
-    cInvLt_Bool_Func,
-    cInvLt_Bool_Array,
-    cInvLt_Int_None,
-    cInvLt_Int_Bool,
-    cInvLt_Int_Int,
-    cInvLt_Int_Str,
-    cInvLt_Int_Func,
-    cInvLt_Int_Array,
-    cInvLt_Str_None,
-    cInvLt_Str_Bool,
-    cInvLt_Str_Int,
-    cInvLt_Str_Str,
-    cInvLt_Str_Func,
-    cInvLt_Str_Array,
-    cInvLt_Func_None,
-    cInvLt_Func_Bool,
-    cInvLt_Func_Int,
-    cInvLt_Func_Str,
-    cInvLt_Func_Func,
-    cInvLt_Func_Array,
-    cInvLt_Array_None,
-    cInvLt_Array_Bool,
-    cInvLt_Array_Int,
-    cInvLt_Array_Str,
-    cInvLt_Array_Func,
-    cInvLt_Array_Array,
-
-  { Operador: Gt }
-    cInvGt_None_None,
-    cInvGt_None_Bool,
-    cInvGt_None_Int,
-    cInvGt_None_Str,
-    cInvGt_None_Func,
-    cInvGt_None_Array,
-    cInvGt_Bool_None,
-    cInvGt_Bool_Bool,
-    cInvGt_Bool_Int,
-    cInvGt_Bool_Str,
-    cInvGt_Bool_Func,
-    cInvGt_Bool_Array,
-    cInvGt_Int_None,
-    cInvGt_Int_Bool,
-    cInvGt_Int_Int,
-    cInvGt_Int_Str,
-    cInvGt_Int_Func,
-    cInvGt_Int_Array,
-    cInvGt_Str_None,
-    cInvGt_Str_Bool,
-    cInvGt_Str_Int,
-    cInvGt_Str_Str,
-    cInvGt_Str_Func,
-    cInvGt_Str_Array,
-    cInvGt_Func_None,
-    cInvGt_Func_Bool,
-    cInvGt_Func_Int,
-    cInvGt_Func_Str,
-    cInvGt_Func_Func,
-    cInvGt_Func_Array,
-    cInvGt_Array_None,
-    cInvGt_Array_Bool,
-    cInvGt_Array_Int,
-    cInvGt_Array_Str,
-    cInvGt_Array_Func,
-    cInvGt_Array_Array,
-
-  { Operador: Lte }
-    cInvLte_None_None,
-    cInvLte_None_Bool,
-    cInvLte_None_Int,
-    cInvLte_None_Str,
-    cInvLte_None_Func,
-    cInvLte_None_Array,
-    cInvLte_Bool_None,
-    cInvLte_Bool_Bool,
-    cInvLte_Bool_Int,
-    cInvLte_Bool_Str,
-    cInvLte_Bool_Func,
-    cInvLte_Bool_Array,
-    cInvLte_Int_None,
-    cInvLte_Int_Bool,
-    cInvLte_Int_Int,
-    cInvLte_Int_Str,
-    cInvLte_Int_Func,
-    cInvLte_Int_Array,
-    cInvLte_Str_None,
-    cInvLte_Str_Bool,
-    cInvLte_Str_Int,
-    cInvLte_Str_Str,
-    cInvLte_Str_Func,
-    cInvLte_Str_Array,
-    cInvLte_Func_None,
-    cInvLte_Func_Bool,
-    cInvLte_Func_Int,
-    cInvLte_Func_Str,
-    cInvLte_Func_Func,
-    cInvLte_Func_Array,
-    cInvLte_Array_None,
-    cInvLte_Array_Bool,
-    cInvLte_Array_Int,
-    cInvLte_Array_Str,
-    cInvLte_Array_Func,
-    cInvLte_Array_Array,
-
-  { Operador: Gte }
-    cInvGte_None_None,
-    cInvGte_None_Bool,
-    cInvGte_None_Int,
-    cInvGte_None_Str,
-    cInvGte_None_Func,
-    cInvGte_None_Array,
-    cInvGte_Bool_None,
-    cInvGte_Bool_Bool,
-    cInvGte_Bool_Int,
-    cInvGte_Bool_Str,
-    cInvGte_Bool_Func,
-    cInvGte_Bool_Array,
-    cInvGte_Int_None,
-    cInvGte_Int_Bool,
-    cInvGte_Int_Int,
-    cInvGte_Int_Str,
-    cInvGte_Int_Func,
-    cInvGte_Int_Array,
-    cInvGte_Str_None,
-    cInvGte_Str_Bool,
-    cInvGte_Str_Int,
-    cInvGte_Str_Str,
-    cInvGte_Str_Func,
-    cInvGte_Str_Array,
-    cInvGte_Func_None,
-    cInvGte_Func_Bool,
-    cInvGte_Func_Int,
-    cInvGte_Func_Str,
-    cInvGte_Func_Func,
-    cInvGte_Func_Array,
-    cInvGte_Array_None,
-    cInvGte_Array_Bool,
-    cInvGte_Array_Int,
-    cInvGte_Array_Str,
-    cInvGte_Array_Func,
-    cInvGte_Array_Array,
-
-  { Operador: And }
-    cInvAnd_None_None,
-    cInvAnd_None_Bool,
-    cInvAnd_None_Int,
-    cInvAnd_None_Str,
-    cInvAnd_None_Func,
-    cInvAnd_None_Array,
-    cInvAnd_Bool_None,
-    cInvAnd_Bool_Bool,
-    cInvAnd_Bool_Int,
-    cInvAnd_Bool_Str,
-    cInvAnd_Bool_Func,
-    cInvAnd_Bool_Array,
-    cInvAnd_Int_None,
-    cInvAnd_Int_Bool,
-    cInvAnd_Int_Int,
-    cInvAnd_Int_Str,
-    cInvAnd_Int_Func,
-    cInvAnd_Int_Array,
-    cInvAnd_Str_None,
-    cInvAnd_Str_Bool,
-    cInvAnd_Str_Int,
-    cInvAnd_Str_Str,
-    cInvAnd_Str_Func,
-    cInvAnd_Str_Array,
-    cInvAnd_Func_None,
-    cInvAnd_Func_Bool,
-    cInvAnd_Func_Int,
-    cInvAnd_Func_Str,
-    cInvAnd_Func_Func,
-    cInvAnd_Func_Array,
-    cInvAnd_Array_None,
-    cInvAnd_Array_Bool,
-    cInvAnd_Array_Int,
-    cInvAnd_Array_Str,
-    cInvAnd_Array_Func,
-    cInvAnd_Array_Array,
-
-  { Operador: Or }
-    cInvOr_None_None,
-    cInvOr_None_Bool,
-    cInvOr_None_Int,
-    cInvOr_None_Str,
-    cInvOr_None_Func,
-    cInvOr_None_Array,
-    cInvOr_Bool_None,
-    cInvOr_Bool_Bool,
-    cInvOr_Bool_Int,
-    cInvOr_Bool_Str,
-    cInvOr_Bool_Func,
-    cInvOr_Bool_Array,
-    cInvOr_Int_None,
-    cInvOr_Int_Bool,
-    cInvOr_Int_Int,
-    cInvOr_Int_Str,
-    cInvOr_Int_Func,
-    cInvOr_Int_Array,
-    cInvOr_Str_None,
-    cInvOr_Str_Bool,
-    cInvOr_Str_Int,
-    cInvOr_Str_Str,
-    cInvOr_Str_Func,
-    cInvOr_Str_Array,
-    cInvOr_Func_None,
-    cInvOr_Func_Bool,
-    cInvOr_Func_Int,
-    cInvOr_Func_Str,
-    cInvOr_Func_Func,
-    cInvOr_Func_Array,
-    cInvOr_Array_None,
-    cInvOr_Array_Bool,
-    cInvOr_Array_Int,
-    cInvOr_Array_Str,
-    cInvOr_Array_Func,
-    cInvOr_Array_Array,
-
-  { Operador: Power }
-    cInvPower_None_None,
-    cInvPower_None_Bool,
-    cInvPower_None_Int,
-    cInvPower_None_Str,
-    cInvPower_None_Func,
-    cInvPower_None_Array,
-    cInvPower_Bool_None,
-    cInvPower_Bool_Bool,
-    cInvPower_Bool_Int,
-    cInvPower_Bool_Str,
-    cInvPower_Bool_Func,
-    cInvPower_Bool_Array,
-    cInvPower_Int_None,
-    cInvPower_Int_Bool,
-    cInvPower_Int_Int,
-    cInvPower_Int_Str,
-    cInvPower_Int_Func,
-    cInvPower_Int_Array,
-    cInvPower_Str_None,
-    cInvPower_Str_Bool,
-    cInvPower_Str_Int,
-    cInvPower_Str_Str,
-    cInvPower_Str_Func,
-    cInvPower_Str_Array,
-    cInvPower_Func_None,
-    cInvPower_Func_Bool,
-    cInvPower_Func_Int,
-    cInvPower_Func_Str,
-    cInvPower_Func_Func,
-    cInvPower_Func_Array,
-    cInvPower_Array_None,
-    cInvPower_Array_Bool,
-    cInvPower_Array_Int,
-    cInvPower_Array_Str,
-    cInvPower_Array_Func,
-    cInvPower_Array_Array);
+procedure cInvkOp(APars: PFennerData; var AResult: TFennerData;
+  AOp: UInt64); assembler;
 
 implementation
 
-function StrSubStr(const a, b: LString): LString;
-var
-  i: Integer;
-begin
-  Result := a;
-  repeat
-    i := Pos(b, Result);
-    if (i = 0) then Break;
-    Delete(Result, i, Length(b));
-  until False;
-end;
-
-function StrMulStr(const a, b: LString): LString;
-var
-  scs: TSysCharSet;
-  cnt: Integer;
-  i: Integer;
-  c: AnsiChar;
-  d: PAnsiChar;
-begin
-  scs := [];
-  cnt := 0;
-
-  for i := 1 to Length(a) do
-  begin
-    c := a[i];
-    if (not (c in scs)) then
-    begin
-      Include(scs, c);
-      Inc(cnt);
-    end;
-  end;
-
-  for i := 1 to Length(b) do
-  begin
-    c := b[i];
-    if (not (c in scs)) then
-    begin
-      Include(scs, c);
-      Inc(cnt);
-    end;
-  end;
-
-  SetLength(Result, cnt);
-  d := Pointer(Result);
-  for c in scs do
-  begin
-    d^ := c;
-    Inc(d);
-  end;
-end;
-
-function StrDivStr(const a, b: LString): LString;
-var
-  scs: TSysCharSet;
-  cnt: Integer;
-  i: Integer;
-  c: AnsiChar;
-  d: PAnsiChar;
-begin
-  scs := [];
-  cnt := 0;
-
-  for i := 1 to Length(a) do
-  begin
-    c := a[i];
-    if (not (c in scs)) then
-    begin
-      Include(scs, c);
-      Inc(cnt);
-    end;
-  end;
-
-  for i := 1 to Length(b) do
-  begin
-    c := b[i];
-    if (c in scs) then
-    begin
-      Exclude(scs, c);
-      Dec(cnt);
-    end;
-  end;
-
-  SetLength(Result, cnt);
-  d := Pointer(Result);
-  for c in scs do
-  begin
-    d^ := c;
-    Inc(d);
-  end;
-end;
-
-function StrRemStr(const a, b: LString): LString; inline;
-begin
-  Exit(StrDivStr(a, b));
-end;
-
-function StrAndStr(const a, b: LString): LString;
-var
-  cscA, cscB, cscC: TSysCharSet;
-  i: Integer;
-  Buffer: array[Byte] of AnsiChar;
-  c: AnsiChar;
-begin
-  cscA := [];
-  cscB := [];
-
-  for i := 1 to Length(a) do
-    Include(cscA, a[i]);
-  for i := 1 to Length(b) do
-    Include(cscB, b[i]);
-
-  cscC := (cscA * cscB);
-  i := 0;
-  for c in cscC do
-  begin
-    Buffer[i] := c;
-    Inc(i);
-  end;
-  SetString(Result, PAnsiChar(@Buffer[0]), i);
-end;
-
-function StrOrStr(const a, b: LString): LString; inline;
-begin
-  Exit(StrMulStr(a, b));
-end;
-
-function StrPowerStr(const a, b: LString): LString; inline;
-begin
-  Exit(StrMulStr(a, b));
-end;
-
-function IPower(const Base: Int64; const Exponent: Integer): Int64;
-var
-  Y: Integer;
-  LBase: Int64;
-begin
-  if ((Base = 0) or (Base = 1)) then Exit(Base);
-  if (Exponent < 0) then Exit(0);
-
-  Y := Exponent;
-  LBase := Base;
-  Result := 1;
-
-  while (Y > 0) do
-  begin
-    while (not Odd(Y)) do
-    begin
-      Y := (Y shr 1);
-      LBase := (LBase * LBase)
-    end;
-    Dec(Y);
-    Result := (Result * LBase)
-  end;
-end;
-
-procedure Error_(APars: PFennerData; var AResult: TFennerData;
-  const AMethodName: LString);
-begin
-  FennerData_Clear(AResult);
-end;
+uses
+  err.classes;
 
 procedure ThrowInvalidOp2(APars: PFennerData; var AResult: TFennerData;
   const AOp: Byte);
+var
+  LMsg, LMsgTypes: LString;
+  LId0, LId1: Byte;
 begin
+  LId0 := APars[0].vId;
+  LId1 := APars[1].vId;
 
-end;
-
-procedure cInvAdd_None_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-  FennerData_Clear(AResult);
-end;
-
-procedure cInvAdd_None_Bool(APars: PFennerData;var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-  FennerData_SetAsBool(AResult, APars[1].vBool);
-end;
-
-procedure cInvAdd_None_Int(APars: PFennerData;var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-  FennerData_SetAsInteger(AResult, APars[1].vInt);
-end;
-
-procedure cInvAdd_None_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-  FennerData_SetAsString(AResult, LString(APars[1].vStr));
-end;
-
-procedure cInvAdd_None_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-  FennerData_SetAsFunctionBy(AResult, @APars[1]);
-end;
-
-procedure cInvAdd_None_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-  Error_(APars, AResult, 'Add_None_Array');
-end;
-
-procedure cInvAdd_Bool_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-  FennerData_SetAsBool(AResult, APars[0].vBool);
-end;
-
-procedure cInvAdd_Bool_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  if APars[0].vBool then
-  begin
-    if APars[1].vBool then
-      FennerData_SetAsInteger(AResult, 2)
-    else
-      FennerData_SetAsInteger(AResult, 1);
-  end else
-  begin
-    if APars[1].vBool then
-      FennerData_SetAsInteger(AResult, 1)
-    else
-      FennerData_SetAsInteger(AResult, 0);
-  end;
-end;
-
-procedure cInvAdd_Bool_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  if APars[0].vBool then
-    FennerData_SetAsInteger(AResult, APars[1].vInt + 1)
+  if (LId0 = LId1) then
+    LMsgTypes := 'dois itens do tipo [' + cs_TypeOf[LId0] + ']'
   else
-    FennerData_SetAsInteger(AResult, APars[1].vInt);
+    LMsgTypes := 'um item do tipo [' + cs_TypeOf[LId0] +
+      '] e outro item do tipo [' + cs_TypeOf[LId1] + ']';
+
+  LMsg := 'Operação ilegal: [' + sTkOpersInfo[AOp] + '] entre ' + LMsgTypes;
+
+  raise EInvalidOperation.Create(LMsg);
 end;
 
 procedure cInvAdd_Bool_Str(APars: PFennerData; var AResult: TFennerData);
@@ -1806,67 +65,10 @@ begin
     BoolToLString(APars[0].vBool) + LString(APars[1].vStr));
 end;
 
-procedure cInvAdd_Bool_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Bool_Func');
-end;
-
-procedure cInvAdd_Bool_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Bool_Array');
-end;
-
-procedure cInvAdd_Int_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  FennerData_SetAsInteger(AResult, APars[0].vInt);
-end;
-
-procedure cInvAdd_Int_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  if APars[1].vBool then
-    FennerData_SetAsInteger(AResult, APars[0].vInt + 1)
-  else
-    FennerData_SetAsInteger(AResult, APars[0].vInt);
-end;
-
-procedure cInvAdd_Int_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, APars[0].vInt + APars[1].vInt);
-end;
-
 procedure cInvAdd_Int_Str(APars: PFennerData; var AResult: TFennerData);
 begin
   FennerData_SetAsString(AResult,
     Int64ToLString(APars[0].vInt) + LString(APars[1].vStr));
-end;
-
-procedure cInvAdd_Int_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Int_Func');
-end;
-
-procedure cInvAdd_Int_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Int_Array');
-end;
-
-procedure cInvAdd_Str_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  FennerData_SetAsString(AResult, LString(APars[0].vStr));
 end;
 
 procedure cInvAdd_Str_Bool(APars: PFennerData; var AResult: TFennerData);
@@ -1885,100 +87,6 @@ procedure cInvAdd_Str_Str(APars: PFennerData; var AResult: TFennerData);
 begin
   FennerData_SetAsString(AResult,
     LString(APars[0].vStr) + LString(APars[1].vStr));
-end;
-
-procedure cInvAdd_Str_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Str_Func');
-end;
-
-procedure cInvAdd_Str_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Str_Array');
-end;
-
-procedure cInvAdd_Func_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  FennerData_SetAsFunctionBy(AResult, @APars[0]);
-end;
-
-procedure cInvAdd_Func_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  if APars[1].vBool then
-    FennerData_SetAsFunctionBy(AResult, @APars[0])
-  else
-    FennerData_Clear(AResult);
-end;
-
-procedure cInvAdd_Func_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Func_Int');
-end;
-
-procedure cInvAdd_Func_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Func_Str');
-end;
-
-procedure cInvAdd_Func_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Func_Func');
-end;
-
-procedure cInvAdd_Func_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Func_Array');
-end;
-
-procedure cInvAdd_Array_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Array_None');
-end;
-
-procedure cInvAdd_Array_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Array_Bool');
-end;
-
-procedure cInvAdd_Array_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Array_Int');
-end;
-
-procedure cInvAdd_Array_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Array_Str');
-end;
-
-procedure cInvAdd_Array_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Add);
-
-  Error_(APars, AResult, 'Add_Array_Func');
 end;
 
 procedure cInvAdd_Array_Array(APars: PFennerData; var AResult: TFennerData);
@@ -2018,1209 +126,7 @@ begin
   FennerData_SetAsArray(AResult, Pointer(vr));
 end;
 
-{ Operador: Sub }
-
-procedure cInvSub_None_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_Clear(AResult);
-end;
-
-procedure cInvSub_None_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  if APars[1].vBool then
-    FennerData_SetAsInteger(AResult, -1)
-  else
-    FennerData_SetAsInteger(AResult, 0);
-end;
-
-procedure cInvSub_None_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsInteger(AResult, -APars[1].vInt);
-end;
-
-procedure cInvSub_None_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsString(AResult, '');
-end;
-
-procedure cInvSub_None_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_None_Func');
-end;
-
-procedure cInvSub_None_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_None_Array');
-end;
-
-procedure cInvSub_Bool_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsBool(AResult, APars[0].vBool);
-end;
-
-procedure cInvSub_Bool_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  if APars[0].vBool then
-  begin
-    if APars[1].vBool then
-      FennerData_SetAsInteger(AResult, 0)
-    else
-      FennerData_SetAsInteger(AResult, 1);
-  end else
-  begin
-    if APars[1].vBool then
-      FennerData_SetAsInteger(AResult, -1)
-    else
-      FennerData_SetAsInteger(AResult, 0);
-  end;
-end;
-
-procedure cInvSub_Bool_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  if APars[0].vBool then
-    FennerData_SetAsInteger(AResult, 1 - APars[1].vInt)
-  else
-    FennerData_SetAsInteger(AResult, - APars[1].vInt);
-end;
-
-procedure cInvSub_Bool_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult, StrSubStr(
-    BoolToLString(APars[0].vBool), LString(APars[1].vStr)));
-end;
-
-procedure cInvSub_Bool_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  if APars[0].vBool then
-    FennerData_SetAsFunctionBy(AResult, @APars[1])
-  else
-    FennerData_Clear(AResult);
-end;
-
-procedure cInvSub_Bool_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Bool_Array');
-end;
-
-procedure cInvSub_Int_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsInteger(AResult, APars[0].vInt);
-end;
-
-procedure cInvSub_Int_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  if APars[1].vBool then
-    FennerData_SetAsInteger(AResult, APars[0].vInt - 1)
-  else
-    FennerData_SetAsInteger(AResult, APars[0].vInt);
-end;
-
-procedure cInvSub_Int_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, APars[0].vInt - APars[1].vInt);
-end;
-
-procedure cInvSub_Int_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsString(AResult,
-    StrSubStr(Int64ToLString(APars[0].vInt), LString(APars[1].vStr)));
-end;
-
-procedure cInvSub_Int_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Int_Func');
-end;
-
-procedure cInvSub_Int_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-end;
-
-procedure cInvSub_Str_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsString(AResult, LString(APars[0].vStr));
-end;
-
-procedure cInvSub_Str_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsString(AResult, StrSubStr(LString(APars[0].vStr),
-    BoolToLString(APars[1].vBool)));
-end;
-
-procedure cInvSub_Str_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsString(AResult, StrSubStr(LString(APars[0].vStr),
-    Int64ToLString(APars[1].vInt)));
-end;
-
-procedure cInvSub_Str_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsString(AResult, StrSubStr(LString(APars[0].vStr),
-    LString(APars[1].vStr)));
-end;
-
-procedure cInvSub_Str_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Str_Func');
-end;
-
-procedure cInvSub_Str_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Str_Array');
-end;
-
-procedure cInvSub_Func_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  FennerData_SetAsFunctionBy(AResult, @APars[0]);
-end;
-
-procedure cInvSub_Func_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  if APars[1].vBool then
-    FennerData_SetAsFunctionBy(AResult, @APars[0])
-  else
-    FennerData_Clear(AResult);
-end;
-
-procedure cInvSub_Func_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Func_Int');
-end;
-
-procedure cInvSub_Func_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Func_Str');
-end;
-
-procedure cInvSub_Func_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Func_Func');
-end;
-
-procedure cInvSub_Func_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Func_Array');
-end;
-
-procedure cInvSub_Array_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Array_None');
-end;
-
-procedure cInvSub_Array_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Array_Bool');
-end;
-
-procedure cInvSub_Array_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Array_Int');
-end;
-
-procedure cInvSub_Array_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Array_Str');
-end;
-
-procedure cInvSub_Array_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Array_Func');
-end;
-
-procedure cInvSub_Array_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Sub);
-
-  Error_(APars, AResult, 'Sub_Array_Array');
-end;
-
-{ Operador: Mul }
-
-procedure cInvMul_None_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_Clear(AResult);
-end;
-
-procedure cInvMul_None_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsBool(AResult, APars[1].vBool);
-end;
-
-procedure cInvMul_None_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsInteger(AResult, APars[1].vInt);
-end;
-
-procedure cInvMul_None_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsString(AResult, LString(APars[1].vStr));
-end;
-
-procedure cInvMul_None_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsFunctionBy(AResult, @APars[1]);
-end;
-
-procedure cInvMul_None_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_None_Array');
-end;
-
-procedure cInvMul_Bool_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsBool(AResult, APars[0].vBool);
-end;
-
-procedure cInvMul_Bool_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsBool(AResult, APars[0].vBool and APars[1].vBool);
-end;
-
-procedure cInvMul_Bool_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  if APars[0].vBool then
-    FennerData_SetAsInteger(AResult, APars[1].vInt)
-  else
-    FennerData_SetAsInteger(AResult, 0);
-end;
-
-procedure cInvMul_Bool_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  if APars[0].vBool then
-    FennerData_SetAsString(AResult, LString(APars[1].vStr))
-  else
-    FennerData_SetAsString(AResult, '');
-end;
-
-procedure cInvMul_Bool_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  if APars[0].vBool then
-    FennerData_SetAsFunctionBy(AResult, @APars[1])
-  else
-    FennerData_Clear(AResult);
-end;
-
-procedure cInvMul_Bool_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Bool_Array');
-end;
-
-procedure cInvMul_Int_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsInteger(AResult, APars[0].vInt);
-end;
-
-procedure cInvMul_Int_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  if APars[1].vBool then
-    FennerData_SetAsInteger(AResult, APars[0].vInt)
-  else
-    FennerData_SetAsInteger(AResult, 0);
-end;
-
-procedure cInvMul_Int_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, APars[0].vInt * APars[1].vInt);
-end;
-
-procedure cInvMul_Int_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsString(AResult, StrMulStr(LString(APars[0].vStr),
-    LString(APars[1].vStr)));
-end;
-
-procedure cInvMul_Int_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Int_Func');
-end;
-
-procedure cInvMul_Int_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Int_Array');
-end;
-
-procedure cInvMul_Str_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsString(AResult, LString(APars[0].vStr));
-end;
-
-procedure cInvMul_Str_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsString(AResult, StrMulStr(LString(APars[0].vStr),
-    BoolToLString(APars[1].vBool)));
-end;
-
-procedure cInvMul_Str_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsString(AResult, StrMulStr(LString(APars[0].vStr),
-    Int64ToLString(APars[1].vInt)));
-end;
-
-procedure cInvMul_Str_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  FennerData_SetAsString(AResult, StrMulStr(LString(APars[0].vStr),
-    LString(APars[1].vStr)));
-end;
-
-procedure cInvMul_Str_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Str_Func');
-end;
-
-procedure cInvMul_Str_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Str_Array');
-end;
-
-procedure cInvMul_Func_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Func_None');
-end;
-
-procedure cInvMul_Func_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  if APars[1].vBool then
-    FennerData_SetAsFunctionBy(AResult, @APars[0])
-  else
-    FennerData_Clear(AResult);
-end;
-
-procedure cInvMul_Func_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Func_Int');
-end;
-
-procedure cInvMul_Func_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Func_Str');
-end;
-
-procedure cInvMul_Func_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Func_Func');
-end;
-
-procedure cInvMul_Func_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Func_Array');
-end;
-
-procedure cInvMul_Array_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Array_None');
-end;
-
-procedure cInvMul_Array_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Array_Bool');
-end;
-
-procedure cInvMul_Array_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Array_Int');
-end;
-
-procedure cInvMul_Array_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Array_Str');
-end;
-
-procedure cInvMul_Array_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Array_Func');
-end;
-
-procedure cInvMul_Array_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Mul);
-
-  Error_(APars, AResult, 'Mul_Array_Array');
-end;
-
-{ Operador: Div }
-
-procedure cInvDiv_None_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  FennerData_Clear(AResult);
-end;
-
-procedure cInvDiv_None_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_None_Bool');
-end;
-
-procedure cInvDiv_None_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_None_Int');
-end;
-
-procedure cInvDiv_None_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_None_Str');
-end;
-
-procedure cInvDiv_None_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_None_Func');
-end;
-
-procedure cInvDiv_None_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_None_Array');
-end;
-
-procedure cInvDiv_Bool_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  FennerData_SetAsBool(AResult, APars[0].vBool);
-end;
-
-procedure cInvDiv_Bool_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  FennerData_SetAsBool(AResult, APars[0].vBool or APars[1].vBool);
-end;
-
-procedure cInvDiv_Bool_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Bool_Int');
-end;
-
-procedure cInvDiv_Bool_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Bool_Str');
-end;
-
-procedure cInvDiv_Bool_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Bool_Func');
-end;
-
-procedure cInvDiv_Bool_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Bool_Array');
-end;
-
-procedure cInvDiv_Int_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Int_None');
-end;
-
-procedure cInvDiv_Int_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Int_Bool');
-end;
-
-procedure cInvDiv_Int_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, APars[0].vInt div APars[1].vInt);
-end;
-
-procedure cInvDiv_Int_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult, StrDivStr(Int64ToLString(APars[0].vInt),
-    LString(APars[1].vStr)));
-end;
-
-procedure cInvDiv_Int_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Int_Func');
-end;
-
-procedure cInvDiv_Int_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Int_Array');
-end;
-
-procedure cInvDiv_Str_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Str_None');
-end;
-
-procedure cInvDiv_Str_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  FennerData_SetAsString(AResult, StrDivStr(LString(APars[0].vStr),
-    BoolToLString(APars[1].vBool)));
-end;
-
-procedure cInvDiv_Str_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  FennerData_SetAsString(AResult, StrDivStr(LString(APars[0].vStr),
-    Int64ToLString(APars[1].vInt)));
-end;
-
-procedure cInvDiv_Str_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  FennerData_SetAsString(AResult, StrDivStr(LString(APars[0].vStr),
-    LString(APars[1].vStr)));
-end;
-
-procedure cInvDiv_Str_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Str_Func');
-end;
-
-procedure cInvDiv_Str_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Str_Array');
-end;
-
-procedure cInvDiv_Func_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Func_None');
-end;
-
-procedure cInvDiv_Func_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Func_Bool');
-end;
-
-procedure cInvDiv_Func_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Func_Int');
-end;
-
-procedure cInvDiv_Func_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Func_Str');
-end;
-
-procedure cInvDiv_Func_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Func_Func');
-end;
-
-procedure cInvDiv_Func_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Func_Array');
-end;
-
-procedure cInvDiv_Array_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Array_None');
-end;
-
-procedure cInvDiv_Array_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Array_Bool');
-end;
-
-procedure cInvDiv_Array_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Array_Int');
-end;
-
-procedure cInvDiv_Array_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Array_Str');
-end;
-
-procedure cInvDiv_Array_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Array_Func');
-end;
-
-procedure cInvDiv_Array_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Div);
-
-  Error_(APars, AResult, 'Div_Array_Array');
-end;
-
-{ Operador: Rem }
-
-procedure cInvRem_None_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  FennerData_Clear(AResult);
-end;
-
-procedure cInvRem_None_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_None_Bool');
-end;
-
-procedure cInvRem_None_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_None_Int');
-end;
-
-procedure cInvRem_None_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_None_Str');
-end;
-
-procedure cInvRem_None_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_None_Func');
-end;
-
-procedure cInvRem_None_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_None_Array');
-end;
-
-procedure cInvRem_Bool_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Bool_None');
-end;
-
-procedure cInvRem_Bool_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  FennerData_SetAsBool(AResult, APars[0].vBool xor APars[1].vBool);
-end;
-
-procedure cInvRem_Bool_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Bool_Int');
-end;
-
-procedure cInvRem_Bool_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Bool_Str');
-end;
-
-procedure cInvRem_Bool_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Bool_Func');
-end;
-
-procedure cInvRem_Bool_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Bool_Array');
-end;
-
-procedure cInvRem_Int_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Int_None');
-end;
-
-procedure cInvRem_Int_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Int_Bool');
-end;
-
-procedure cInvRem_Int_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, APars[0].vInt mod APars[1].vInt);
-end;
-
-procedure cInvRem_Int_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  FennerData_SetAsString(AResult, StrRemStr(Int64ToLString(APars[0].vInt),
-    LString(APars[1].vStr)));
-end;
-
-procedure cInvRem_Int_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Int_Func');
-end;
-
-procedure cInvRem_Int_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Int_Array');
-end;
-
-procedure cInvRem_Str_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Str_None');
-end;
-
-procedure cInvRem_Str_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  FennerData_SetAsString(AResult, StrRemStr(LString(APars[0].vStr),
-    BoolToLString(APars[1].vBool)));
-end;
-
-procedure cInvRem_Str_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  FennerData_SetAsString(AResult, StrRemStr(LString(APars[0].vStr),
-    Int64ToLString(APars[1].vInt)));
-end;
-
-procedure cInvRem_Str_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  FennerData_SetAsString(AResult, StrRemStr(LString(APars[0].vStr),
-    LString(APars[1].vStr)));
-end;
-
-procedure cInvRem_Str_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Str_Func');
-end;
-
-procedure cInvRem_Str_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Str_Array');
-end;
-
-procedure cInvRem_Func_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Func_None');
-end;
-
-procedure cInvRem_Func_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Func_Bool');
-end;
-
-procedure cInvRem_Func_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Func_Int');
-end;
-
-procedure cInvRem_Func_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Func_Str');
-end;
-
-procedure cInvRem_Func_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Func_Func');
-end;
-
-procedure cInvRem_Func_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Func_Array');
-end;
-
-procedure cInvRem_Array_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Array_None');
-end;
-
-procedure cInvRem_Array_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Array_Bool');
-end;
-
-procedure cInvRem_Array_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Array_Int');
-end;
-
-procedure cInvRem_Array_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Array_Str');
-end;
-
-procedure cInvRem_Array_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Array_Func');
-end;
-
-procedure cInvRem_Array_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Rem);
-
-  Error_(APars, AResult, 'Rem_Array_Array');
-end;
-
 { Operador: Eq }
-
-procedure cInvEq_None_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvEq_None_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_None_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_None_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_None_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_None_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Bool_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Bool_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool = APars[1].vBool);
-end;
-
-procedure cInvEq_Bool_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  if APars[0].vBool then
-    FennerData_SetAsBool(AResult, APars[1].vInt = 1)
-  else
-    FennerData_SetAsBool(AResult, APars[1].vInt = 0);
-end;
-
-procedure cInvEq_Bool_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    cs_Bool[APars[0].vBool] = LString(APars[1].vStr));
-end;
-
-procedure cInvEq_Bool_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, APars[0].vBool = (APars[1].vFn <> nil));
-end;
-
-procedure cInvEq_Bool_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, APars[0].vBool = (APars[1].vArr <> nil));
-end;
-
-procedure cInvEq_Int_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Int_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  if APars[1].vBool then
-    FennerData_SetAsBool(AResult, APars[0].vInt = 1)
-  else
-    FennerData_SetAsBool(AResult, APars[0].vInt = 0);
-end;
-
-procedure cInvEq_Int_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vInt = APars[1].vInt);
-end;
-
-procedure cInvEq_Int_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    Int64ToLString(APars[0].vInt) = LString(APars[1].vStr));
-end;
-
-procedure cInvEq_Int_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Int_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Str_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Str_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    LString(APars[0].vStr) = cs_Bool[APars[1].vBool]);
-end;
-
-procedure cInvEq_Str_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    LString(APars[0].vStr) = Int64ToLString(APars[1].vInt));
-end;
 
 procedure cInvEq_Str_Str(APars: PFennerData; var AResult: TFennerData);
 begin
@@ -3228,246 +134,19 @@ begin
     LString(APars[0].vStr) = LString(APars[1].vStr));
 end;
 
-procedure cInvEq_Str_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Str_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Func_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Func_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Func_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Func_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
 procedure cInvEq_Func_Func(APars: PFennerData; var AResult: TFennerData);
 begin
   FennerData_SetAsBool(AResult, APars[0].vFn = APars[1].vFn);
 end;
 
-procedure cInvEq_Func_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Array_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Array_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Array_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Array_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvEq_Array_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_Eq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
 procedure cInvEq_Array_Array(APars: PFennerData; var AResult: TFennerData);
 begin
-  FennerData_SetAsBool(AResult, (APars[0].vArr = APars[1].vArr));
+  FennerData_SetAsBool(AResult,
+    FennerDataArray_IsEquals(TFennerDataDynArray(APars[0].vArr),
+      TFennerDataDynArray(APars[1].vArr)));
 end;
 
 { Operador: Neq }
-
-procedure cInvNeq_None_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvNeq_None_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_None_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_None_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_None_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_None_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Bool_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Bool_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool <> APars[1].vBool);
-end;
-
-procedure cInvNeq_Bool_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  if APars[0].vBool then
-    FennerData_SetAsBool(AResult, APars[1].vInt <> 1)
-  else
-    FennerData_SetAsBool(AResult, APars[1].vInt <> 0);
-end;
-
-procedure cInvNeq_Bool_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    cs_Bool[APars[0].vBool] <> LString(APars[1].vStr));
-end;
-
-procedure cInvNeq_Bool_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Bool_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Int_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Int_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  if APars[1].vBool then
-    FennerData_SetAsBool(AResult, APars[0].vInt <> 1)
-  else
-    FennerData_SetAsBool(AResult, APars[0].vInt <> 0);
-end;
-
-procedure cInvNeq_Int_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vInt <> APars[1].vInt);
-end;
-
-procedure cInvNeq_Int_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult,
-    Int64ToLString(APars[0].vInt) <> LString(APars[1].vStr));
-end;
-
-procedure cInvNeq_Int_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Int_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Str_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Str_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    LString(APars[0].vStr) <> cs_Bool[APars[1].vBool]);
-end;
-
-procedure cInvNeq_Str_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    LString(APars[0].vStr) <> Int64ToLString(APars[1].vInt));
-end;
 
 procedure cInvNeq_Str_Str(APars: PFennerData; var AResult: TFennerData);
 begin
@@ -3475,1678 +154,923 @@ begin
     LString(APars[0].vStr) <> LString(APars[1].vStr));
 end;
 
-procedure cInvNeq_Str_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Str_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Func_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Func_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Func_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Func_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
 procedure cInvNeq_Func_Func(APars: PFennerData; var AResult: TFennerData);
 begin
   FennerData_SetAsBool(AResult, APars[0].vFn <> APars[1].vFn);
 end;
 
-procedure cInvNeq_Func_Array(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Array_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Array_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Array_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Array_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvNeq_Array_Func(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, True);
-end;
-
 procedure cInvNeq_Array_Array(APars: PFennerData; var AResult: TFennerData);
 begin
-  FennerData_SetAsBool(AResult, APars[0].vArr <> APars[1].vArr);
+  FennerData_SetAsBool(AResult,
+    not FennerDataArray_IsEquals(
+      TFennerDataDynArray(APars[0].vArr),
+      TFennerDataDynArray(APars[1].vArr)));
 end;
 
 { Operador: Lt }
 
-procedure cInvLt_None_None(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_None_Bool(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_None_Int(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_None_Str(APars: PFennerData; var AResult: TFennerData);
-begin
-  ThrowInvalidOp2(APars, AResult, tkop_NEq);
-
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool < APars[1].vBool);
-end;
-
-procedure cInvLt_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  if APars[0].vBool then
-    FennerData_SetAsBool(AResult, 1 < APars[1].vInt)
-  else
-    FennerData_SetAsBool(AResult, 0 < APars[1].vInt);
-end;
-
-procedure cInvLt_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    cs_Bool[APars[0].vBool] <= LString(APars[1].vStr));
-end;
-
-procedure cInvLt_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  if APars[1].vBool then
-    FennerData_SetAsBool(AResult, APars[0].vInt < 1)
-  else
-    FennerData_SetAsBool(AResult, APars[0].vInt < 0);
-end;
-
-procedure cInvLt_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vInt < APars[1].vInt);
-end;
-
-procedure cInvLt_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    Int64ToLString(APars[0].vInt) < LString(APars[1].vStr));
-end;
-
-procedure cInvLt_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    LString(APars[0].vStr) < cs_Bool[APars[1].vBool]);
-end;
-
-procedure cInvLt_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult,
-    LString(APars[0].vStr) < Int64ToLString(APars[1].vInt));
-end;
-
-procedure cInvLt_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
+procedure cInvLt_Str_Str(APars: PFennerData; var AResult: TFennerData);
 begin
   FennerData_SetAsBool(AResult, LString(APars[0].vStr) < LString(APars[1].vStr));
 end;
 
-procedure cInvLt_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLt_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
 { Operador: Gt }
 
-procedure cInvGt_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool > APars[1].vBool);
-end;
-
-procedure cInvGt_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  if APars[0].vBool then
-    FennerData_SetAsBool(AResult, APars[1].vInt > 1)
-  else
-    FennerData_SetAsBool(AResult, APars[1].vInt > 0);
-end;
-
-procedure cInvGt_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, cs_Bool[APars[0].vBool] > LString(APars[1].vStr));
-end;
-
-procedure cInvGt_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  if APars[1].vBool then
-    FennerData_SetAsBool(AResult, APars[0].vInt > 1)
-  else
-    FennerData_SetAsBool(AResult, APars[0].vInt > 0);
-end;
-
-procedure cInvGt_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vInt > APars[1].vInt);
-end;
-
-procedure cInvGt_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, Int64ToLString(APars[0].vInt) > LString(APars[1].vStr));
-end;
-
-procedure cInvGt_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, LString(APars[0].vStr) > cs_Bool[APars[1].vBool]);
-end;
-
-procedure cInvGt_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, LString(APars[0].vStr) > Int64ToLString(APars[1].vInt));
-end;
-
-procedure cInvGt_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
+procedure cInvGt_Str_Str(APars: PFennerData; var AResult: TFennerData);
 begin
   FennerData_SetAsBool(AResult, LString(APars[0].vStr) > LString(APars[1].vStr));
 end;
 
-procedure cInvGt_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGt_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
 { Operador: Lte }
 
-procedure cInvLte_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvLte_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool <= APars[1].vBool);
-end;
-
-procedure cInvLte_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  if APars[0].vBool then
-    FennerData_SetAsBool(AResult, 1 <= APars[1].vInt)
-  else
-    FennerData_SetAsBool(AResult, 0 <= APars[1].vInt);
-end;
-
-procedure cInvLte_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, cs_Bool[APars[0].vBool] <= LString(APars[1].vStr));
-end;
-
-procedure cInvLte_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  if APars[1].vBool then
-    FennerData_SetAsBool(AResult, APars[0].vInt <= 1)
-  else
-    FennerData_SetAsBool(AResult, APars[0].vInt <= 0);
-end;
-
-procedure cInvLte_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vInt <= APars[1].vInt);
-end;
-
-procedure cInvLte_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, Int64ToLString(APars[0].vInt) <= LString(APars[1].vStr));
-end;
-
-procedure cInvLte_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, LString(APars[0].vStr) <= cs_Bool[APars[1].vBool]);
-end;
-
-procedure cInvLte_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, LString(APars[0].vStr) <= Int64ToLString(APars[1].vInt));
-end;
-
-procedure cInvLte_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
+procedure cInvLte_Str_Str(APars: PFennerData; var AResult: TFennerData);
 begin
   FennerData_SetAsBool(AResult, LString(APars[0].vStr) <= LString(APars[1].vStr));
 end;
 
-procedure cInvLte_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vFn = APars[1].vFn);
-end;
-
-procedure cInvLte_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvLte_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vArr = APars[1].vArr);
-end;
-
 { Operador: Gte }
 
-procedure cInvGte_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, True);
-end;
-
-procedure cInvGte_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool >= APars[1].vBool);
-end;
-
-procedure cInvGte_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  if APars[0].vBool then
-    FennerData_SetAsBool(AResult, 1 >= APars[1].vInt)
-  else
-    FennerData_SetAsBool(AResult, 0 >= APars[1].vInt);
-end;
-
-procedure cInvGte_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, cs_Bool[APars[0].vBool] >= LString(APars[1].vStr));
-end;
-
-procedure cInvGte_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  if APars[1].vBool then
-    FennerData_SetAsBool(AResult, APars[0].vInt >= 1)
-  else
-    FennerData_SetAsBool(AResult, APars[0].vInt >= 0);
-end;
-
-procedure cInvGte_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vInt >= APars[1].vInt);
-end;
-
-procedure cInvGte_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, Int64ToLString(APars[0].vInt) >= LString(APars[1].vStr));
-end;
-
-procedure cInvGte_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvGte_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, LString(APars[0].vStr) >= cs_Bool[APars[1].vBool]);
-end;
-
-procedure cInvGte_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, LString(APars[0].vStr) >= Int64ToLString(APars[1].vInt));
-end;
-
-procedure cInvGte_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
+procedure cInvGte_Str_Str(APars: PFennerData; var AResult: TFennerData);
 begin
   FennerData_SetAsBool(AResult, LString(APars[0].vStr) >= LString(APars[1].vStr));
 end;
 
-procedure cInvGte_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
+{ Operador: Power }
+
+procedure cInvPower_Int_Int(APars: PFennerData; var AResult: TFennerData);
 begin
-  FennerData_SetAsBool(AResult, False);
+  FennerData_SetAsInteger(AResult, MyFuncs_IntPower(APars[0].vInt, APars[1].vInt));
 end;
 
-procedure cInvGte_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+procedure cInvkOp(APars: PFennerData; var AResult: TFennerData; AOp: UInt64);
+  assembler; nostackframe;
+asm
+    cmp rdx, 503
+    ja AsmRet
+    mov rcx, Offset @tab
+    jmp [rcx + rdx * 8]
 
-procedure cInvGte_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+@inv_op_add:
+    mov rdx, tkop_Add
+    jmp ThrowInvalidOp2
+@inv_op_sub:
+    mov rdx, tkop_Sub
+    jmp ThrowInvalidOp2
+@inv_op_mul:
+    mov rdx, tkop_Mul
+    jmp ThrowInvalidOp2
+@inv_op_div:
+    mov rdx, tkop_Div
+    jmp ThrowInvalidOp2
+@inv_op_rem:
+    mov rdx, tkop_Rem
+    jmp ThrowInvalidOp2
+@inv_op_eq:
+    mov rdx, tkop_Eq
+    jmp ThrowInvalidOp2
+@inv_op_neq:
+    mov rdx, tkop_Neq
+    jmp ThrowInvalidOp2
+@inv_op_lt:
+    mov rdx, tkop_Lt
+    jmp ThrowInvalidOp2
+@inv_op_gt:
+    mov rdx, tkop_Gt
+    jmp ThrowInvalidOp2
+@inv_op_lte:
+    mov rdx, tkop_Lte
+    jmp ThrowInvalidOp2
+@inv_op_gte:
+    mov rdx, tkop_Gte
+    jmp ThrowInvalidOp2
+@inv_op_and:
+    mov rdx, tkop_And
+    jmp ThrowInvalidOp2
+@inv_op_or:
+    mov rdx, tkop_Or
+    jmp ThrowInvalidOp2
+@inv_op_power:
+    mov rdx, tkop_Power
+    jmp ThrowInvalidOp2
+@inv_op_fact:
+    mov rdx, tkop_Fact
+    jmp ThrowInvalidOp2
+@ret_false:
+    mov rdi, rsi
+    xor rsi, rsi
+    jmp FennerData_SetAsBool
+@ret_true:
+    mov rdi, rsi
+    xor rsi, rsi
+    dec rsi
+    jmp FennerData_SetAsBool
 
-procedure cInvGte_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+@eq_bool_bool:
+    mov al, [rdi + TFennerData.vBool]
+    mov ah, [rsi + TFennerData.vBool]
+    cmp al, ah
+    je @ret_true
+    jmp @ret_false
+@neq_bool_bool:
+    mov al, [rdi + TFennerData.vBool]
+    mov ah, [rsi + TFennerData.vBool]
+    cmp al, ah
+    jne @ret_true
+    jmp @ret_false
+@lt_bool_bool:
+    mov al, [rdi + TFennerData.vBool]
+    mov ah, [rsi + TFennerData.vBool]
+    cmp al, ah
+    jb @ret_true
+    jmp @ret_false
+@gt_bool_bool:
+    mov al, [rdi + TFennerData.vBool]
+    mov ah, [rsi + TFennerData.vBool]
+    cmp al, ah
+    ja @ret_true
+    jmp @ret_false
+@lte_bool_bool:
+    mov al, [rdi + TFennerData.vBool]
+    mov ah, [rsi + TFennerData.vBool]
+    cmp al, ah
+    jbe @ret_true
+    jmp @ret_false
+@gte_bool_bool:
+    mov al, [rdi + TFennerData.vBool]
+    mov ah, [rsi + TFennerData.vBool]
+    cmp al, ah
+    jbe @ret_true
+    jmp @ret_false
+@and_bool_bool:
+    mov al, [rdi + TFennerData.vBool]
+    mov ah, [rsi + TFennerData.vBool]
+    and al, ah
+    jz @ret_false
+    jmp @ret_true
+@or_bool_bool:
+    mov al, [rdi + TFennerData.vBool]
+    mov ah, [rsi + TFennerData.vBool]
+    or al, ah
+    jz @ret_false
+    jmp @ret_true
+@add_int_int:
+    mov rcx, [rdi + TFennerData.vInt]
+    add rcx, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
+    mov rdi, rsi
+    mov rsi, rcx
+    jmp FennerData_SetAsInteger
+@sub_int_int:
+    mov rcx, [rdi + TFennerData.vInt]
+    add rcx, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
+    mov rdi, rsi
+    mov rsi, rcx
+    jmp FennerData_SetAsInteger
+@mul_int_int:
+    mov rax, [rdi + TFennerData.vInt]
+    imul [rdi + TFennerData.vInt + SizeOf(TFennerData)]
+    mov rdi, rsi
+    mov rsi, rax
+    jmp FennerData_SetAsInteger
+@div_int_int:
+    mov rax, [rdi + TFennerData.vInt]
+    xor rdx, rdx
+    idiv [rdi + TFennerData.vInt + SizeOf(TFennerData)]
+    mov rdi, rsi
+    mov rsi, rax
+    jmp FennerData_SetAsInteger
+@rem_int_int:
+    mov rax, [rdi + TFennerData.vInt]
+    xor rdx, rdx
+    idiv [rdi + TFennerData.vInt + SizeOf(TFennerData)]
+    mov rdi, rsi
+    mov rsi, rdx
+    jmp FennerData_SetAsInteger
+@eq_int_int:
+    mov rax, [rdi + TFennerData.vInt]
+    cmp rax, [rsi + TFennerData.vInt]
+    je @ret_true
+    jmp @ret_false
+@neq_int_int:
+    mov rax, [rdi + TFennerData.vInt]
+    cmp rax, [rsi + TFennerData.vInt]
+    jne @ret_true
+    jmp @ret_false
+@lt_int_int:
+    mov rax, [rdi + TFennerData.vInt]
+    cmp rax, [rsi + TFennerData.vInt]
+    jl @ret_true
+    jmp @ret_false
+@gt_int_int:
+    mov rax, [rdi + TFennerData.vInt]
+    cmp rax, [rsi + TFennerData.vInt]
+    jl @ret_true
+    jmp @ret_false
+@lte_int_int:
+    mov rax, [rdi + TFennerData.vInt]
+    cmp rax, [rsi + TFennerData.vInt]
+    jle @ret_true
+    jmp @ret_false
+@gte_int_int:
+    mov rax, [rdi + TFennerData.vInt]
+    cmp rax, [rsi + TFennerData.vInt]
+    jge @ret_true
+    jmp @ret_false
 
-procedure cInvGte_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+@tab:
+{ Operador: Add }
+  { None -> }
+    dq Offset @inv_op_add               //  000 -> None + None
+    dq Offset @inv_op_add               //  001 -> None + Bool
+    dq Offset @inv_op_add               //  002 -> None + Int
+    dq Offset @inv_op_add               //  003 -> None + Str
+    dq Offset @inv_op_add               //  004 -> None + Func
+    dq Offset @inv_op_add               //  005 -> None + Array
 
-procedure cInvGte_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Bool -> }
+    dq Offset @inv_op_add               //  006 -> Bool + None
+    dq Offset @inv_op_add               //  007 -> Bool + Bool
+    dq Offset @inv_op_add               //  008 -> Bool + Int
+    dq Offset cInvAdd_Bool_Str,         //  009 -> Bool + Str
+    dq Offset @inv_op_add               //  010 -> Bool + Func
+    dq Offset @inv_op_add               //  011 -> Bool + Array
 
-procedure cInvGte_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vFn = APars[1].vFn);
-end;
+  { Int -> }
+    dq Offset @inv_op_add               //  012 -> Int + None
+    dq Offset @inv_op_add               //  013 -> Int + Bool
+    dq Offset @add_int_int              //  014 -> Int + Int
+    dq Offset cInvAdd_Int_Str,          //  015 -> Int + Str
+    dq Offset @inv_op_add               //  016 -> Int + Func
+    dq Offset @inv_op_add               //  017 -> Int + Array
 
-procedure cInvGte_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Str -> }
+    dq Offset @inv_op_add               //  018 -> Str + None
+    dq Offset cInvAdd_Str_Bool,         //  019 -> Str + Bool
+    dq Offset cInvAdd_Str_Int,          //  020 -> Str + Int
+    dq Offset cInvAdd_Str_Str,          //  021 -> Str + Str
+    dq Offset @inv_op_add               //  022 -> Str + Func
+    dq Offset @inv_op_add               //  023 -> Str + Array
 
-procedure cInvGte_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Func -> }
+    dq Offset @inv_op_add               //  024 -> Func + None
+    dq Offset @inv_op_add               //  025 -> Func + Bool
+    dq Offset @inv_op_add               //  026 -> Func + Int
+    dq Offset @inv_op_add               //  027 -> Func + Str
+    dq Offset @inv_op_add               //  028 -> Func + Func
+    dq Offset @inv_op_add               //  029 -> Func + Array
 
-procedure cInvGte_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Array -> }
+    dq Offset @inv_op_add               //  030 -> Array + None
+    dq Offset @inv_op_add               //  031 -> Array + Bool
+    dq Offset @inv_op_add               //  032 -> Array + Int
+    dq Offset @inv_op_add               //  033 -> Array + Str
+    dq Offset @inv_op_add               //  034 -> Array + Func
+    dq Offset cInvAdd_Array_Array       //  035 -> Array + Array
 
-procedure cInvGte_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+{ Operador: Sub }
+  { None -> }
+    dq Offset @inv_op_sub               //  036 -> None - None
+    dq Offset @inv_op_sub               //  037 -> None - Bool
+    dq Offset @inv_op_sub               //  038 -> None - Int
+    dq Offset @inv_op_sub               //  039 -> None - Str
+    dq Offset @inv_op_sub               //  040 -> None - Func
+    dq Offset @inv_op_sub               //  041 -> None - Array
 
-procedure cInvGte_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Bool -> }
+    dq Offset @inv_op_sub               //  042 -> Bool - None
+    dq Offset @inv_op_sub               //  043 -> Bool - Bool
+    dq Offset @inv_op_sub               //  044 -> Bool - Int
+    dq Offset @inv_op_sub               //  045 -> Bool - Str
+    dq Offset @inv_op_sub               //  046 -> Bool - Func
+    dq Offset @inv_op_sub               //  047 -> Bool - Array
 
-procedure cInvGte_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Int -> }
+    dq Offset @inv_op_sub               //  048 -> Int - None
+    dq Offset @inv_op_sub               //  049 -> Int - Bool
+    dq Offset @sub_int_int              //  050 -> Int - Int
+    dq Offset @inv_op_sub               //  051 -> Int - Str
+    dq Offset @inv_op_sub               //  052 -> Int - Func
+    dq Offset @inv_op_sub               //  053 -> Int - Array
 
-procedure cInvGte_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vArr = APars[1].vArr);
-end;
+  { Str -> }
+    dq Offset @inv_op_sub               //  054 -> Str - None
+    dq Offset @inv_op_sub               //  055 -> Str - Bool
+    dq Offset @inv_op_sub               //  056 -> Str - Int
+    dq Offset @inv_op_sub               //  057 -> Str - Str
+    dq Offset @inv_op_sub               //  058 -> Str - Func
+    dq Offset @inv_op_sub               //  059 -> Str - Array
+
+  { Func -> }
+    dq Offset @inv_op_sub               //  060 -> Func - None
+    dq Offset @inv_op_sub               //  061 -> Func - Bool
+    dq Offset @inv_op_sub               //  062 -> Func - Int
+    dq Offset @inv_op_sub               //  063 -> Func - Str
+    dq Offset @inv_op_sub               //  064 -> Func - Func
+    dq Offset @inv_op_sub               //  065 -> Func - Array
+
+  { Array -> }
+    dq Offset @inv_op_sub               //  066 -> Array - None
+    dq Offset @inv_op_sub               //  067 -> Array - Bool
+    dq Offset @inv_op_sub               //  068 -> Array - Int
+    dq Offset @inv_op_sub               //  069 -> Array - Str
+    dq Offset @inv_op_sub               //  070 -> Array - Func
+    dq Offset @inv_op_sub               //  071 -> Array - Array
+
+{ Operador: Mul }
+  { None -> }
+    dq Offset @inv_op_mul               //  072 -> None * None
+    dq Offset @inv_op_mul               //  073 -> None * Bool
+    dq Offset @inv_op_mul               //  074 -> None * Int
+    dq Offset @inv_op_mul               //  075 -> None * Str
+    dq Offset @inv_op_mul               //  076 -> None * Func
+    dq Offset @inv_op_mul               //  077 -> None * Array
+
+  { Bool -> }
+    dq Offset @inv_op_mul               //  078 -> Bool * None
+    dq Offset @inv_op_mul               //  079 -> Bool * Bool
+    dq Offset @inv_op_mul               //  080 -> Bool * Int
+    dq Offset @inv_op_mul               //  081 -> Bool * Str
+    dq Offset @inv_op_mul               //  082 -> Bool * Func
+    dq Offset @inv_op_mul               //  083 -> Bool * Array
+
+  { Int -> }
+    dq Offset @inv_op_mul               //  084 -> Int * None
+    dq Offset @inv_op_mul               //  085 -> Int * Bool
+    dq Offset @mul_int_int              //  086 -> Int * Int
+    dq Offset @inv_op_mul               //  087 -> Int * Str
+    dq Offset @inv_op_mul               //  088 -> Int * Func
+    dq Offset @inv_op_mul               //  089 -> Int * Array
+
+  { Str -> }
+    dq Offset @inv_op_mul               //  090 -> Str * None
+    dq Offset @inv_op_mul               //  091 -> Str * Bool
+    dq Offset @inv_op_mul               //  092 -> Str * Int
+    dq Offset @inv_op_mul               //  093 -> Str * Str
+    dq Offset @inv_op_mul               //  094 -> Str * Func
+    dq Offset @inv_op_mul               //  095 -> Str * Array
+
+  { Func -> }
+    dq Offset @inv_op_mul               //  096 -> Func * None
+    dq Offset @inv_op_mul               //  097 -> Func * Bool
+    dq Offset @inv_op_mul               //  098 -> Func * Int
+    dq Offset @inv_op_mul               //  099 -> Func * Str
+    dq Offset @inv_op_mul               //  100 -> Func * Func
+    dq Offset @inv_op_mul               //  101 -> Func * Array
+
+  { Array -> }
+    dq Offset @inv_op_mul               //  102 -> Array * None
+    dq Offset @inv_op_mul               //  103 -> Array * Bool
+    dq Offset @inv_op_mul               //  104 -> Array * Int
+    dq Offset @inv_op_mul               //  105 -> Array * Str
+    dq Offset @inv_op_mul               //  106 -> Array * Func
+    dq Offset @inv_op_mul               //  107 -> Array * Array
+
+{ Operador: Div }
+  { None -> }
+    dq Offset @inv_op_div               //  108 -> None / None
+    dq Offset @inv_op_div               //  109 -> None / Bool
+    dq Offset @inv_op_div               //  110 -> None / Int
+    dq Offset @inv_op_div               //  111 -> None / Str
+    dq Offset @inv_op_div               //  112 -> None / Func
+    dq Offset @inv_op_div               //  113 -> None / Array
+
+  { Bool -> }
+    dq Offset @inv_op_div               //  114 -> Bool / None
+    dq Offset @inv_op_div               //  115 -> Bool / Bool
+    dq Offset @inv_op_div               //  116 -> Bool / Int
+    dq Offset @inv_op_div               //  117 -> Bool / Str
+    dq Offset @inv_op_div               //  118 -> Bool / Func
+    dq Offset @inv_op_div               //  119 -> Bool / Array
+
+  { Int -> }
+    dq Offset @inv_op_div               //  120 -> Int / None
+    dq Offset @inv_op_div               //  121 -> Int / Bool
+    dq Offset @div_int_int              //  122 -> Int / Int
+    dq Offset @inv_op_div               //  123 -> Int / Str
+    dq Offset @inv_op_div               //  124 -> Int / Func
+    dq Offset @inv_op_div               //  125 -> Int / Array
+
+  { Str -> }
+    dq Offset @inv_op_div               //  126 -> Str / None
+    dq Offset @inv_op_div               //  127 -> Str / Bool
+    dq Offset @inv_op_div               //  128 -> Str / Int
+    dq Offset @inv_op_div               //  129 -> Str / Str
+    dq Offset @inv_op_div               //  130 -> Str / Func
+    dq Offset @inv_op_div               //  131 -> Str / Array
+
+  { Func -> }
+    dq Offset @inv_op_div               //  132 -> Func / None
+    dq Offset @inv_op_div               //  133 -> Func / Bool
+    dq Offset @inv_op_div               //  134 -> Func / Int
+    dq Offset @inv_op_div               //  135 -> Func / Str
+    dq Offset @inv_op_div               //  136 -> Func / Func
+    dq Offset @inv_op_div               //  137 -> Func / Array
+
+  { Array -> }
+    dq Offset @inv_op_div               //  138 -> Array / None
+    dq Offset @inv_op_div               //  139 -> Array / Bool
+    dq Offset @inv_op_div               //  140 -> Array / Int
+    dq Offset @inv_op_div               //  141 -> Array / Str
+    dq Offset @inv_op_div               //  142 -> Array / Func
+    dq Offset @inv_op_div               //  143 -> Array / Array
+
+{ Operador: Rem }
+
+  { None -> }
+    dq Offset @inv_op_rem               //  144 -> None % None
+    dq Offset @inv_op_rem               //  145 -> None % Bool
+    dq Offset @inv_op_rem               //  146 -> None % Int
+    dq Offset @inv_op_rem               //  147 -> None % Str
+    dq Offset @inv_op_rem               //  148 -> None % Func
+    dq Offset @inv_op_rem               //  149 -> None % Array
+
+  { Bool -> }
+    dq Offset @inv_op_rem               //  150 -> Bool % None
+    dq Offset @inv_op_rem               //  151 -> Bool % Bool
+    dq Offset @inv_op_rem               //  152 -> Bool % Int
+    dq Offset @inv_op_rem               //  153 -> Bool % Str
+    dq Offset @inv_op_rem               //  154 -> Bool % Func
+    dq Offset @inv_op_rem               //  155 -> Bool % Array
+
+  { Int -> }
+    dq Offset @inv_op_rem               //  156 -> Int % None
+    dq Offset @inv_op_rem               //  157 -> Int % Bool
+    dq Offset @rem_int_int              //  158 -> Int % Int
+    dq Offset @inv_op_rem               //  159 -> Int % Str
+    dq Offset @inv_op_rem               //  160 -> Int % Func
+    dq Offset @inv_op_rem               //  161 -> Int % Array
+
+  { Str -> }
+    dq Offset @inv_op_rem               //  162 -> Str % None
+    dq Offset @inv_op_rem               //  163 -> Str % Bool
+    dq Offset @inv_op_rem               //  164 -> Str % Int
+    dq Offset @inv_op_rem               //  165 -> Str % Str
+    dq Offset @inv_op_rem               //  166 -> Str % Func
+    dq Offset @inv_op_rem               //  167 -> Str % Array
+
+  { Func -> }
+    dq Offset @inv_op_rem               //  168 -> Func % None
+    dq Offset @inv_op_rem               //  169 -> Func % Bool
+    dq Offset @inv_op_rem               //  170 -> Func % Int
+    dq Offset @inv_op_rem               //  171 -> Func % Str
+    dq Offset @inv_op_rem               //  172 -> Func % Func
+    dq Offset @inv_op_rem               //  173 -> Func % Array
+
+  { Array -> }
+    dq Offset @inv_op_rem               //  174 -> Array % None
+    dq Offset @inv_op_rem               //  175 -> Array % Bool
+    dq Offset @inv_op_rem               //  176 -> Array % Int
+    dq Offset @inv_op_rem               //  177 -> Array % Str
+    dq Offset @inv_op_rem               //  178 -> Array % Func
+    dq Offset @inv_op_rem               //  179 -> Array % Array
+
+{ Operador: Eq }
+
+  { None -> }
+    dq Offset @ret_true                 //  180 -> None == None
+    dq Offset @ret_false                //  181 -> None == Bool
+    dq Offset @ret_false                //  182 -> None == Int
+    dq Offset @ret_false                //  183 -> None == Str
+    dq Offset @ret_false                //  184 -> None == Func
+    dq Offset @ret_false                //  185 -> None == Array
+
+  { Bool -> }
+    dq Offset @ret_false                //  186 -> Bool == None
+    dq Offset @eq_bool_bool             //  187 -> Bool == Bool
+    dq Offset @ret_false                //  188 -> Bool == Int
+    dq Offset @ret_false                //  189 -> Bool == Str
+    dq Offset @ret_false                //  190 -> Bool == Func
+    dq Offset @ret_false                //  191 -> Bool == Array
+
+  { Int -> }
+    dq Offset @ret_false                //  192 -> Int == None
+    dq Offset @ret_false                //  193 -> Int == Bool
+    dq Offset @eq_int_int               //  194 -> Int == Int
+    dq Offset @ret_false                //  195 -> Int == Str
+    dq Offset @ret_false                //  196 -> Int == Func
+    dq Offset @ret_false                //  197 -> Int == Array
+
+  { Str -> }
+    dq Offset @ret_false                //  198 -> Str == None
+    dq Offset @ret_false                //  199 -> Str == Bool
+    dq Offset @ret_false                //  200 -> Str == Int
+    dq Offset cInvEq_Str_Str            //  201 -> Str == Str
+    dq Offset @ret_false                //  202 -> Str == Func
+    dq Offset @ret_false                //  203 -> Str == Array
+
+  { Func -> }
+    dq Offset @ret_false                //  204 -> Func == None
+    dq Offset @ret_false                //  205 -> Func == Bool
+    dq Offset @ret_false                //  206 -> Func == Int
+    dq Offset @ret_false                //  207 -> Func == Str
+    dq Offset cInvEq_Func_Func,         //  208 -> Func == Func
+    dq Offset @ret_false                //  209 -> Func == Array
+
+  { Array -> }
+    dq Offset @ret_false                //  210 -> Array == None
+    dq Offset @ret_false                //  211 -> Array == Bool
+    dq Offset @ret_false                //  212 -> Array == Int
+    dq Offset @ret_false                //  213 -> Array == Str
+    dq Offset @ret_false                //  214 -> Array == Func
+    dq Offset cInvEq_Array_Array,       //  215 -> Array == Array
+
+{ Operador: Neq }
+
+  { None -> }
+    dq Offset @ret_false                //  216 -> None != None
+    dq Offset @ret_true                 //  217 -> None != Bool
+    dq Offset @ret_true                 //  218 -> None != Int
+    dq Offset @ret_true                 //  219 -> None != Str
+    dq Offset @ret_true                 //  220 -> None != Func
+    dq Offset @ret_true                 //  221 -> None != Array
+
+  { Bool -> }
+    dq Offset @ret_true                 //  222 -> Bool != None
+    dq Offset @neq_bool_bool            //  223 -> Bool != Bool
+    dq Offset @ret_true                 //  224 -> Bool != Int
+    dq Offset @ret_true                 //  225 -> Bool != Str
+    dq Offset @ret_true                 //  226 -> Bool != Func
+    dq Offset @ret_true                 //  227 -> Bool != Array
+
+  { Int -> }
+    dq Offset @ret_true                 //  228 -> Int != None
+    dq Offset @ret_true                 //  229 -> Int != Bool
+    dq Offset @neq_int_int              //  230 -> Int != Int
+    dq Offset @ret_true                 //  231 -> Int != Str
+    dq Offset @ret_true                 //  232 -> Int != Func
+    dq Offset @ret_true                 //  233 -> Int != Array
+
+  { Str -> }
+    dq Offset @ret_true                 //  234 -> Str != None
+    dq Offset @ret_true                 //  235 -> Str != Bool
+    dq Offset @ret_true                 //  236 -> Str != Int
+    dq Offset cInvNeq_Str_Str           //  237 -> Str != Str
+    dq Offset @ret_true                 //  238 -> Str != Func
+    dq Offset @ret_true                 //  239 -> Str != Array
+
+  { Func -> }
+    dq Offset @ret_true                 //  240 -> Func != None
+    dq Offset @ret_true                 //  241 -> Func != Bool
+    dq Offset @ret_true                 //  242 -> Func != Int
+    dq Offset @ret_true                 //  243 -> Func != Str
+    dq Offset cInvNeq_Func_Func         //  244 -> Func != Func
+    dq Offset @ret_true                 //  245 -> Func != Array
+
+  { Array -> }
+    dq Offset @ret_true                 //  246 -> Array != None
+    dq Offset @ret_true                 //  247 -> Array != Bool
+    dq Offset @ret_true                 //  248 -> Array != Int
+    dq Offset @ret_true                 //  249 -> Array != Str
+    dq Offset @ret_true                 //  250 -> Array != Func
+    dq Offset cInvNeq_Array_Array       //  251 -> Array != Array
+
+{ Operador: Lt }
+  { None -> }
+    dq Offset @inv_op_lt                //  252 -> None < None
+    dq Offset @inv_op_lt                //  253 -> None < Bool
+    dq Offset @inv_op_lt                //  254 -> None < Int
+    dq Offset @inv_op_lt                //  255 -> None < Str
+    dq Offset @inv_op_lt                //  256 -> None < Func
+    dq Offset @inv_op_lt                //  257 -> None < Array
+
+  { Bool -> }
+    dq Offset @inv_op_lt                //  258 -> Bool < None
+    dq Offset @lt_bool_bool             //  259 -> Bool < Bool
+    dq Offset @inv_op_lt                //  260 -> Bool < Int
+    dq Offset @inv_op_lt                //  261 -> Bool < Str
+    dq Offset @inv_op_lt                //  262 -> Bool < Func
+    dq Offset @inv_op_lt                //  263 -> Bool < Array
+
+  { Int -> }
+    dq Offset @inv_op_lt                //  264 -> Int < None
+    dq Offset @inv_op_lt                //  265 -> Int < Bool
+    dq Offset @lt_int_int               //  266 -> Int < Int
+    dq Offset @inv_op_lt                //  267 -> Int < Str
+    dq Offset @inv_op_lt                //  268 -> Int < Func
+    dq Offset @inv_op_lt                //  269 -> Int < Array
+
+  { Str -> }
+    dq Offset @inv_op_lt                //  270 -> Str < None
+    dq Offset @inv_op_lt                //  271 -> Str < Bool
+    dq Offset @inv_op_lt                //  272 -> Str < Int
+    dq Offset cInvLt_Str_Str,           //  273 -> Str < Str
+    dq Offset @inv_op_lt                //  274 -> Str < Func
+    dq Offset @inv_op_lt                //  275 -> Str < Array
+
+  { Func -> }
+    dq Offset @inv_op_lt                //  276 -> Func < None
+    dq Offset @inv_op_lt                //  277 -> Func < Bool
+    dq Offset @inv_op_lt                //  278 -> Func < Int
+    dq Offset @inv_op_lt                //  279 -> Func < Str
+    dq Offset @inv_op_lt                //  280 -> Func < Func
+    dq Offset @inv_op_lt                //  281 -> Func < Array
+
+  { Array -> }
+    dq Offset @inv_op_lt                //  282 -> Array < None
+    dq Offset @inv_op_lt                //  283 -> Array < Bool
+    dq Offset @inv_op_lt                //  284 -> Array < Int
+    dq Offset @inv_op_lt                //  285 -> Array < Str
+    dq Offset @inv_op_lt                //  286 -> Array < Func
+    dq Offset @inv_op_lt                //  287 -> Array < Array
+
+{ Operador: Gt }
+
+  { None -> }
+    dq Offset @inv_op_gt                //  288 -> None > None
+    dq Offset @inv_op_gt                //  289 -> None > Bool
+    dq Offset @inv_op_gt                //  290 -> None > Int
+    dq Offset @inv_op_gt                //  291 -> None > Str
+    dq Offset @inv_op_gt                //  292 -> None > Func
+    dq Offset @inv_op_gt                //  293 -> None > Array
+
+  { Bool -> }
+    dq Offset @inv_op_gt                //  294 -> Bool > None
+    dq Offset @gt_bool_bool             //  295 -> Bool > Bool
+    dq Offset @inv_op_gt                //  296 -> Bool > Int
+    dq Offset @inv_op_gt                //  297 -> Bool > Str
+    dq Offset @inv_op_gt                //  298 -> Bool > Func
+    dq Offset @inv_op_gt                //  299 -> Bool > Array
+
+  { Int -> }
+    dq Offset @inv_op_gt                //  300 -> Int > None
+    dq Offset @inv_op_gt                //  301 -> Int > Bool
+    dq Offset @gt_int_int               //  302 -> Int > Int
+    dq Offset @inv_op_gt                //  303 -> Int > Str
+    dq Offset @inv_op_gt                //  304 -> Int > Func
+    dq Offset @inv_op_gt                //  305 -> Int > Array
+
+  { Str -> }
+    dq Offset @inv_op_gt                //  306 -> Str > None
+    dq Offset @inv_op_gt                //  307 -> Str > Bool
+    dq Offset @inv_op_gt                //  308 -> Str > Int
+    dq Offset cInvGt_Str_Str            //  309 -> Str > Str
+    dq Offset @inv_op_gt                //  310 -> Str > Func
+    dq Offset @inv_op_gt                //  311 -> Str > Array
+
+  { Func -> }
+    dq Offset @inv_op_gt                //  312 -> Func > None
+    dq Offset @inv_op_gt                //  313 -> Func > Bool
+    dq Offset @inv_op_gt                //  314 -> Func > Int
+    dq Offset @inv_op_gt                //  315 -> Func > Str
+    dq Offset @inv_op_gt                //  316 -> Func > Func
+    dq Offset @inv_op_gt                //  317 -> Func > Array
+
+  { Array -> }
+    dq Offset @inv_op_gt                //  318 -> Array > None
+    dq Offset @inv_op_gt                //  319 -> Array > Bool
+    dq Offset @inv_op_gt                //  320 -> Array > Int
+    dq Offset @inv_op_gt                //  321 -> Array > Str
+    dq Offset @inv_op_gt                //  322 -> Array > Func
+    dq Offset @inv_op_gt                //  323 -> Array > Array
+
+{ Operador: Lte }
+
+  { None -> }
+    dq Offset @inv_op_lte               //  324 -> None <= None
+    dq Offset @inv_op_lte               //  325 -> None <= Bool
+    dq Offset @inv_op_lte               //  326 -> None <= Int
+    dq Offset @inv_op_lte               //  327 -> None <= Str
+    dq Offset @inv_op_lte               //  328 -> None <= Func
+    dq Offset @inv_op_lte               //  329 -> None <= Array
+
+  { Bool -> }
+    dq Offset @inv_op_lte               //  330 -> Bool <= None
+    dq Offset @lte_bool_bool            //  331 -> Bool <= Bool
+    dq Offset @inv_op_lte               //  332 -> Bool <= Int
+    dq Offset @inv_op_lte               //  333 -> Bool <= Str
+    dq Offset @inv_op_lte               //  334 -> Bool <= Func
+    dq Offset @inv_op_lte               //  335 -> Bool <= Array
+
+  { Int -> }
+    dq Offset @inv_op_lte               //  336 -> Int <= None
+    dq Offset @inv_op_lte               //  337 -> Int <= Bool
+    dq Offset @lte_int_int              //  338 -> Int <= Int
+    dq Offset @inv_op_lte               //  339 -> Int <= Str
+    dq Offset @inv_op_lte               //  340 -> Int <= Func
+    dq Offset @inv_op_lte               //  341 -> Int <= Array
+
+  { Str -> }
+    dq Offset @inv_op_lte               //  342 -> Str <= None
+    dq Offset @inv_op_lte               //  343 -> Str <= Bool
+    dq Offset @inv_op_lte               //  344 -> Str <= Int
+    dq Offset cInvLte_Str_Str,          //  345 -> Str <= Str
+    dq Offset @inv_op_lte               //  346 -> Str <= Func
+    dq Offset @inv_op_lte               //  347 -> Str <= Array
+
+  { Func -> }
+    dq Offset @inv_op_lte               //  348 -> Func <= None
+    dq Offset @inv_op_lte               //  349 -> Func <= Bool
+    dq Offset @inv_op_lte               //  350 -> Func <= Int
+    dq Offset @inv_op_lte               //  351 -> Func <= Str
+    dq Offset @inv_op_lte               //  352 -> Func <= Func
+    dq Offset @inv_op_lte               //  353 -> Func <= Array
+
+  { Array -> }
+    dq Offset @inv_op_lte               //  354 -> Array <= None
+    dq Offset @inv_op_lte               //  355 -> Array <= Bool
+    dq Offset @inv_op_lte               //  356 -> Array <= Int
+    dq Offset @inv_op_lte               //  357 -> Array <= Str
+    dq Offset @inv_op_lte               //  358 -> Array <= Func
+    dq Offset @inv_op_lte               //  359 -> Array <= Array
+
+{ Operador: Gte }
+
+  { None -> }
+    dq Offset @inv_op_gte               //  360 -> None >= None
+    dq Offset @inv_op_gte               //  361 -> None >= Bool
+    dq Offset @inv_op_gte               //  362 -> None >= Int
+    dq Offset @inv_op_gte               //  363 -> None >= Str
+    dq Offset @inv_op_gte               //  364 -> None >= Func
+    dq Offset @inv_op_gte               //  365 -> None >= Array
+
+  { Bool -> }
+    dq Offset @inv_op_gte               //  366 -> Bool >= None
+    dq Offset @gte_bool_bool            //  367 -> Bool >= Bool
+    dq Offset @inv_op_gte               //  368 -> Bool >= Int
+    dq Offset @inv_op_gte               //  369 -> Bool >= Str
+    dq Offset @inv_op_gte               //  370 -> Bool >= Func
+    dq Offset @inv_op_gte               //  371 -> Bool >= Array
+
+  { Int -> }
+    dq Offset @inv_op_gte               //  372 -> Int >= None
+    dq Offset @inv_op_gte               //  373 -> Int >= Bool
+    dq Offset @gte_int_int              //  374 -> Int >= Int
+    dq Offset @inv_op_gte               //  375 -> Int >= Str
+    dq Offset @inv_op_gte               //  376 -> Int >= Func
+    dq Offset @inv_op_gte               //  377 -> Int >= Array
+
+  { Str -> }
+    dq Offset @inv_op_gte               //  378 -> Str >= None
+    dq Offset @inv_op_gte               //  379 -> Str >= Bool
+    dq Offset @inv_op_gte               //  380 -> Str >= Int
+    dq Offset cInvGte_Str_Str           //  381 -> Str >= Str
+    dq Offset @inv_op_gte               //  382 -> Str >= Func
+    dq Offset @inv_op_gte               //  383 -> Str >= Array
+
+  { Func -> }
+    dq Offset @inv_op_gte               //  384 -> Func >= None
+    dq Offset @inv_op_gte               //  385 -> Func >= Bool
+    dq Offset @inv_op_gte               //  386 -> Func >= Int
+    dq Offset @inv_op_gte               //  387 -> Func >= Str
+    dq Offset @inv_op_gte               //  388 -> Func >= Func
+    dq Offset @inv_op_gte               //  389 -> Func >= Array
+
+  { Array -> }
+    dq Offset @inv_op_gte               //  390 -> Array >= None
+    dq Offset @inv_op_gte               //  391 -> Array >= Bool
+    dq Offset @inv_op_gte               //  392 -> Array >= Int
+    dq Offset @inv_op_gte               //  393 -> Array >= Str
+    dq Offset @inv_op_gte               //  394 -> Array >= Func
+    dq Offset @inv_op_gte               //  395 -> Array >= Array
 
 { Operador: And }
 
-procedure cInvAnd_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { None -> }
+    dq Offset @inv_op_and               //  396 -> None && None
+    dq Offset @inv_op_and               //  397 -> None && Bool
+    dq Offset @inv_op_and               //  398 -> None && Int
+    dq Offset @inv_op_and               //  399 -> None && Str
+    dq Offset @inv_op_and               //  400 -> None && Func
+    dq Offset @inv_op_and               //  401 -> None && Array
 
-procedure cInvAnd_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Bool -> }
+    dq Offset @inv_op_and               //  402 -> Bool && None
+    dq Offset @and_bool_bool            //  403 -> Bool && Bool
+    dq Offset @inv_op_and               //  404 -> Bool && Int
+    dq Offset @inv_op_and               //  405 -> Bool && Str
+    dq Offset @inv_op_and               //  406 -> Bool && Func
+    dq Offset @inv_op_and               //  407 -> Bool && Array
 
-procedure cInvAnd_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Int -> }
+    dq Offset @inv_op_and               //  408 -> Int && None
+    dq Offset @inv_op_and               //  409 -> Int && Bool
+    dq Offset @inv_op_and               //  410 -> Int && Int
+    dq Offset @inv_op_and               //  411 -> Int && Str
+    dq Offset @inv_op_and               //  412 -> Int && Func
+    dq Offset @inv_op_and               //  413 -> Int && Array
 
-procedure cInvAnd_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Str -> }
+    dq Offset @inv_op_and               //  414 -> Str && None
+    dq Offset @inv_op_and               //  415 -> Str && Bool
+    dq Offset @inv_op_and               //  416 -> Str && Int
+    dq Offset @inv_op_and               //  417 -> Str && Str
+    dq Offset @inv_op_and               //  418 -> Str && Func
+    dq Offset @inv_op_and               //  419 -> Str && Array
 
-procedure cInvAnd_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Func -> }
+    dq Offset @inv_op_and               //  420 -> Func && None
+    dq Offset @inv_op_and               //  421 -> Func && Bool
+    dq Offset @inv_op_and               //  422 -> Func && Int
+    dq Offset @inv_op_and               //  423 -> Func && Str
+    dq Offset @inv_op_and               //  424 -> Func && Func
+    dq Offset @inv_op_and               //  425 -> Func && Array
 
-procedure cInvAnd_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool and APars[1].vBool);
-end;
-
-procedure cInvAnd_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool and (APars[1].vInt <> 0));
-end;
-
-procedure cInvAnd_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool and
-    StrToBoolDef(LString(APars[1].vStr), False));
-end;
-
-procedure cInvAnd_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vInt <> 0) and APars[1].vBool);
-end;
-
-procedure cInvAnd_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, APars[0].vInt and APars[1].vInt);
-end;
-
-procedure cInvAnd_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrAndStr(Int64ToLString(APars[1].vInt), LString(APars[1].vStr)));
-end;
-
-procedure cInvAnd_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrAndStr(LString(APars[0].vStr), cs_Bool[APars[1].vBool]));
-end;
-
-procedure cInvAnd_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrAndStr(LString(APars[0].vStr), Int64ToLString(APars[1].vInt)));
-end;
-
-procedure cInvAnd_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrAndStr(LString(APars[0].vStr), LString(APars[1].vStr)));
-end;
-
-procedure cInvAnd_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
-
-procedure cInvAnd_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { Array -> }
+    dq Offset @inv_op_and               //  426 -> Array && None
+    dq Offset @inv_op_and               //  427 -> Array && Bool
+    dq Offset @inv_op_and               //  428 -> Array && Int
+    dq Offset @inv_op_and               //  429 -> Array && Str
+    dq Offset @inv_op_and               //  430 -> Array && Func
+    dq Offset @inv_op_and               //  431 -> Array && Array
 
 { Operador: Or }
 
-procedure cInvOr_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, False);
-end;
+  { None -> }
+    dq Offset @inv_op_or                //  432 -> None || None
+    dq Offset @inv_op_or                //  433 -> None || Bool
+    dq Offset @inv_op_or                //  434 -> None || Int
+    dq Offset @inv_op_or                //  435 -> None || Str
+    dq Offset @inv_op_or                //  436 -> None || Func
+    dq Offset @inv_op_or                //  437 -> None || Array
 
-procedure cInvOr_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[1].vBool);
-end;
+  { Bool -> }
+    dq Offset @inv_op_or                //  438 -> Bool || None
+    dq Offset @or_bool_bool             //  439 -> Bool || Bool
+    dq Offset @inv_op_or                //  440 -> Bool || Int
+    dq Offset @inv_op_or                //  441 -> Bool || Str
+    dq Offset @inv_op_or                //  442 -> Bool || Func
+    dq Offset @inv_op_or                //  443 -> Bool || Array
 
-procedure cInvOr_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, APars[1].vInt);
-end;
+  { Int -> }
+    dq Offset @inv_op_or                //  444 -> Int || None
+    dq Offset @inv_op_or                //  445 -> Int || Bool
+    dq Offset @inv_op_or                //  446 -> Int || Int
+    dq Offset @inv_op_or                //  447 -> Int || Str
+    dq Offset @inv_op_or                //  448 -> Int || Func
+    dq Offset @inv_op_or                //  449 -> Int || Array
 
-procedure cInvOr_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult, LString(APars[1].vStr));
-end;
+  { Str -> }
+    dq Offset @inv_op_or                //  450 -> Str || None
+    dq Offset @inv_op_or                //  451 -> Str || Bool
+    dq Offset @inv_op_or                //  452 -> Str || Int
+    dq Offset @inv_op_or                //  453 -> Str || Str
+    dq Offset @inv_op_or                //  454 -> Str || Func
+    dq Offset @inv_op_or                //  455 -> Str || Array
 
-procedure cInvOr_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsFunctionBy(AResult, @APars[1]);
-end;
+  { Func -> }
+    dq Offset @inv_op_or                //  456 -> Func || None
+    dq Offset @inv_op_or                //  457 -> Func || Bool
+    dq Offset @inv_op_or                //  458 -> Func || Int
+    dq Offset @inv_op_or                //  459 -> Func || Str
+    dq Offset @inv_op_or                //  460 -> Func || Func
+    dq Offset @inv_op_or                //  461 -> Func || Array
 
-procedure cInvOr_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[1].vArr <> nil);
-end;
-
-procedure cInvOr_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool);
-end;
-
-procedure cInvOr_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool or APars[1].vBool);
-end;
-
-procedure cInvOr_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool or (APars[1].vInt <> 0));
-end;
-
-procedure cInvOr_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrOrStr(BoolToLString(APars[0].vBool), LString(APars[1].vStr)));
-end;
-
-procedure cInvOr_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool or (APars[1].vFn <> nil));
-end;
-
-procedure cInvOr_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vBool or (APars[1].vArr <> nil));
-end;
-
-procedure cInvOr_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, APars[0].vInt);
-end;
-
-procedure cInvOr_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vInt <> 0) or APars[1].vBool);
-end;
-
-procedure cInvOr_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, APars[0].vInt or APars[1].vInt);
-end;
-
-procedure cInvOr_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrOrStr(Int64ToLString(APars[0].vInt), LString(APars[1].vStr)));
-end;
-
-procedure cInvOr_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vInt <> 0) or (APars[1].vFn <> nil));
-end;
-
-procedure cInvOr_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vInt <> 0) or (APars[1].vArr <> nil));
-end;
-
-procedure cInvOr_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, StrToBoolDef(LString(APars[0].vStr), False));
-end;
-
-procedure cInvOr_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult, StrOrStr(LString(APars[0].vStr),
-    cs_Bool[APars[1].vBool]));
-end;
-
-procedure cInvOr_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult, StrOrStr(LString(APars[0].vStr),
-    Int64ToLString(APars[1].vInt)));
-end;
-
-procedure cInvOr_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult, StrOrStr(LString(APars[0].vStr),
-    LString(APars[1].vStr)));
-end;
-
-procedure cInvOr_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, StrToBoolDef(LString(APars[0].vStr), False)
-    or (APars[1].vFn <> nil));
-end;
-
-procedure cInvOr_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, StrToBoolDef(LString(APars[0].vStr), False)
-    or (APars[1].vArr <> nil));
-end;
-
-procedure cInvOr_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vFn <> nil);
-end;
-
-procedure cInvOr_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vFn <> nil) or APars[1].vBool);
-end;
-
-procedure cInvOr_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vFn <> nil)
-    and (APars[1].vInt <> 0));
-end;
-
-procedure cInvOr_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vFn <> nil)
-    or StrToBoolDef(LString(APars[1].vStr), False));
-end;
-
-procedure cInvOr_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vFn <> nil)
-    or (APars[1].vFn <> nil));
-end;
-
-procedure cInvOr_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vFn <> nil)
-    or (APars[1].vArr <> nil));
-end;
-
-procedure cInvOr_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, APars[0].vArr <> nil);
-end;
-
-procedure cInvOr_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vArr <> nil) and APars[1].vBool);
-end;
-
-procedure cInvOr_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vArr <> nil) or (APars[1].vInt <> 0));
-end;
-
-procedure cInvOr_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vArr <> nil) or
-    StrToBoolDef(LString(APars[1].vStr), False));
-end;
-
-procedure cInvOr_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vArr <> nil)
-    or (APars[1].vFn <> nil));
-end;
-
-procedure cInvOr_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsBool(AResult, (APars[0].vArr <> nil) or (APars[1].vArr <> nil));
-end;
+  { Array -> }
+    dq Offset @inv_op_or                //  462 -> Array || None
+    dq Offset @inv_op_or                //  463 -> Array || Bool
+    dq Offset @inv_op_or                //  464 -> Array || Int
+    dq Offset @inv_op_or                //  465 -> Array || Str
+    dq Offset @inv_op_or                //  466 -> Array || Func
+    dq Offset @inv_op_or                //  467 -> Array || Array
 
 { Operador: Power }
 
-procedure cInvPower_None_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_None_None');
-end;
+  { None -> }
+    dq Offset @inv_op_power             //  468 -> None ** None
+    dq Offset @inv_op_power             //  469 -> None ** Bool
+    dq Offset @inv_op_power             //  470 -> None ** Int
+    dq Offset @inv_op_power             //  471 -> None ** Str
+    dq Offset @inv_op_power             //  472 -> None ** Func
+    dq Offset @inv_op_power             //  473 -> None ** Array
 
-procedure cInvPower_None_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_None_Bool');
-end;
+  { Bool -> }
+    dq Offset @inv_op_power             //  474 -> Bool ** None
+    dq Offset @inv_op_power             //  475 -> Bool ** Bool
+    dq Offset @inv_op_power             //  476 -> Bool ** Int
+    dq Offset @inv_op_power             //  477 -> Bool ** Str
+    dq Offset @inv_op_power             //  478 -> Bool ** Func
+    dq Offset @inv_op_power             //  479 -> Bool ** Array
 
-procedure cInvPower_None_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_None_Int');
-end;
+  { Int -> }
+    dq Offset @inv_op_power             //  480 -> Int ** None
+    dq Offset @inv_op_power             //  481 -> Int ** Bool
+    dq Offset cInvPower_Int_Int,        //  482 -> Int ** Int
+    dq Offset @inv_op_power             //  483 -> Int ** Str
+    dq Offset @inv_op_power             //  484 -> Int ** Func
+    dq Offset @inv_op_power             //  485 -> Int ** Array
 
-procedure cInvPower_None_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_None_Str');
-end;
+  { Str -> }
+    dq Offset @inv_op_power             //  486 -> Str ** None
+    dq Offset @inv_op_power             //  487 -> Str ** Bool
+    dq Offset @inv_op_power             //  488 -> Str ** Int
+    dq Offset @inv_op_power             //  489 -> Str ** Str
+    dq Offset @inv_op_power             //  490 -> Str ** Func
+    dq Offset @inv_op_power             //  491 -> Str ** Array
 
-procedure cInvPower_None_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_None_Func');
-end;
+  { Func -> }
+    dq Offset @inv_op_power             //  492 -> Func ** None
+    dq Offset @inv_op_power             //  493 -> Func ** Bool
+    dq Offset @inv_op_power             //  494 -> Func ** Int
+    dq Offset @inv_op_power             //  495 -> Func ** Str
+    dq Offset @inv_op_power             //  496 -> Func ** Func
+    dq Offset @inv_op_power             //  497 -> Func ** Array
 
-procedure cInvPower_None_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_None_Array');
-end;
-
-procedure cInvPower_Bool_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Bool_None');
-end;
-
-procedure cInvPower_Bool_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Bool_Bool');
-end;
-
-procedure cInvPower_Bool_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Bool_Int');
-end;
-
-procedure cInvPower_Bool_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Bool_Str');
-end;
-
-procedure cInvPower_Bool_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Bool_Func');
-end;
-
-procedure cInvPower_Bool_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Bool_Array');
-end;
-
-procedure cInvPower_Int_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Int_None');
-end;
-
-procedure cInvPower_Int_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Int_Bool');
-end;
-
-procedure cInvPower_Int_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsInteger(AResult, IPower(APars[0].vInt, APars[1].vInt));
-end;
-
-procedure cInvPower_Int_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrPowerStr(Int64ToLString(APars[0].vInt), LString(APars[1].vStr)));
-end;
-
-procedure cInvPower_Int_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Int_Func');
-end;
-
-procedure cInvPower_Int_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Int_Array');
-end;
-
-procedure cInvPower_Str_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Str_None');
-end;
-
-procedure cInvPower_Str_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrPowerStr(LString(APars[0].vStr), cs_Bool[APars[1].vBool]));
-end;
-
-procedure cInvPower_Str_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrPowerStr(LString(APars[0].vStr), Int64ToLString(APars[1].vInt)));
-end;
-
-procedure cInvPower_Str_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  FennerData_SetAsString(AResult,
-    StrPowerStr(LString(APars[0].vStr), LString(APars[1].vStr)));
-end;
-
-procedure cInvPower_Str_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Str_Func');
-end;
-
-procedure cInvPower_Str_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Str_Array');
-end;
-
-procedure cInvPower_Func_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Func_None');
-end;
-
-procedure cInvPower_Func_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Func_Bool');
-end;
-
-procedure cInvPower_Func_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Func_Int');
-end;
-
-procedure cInvPower_Func_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Func_Str');
-end;
-
-procedure cInvPower_Func_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Func_Func');
-end;
-
-procedure cInvPower_Func_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Func_Array');
-end;
-
-procedure cInvPower_Array_None(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Array_None');
-end;
-
-procedure cInvPower_Array_Bool(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Array_Bool');
-end;
-
-procedure cInvPower_Array_Int(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Array_Int');
-end;
-
-procedure cInvPower_Array_Str(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Array_Str');
-end;
-
-procedure cInvPower_Array_Func(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Array_Func');
-end;
-
-procedure cInvPower_Array_Array(APars: PFennerData;
-  var AResult: TFennerData);
-begin
-  Error_(APars, AResult, 'Power_Array_Array');
+  { Array -> }
+    dq Offset @inv_op_power             //  498 -> Array ** None
+    dq Offset @inv_op_power             //  499 -> Array ** Bool
+    dq Offset @inv_op_power             //  500 -> Array ** Int
+    dq Offset @inv_op_power             //  501 -> Array ** Str
+    dq Offset @inv_op_power             //  502 -> Array ** Func
+    dq Offset @inv_op_power             //  503 -> Array ** Array
 end;
 
 end.

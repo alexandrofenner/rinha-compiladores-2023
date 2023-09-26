@@ -41,54 +41,99 @@ uses
   sys.procs,
   sys.funcs,
   sys.utils,
-  engine.procs;
+  engine.procs,
+  engine.contextvalues;
+
+function _AsmRet_ecvcb_False: PEngineContextValueConstBool;
+  assembler; nostackframe;
+asm
+    mov rax, Offset c_EngCtxValueConstFalse
+end;
+
+function _AsmRet_ecvcb_True: PEngineContextValueConstBool;
+  assembler; nostackframe;
+asm
+    mov rax, Offset c_EngCtxValueConstTrue
+end;
 
 function tc_bool_bool_eq(const l, r: PEngineContextValueConstBool):
-  PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue = r.FConstValue));
+  PEngineContextValueConstBool; assembler; nostackframe;
+asm
+    mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
+    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    cmp cl, ch
+    je  _AsmRet_ecvcb_True
+    jmp _AsmRet_ecvcb_False
 end;
 
 function tc_bool_bool_neq(const l, r: PEngineContextValueConstBool):
-  PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue <> r.FConstValue));
+  PEngineContextValueConstBool; assembler; nostackframe;
+asm
+    mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
+    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    cmp cl, ch
+    je  _AsmRet_ecvcb_False
+    jmp _AsmRet_ecvcb_True
 end;
 
 function tc_bool_bool_lt(const l, r: PEngineContextValueConstBool):
-  PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue < r.FConstValue));
+  PEngineContextValueConstBool; assembler; nostackframe;
+asm
+    mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
+    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    cmp cl, ch
+    jl  _AsmRet_ecvcb_True
+    jmp _AsmRet_ecvcb_False
 end;
 
 function tc_bool_bool_gt(const l, r: PEngineContextValueConstBool):
-  PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue > r.FConstValue));
+  PEngineContextValueConstBool; assembler; nostackframe;
+asm
+    mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
+    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    cmp cl, ch
+    jg  _AsmRet_ecvcb_True
+    jmp _AsmRet_ecvcb_False
 end;
 
 function tc_bool_bool_lte(const l, r: PEngineContextValueConstBool):
-  PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue <= r.FConstValue));
+  PEngineContextValueConstBool; assembler; nostackframe;
+asm
+    mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
+    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    cmp cl, ch
+    jle _AsmRet_ecvcb_True
+    jmp _AsmRet_ecvcb_False
 end;
 
 function tc_bool_bool_gte(const l, r: PEngineContextValueConstBool):
-  PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue >= r.FConstValue));
+  PEngineContextValueConstBool; assembler; nostackframe;
+asm
+    mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
+    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    cmp cl, ch
+    jge _AsmRet_ecvcb_True
+    jmp _AsmRet_ecvcb_False
 end;
 
 function tc_bool_bool_and(const l, r: PEngineContextValueConstBool):
-  PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue and r.FConstValue));
+  PEngineContextValueConstBool; assembler; nostackframe;
+asm
+    mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
+    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    and cl, dh
+    jnz _AsmRet_ecvcb_True
+    jmp _AsmRet_ecvcb_False
 end;
 
 function tc_bool_bool_or(const l, r: PEngineContextValueConstBool):
-  PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue or r.FConstValue));
+  PEngineContextValueConstBool; assembler; nostackframe;
+asm
+    mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
+    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    or  cl, dh
+    jnz _AsmRet_ecvcb_True
+    jmp _AsmRet_ecvcb_False
 end;
 
 function tc_int_int_add(const l, r: PEngineContextValueConstInt):
@@ -112,7 +157,6 @@ function tc_int_int_mul(const l, r: PEngineContextValueConstInt):
 asm
     mov  rax, [rdi + TEngineContextValueConstInt.FConstValue]
     mov  rsi, [rsi + TEngineContextValueConstInt.FConstValue]
-
     imul rsi
     mov  rdi, rax
     jmp  EngineContextValueConstInt_Create
@@ -120,50 +164,92 @@ end;
 
 function tc_int_int_div(
   const l, r: PEngineContextValueConstInt): PEngineContextValueConstInt;
-begin
-  Exit(EngineContextValueConstInt_Create(l.FConstValue div r.FConstValue));
+  assembler; nostackframe;
+asm
+    mov  rax, [rdi + TEngineContextValueConstInt.FConstValue]
+    mov  rsi, [rsi + TEngineContextValueConstInt.FConstValue]
+    xor  rdx, rdx
+    idiv rsi
+    mov  rdi, rax
+    jmp  EngineContextValueConstInt_Create
 end;
 
 function tc_int_int_mod(
   const l, r: PEngineContextValueConstInt): PEngineContextValueConstInt;
-begin
-  Exit(EngineContextValueConstInt_Create(l.FConstValue mod r.FConstValue));
+  assembler; nostackframe;
+asm
+    mov  rax, [rdi + TEngineContextValueConstInt.FConstValue]
+    mov  rsi, [rsi + TEngineContextValueConstInt.FConstValue]
+    xor  rdx, rdx
+    idiv rsi
+    mov  rdi, rdx
+    jmp  EngineContextValueConstInt_Create
 end;
 
 function tc_int_int_Eq(
   const l, r: PEngineContextValueConstInt): PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue = r.FConstValue));
+  assembler; nostackframe;
+asm
+    mov  rdi, [rdi + TEngineContextValueConstInt.FConstValue]
+    mov  rsi, [rsi + TEngineContextValueConstInt.FConstValue]
+    cmp  rdi, rsi
+    je   _AsmRet_ecvcb_True
+    jmp  _AsmRet_ecvcb_False
 end;
 
 function tc_int_int_NEq(
   const l, r: PEngineContextValueConstInt): PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue <> r.FConstValue));
+  assembler; nostackframe;
+asm
+    mov  rdi, [rdi + TEngineContextValueConstInt.FConstValue]
+    mov  rsi, [rsi + TEngineContextValueConstInt.FConstValue]
+    cmp  rdi, rsi
+    je   _AsmRet_ecvcb_False
+    jmp  _AsmRet_ecvcb_True
 end;
 
 function tc_int_int_Lt(
   const l, r: PEngineContextValueConstInt): PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue < r.FConstValue));
+  assembler; nostackframe;
+asm
+    mov  rdi, [rdi + TEngineContextValueConstInt.FConstValue]
+    mov  rsi, [rsi + TEngineContextValueConstInt.FConstValue]
+    cmp  rdi, rsi
+    jl   _AsmRet_ecvcb_True
+    jmp  _AsmRet_ecvcb_False
 end;
 
 function tc_int_int_Gt(
   const l, r: PEngineContextValueConstInt): PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue > r.FConstValue));
+  assembler; nostackframe;
+asm
+    mov  rdi, [rdi + TEngineContextValueConstInt.FConstValue]
+    mov  rsi, [rsi + TEngineContextValueConstInt.FConstValue]
+    cmp  rdi, rsi
+    jg   _AsmRet_ecvcb_True
+    jmp  _AsmRet_ecvcb_False
 end;
 
 function tc_int_int_Lte(
   const l, r: PEngineContextValueConstInt): PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue <= r.FConstValue));
+  assembler; nostackframe;
+asm
+    mov  rdi, [rdi + TEngineContextValueConstInt.FConstValue]
+    mov  rsi, [rsi + TEngineContextValueConstInt.FConstValue]
+    cmp  rdi, rsi
+    jle  _AsmRet_ecvcb_True
+    jmp  _AsmRet_ecvcb_False
 end;
 
 function tc_int_int_Gte(
   const l, r: PEngineContextValueConstInt): PEngineContextValueConstBool;
-begin
-  Exit(EngineContextValueConstBool_Create(l.FConstValue >= r.FConstValue));
+  assembler; nostackframe;
+asm
+    mov  rdi, [rdi + TEngineContextValueConstInt.FConstValue]
+    mov  rsi, [rsi + TEngineContextValueConstInt.FConstValue]
+    cmp  rdi, rsi
+    jge  _AsmRet_ecvcb_True
+    jmp  _AsmRet_ecvcb_False
 end;
 
 function tc_int_int_Power(
