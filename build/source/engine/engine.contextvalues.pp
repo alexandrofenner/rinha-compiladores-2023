@@ -24,6 +24,7 @@ interface
 uses
   sys.types,
   sys.procs,
+  data.types,
   engine.consts,
   engine.types;
 
@@ -34,7 +35,18 @@ function EngineContextValueConstInt_Create(
 function EngineContextValueConstStr_Create(
   const AValue: LString): PEngineContextValueConstString; assembler;
 
+function EngineContextValueConstFun_Create(
+  const AValue: PEngineContextFunction): PEngineContextValueConstFunction;
+function EngineContextValueConstArray_Create(
+  const AValue: TArray<TFennerData>): PEngineContextValueConstArray;
+
+function EngineContextValueConst_CreateByFennerData(
+  const AValue: PFennerData): PEngineContextValue;
+
 implementation
+
+uses
+  err.classes;
 
 const
   cInt_Table: array[0..199] of TEngineContextValueConstInt = (
@@ -255,6 +267,7 @@ function EngineContextValueConstInt_Create(
   const AValue: Int64): PEngineContextValueConstInt; assembler; nostackframe;
 asm
     cmp rdi, 200
+    jnb @default
     mov rcx, Offset cInt_Table
 
     {$if SizeOf(TEngineContextValueConstInt) <> 16}
@@ -287,6 +300,40 @@ asm
     push rax
     call LStrCpy
     pop rax
+end;
+
+function EngineContextValueConstFun_Create(
+  const AValue: PEngineContextFunction): PEngineContextValueConstFunction;
+begin
+  Result := AllocMem(SizeOf(TEngineContextValueConstFunction));
+  Result.FConstValue := AValue;
+  Result.FBase.FTypeId := EngCtxValueTpId_ConstFunction;
+end;
+
+function EngineContextValueConstArray_Create(
+  const AValue: TArray<TFennerData>): PEngineContextValueConstArray;
+begin
+  Result := AllocMem(SizeOf(TEngineContextValueConstArray));
+  Result.FConstValue := AValue;
+  Result.FBase.FTypeId := EngCtxValueTpId_ConstArray;
+end;
+
+function EngineContextValueConst_CreateByFennerData(
+  const AValue: PFennerData): PEngineContextValue;
+begin
+  case AValue.vId of
+    //dttp_None = 0;
+    dttp_Bool: Exit(Pointer(EngineContextValueConstBool_Create(AValue.vBool)));
+    dttp_Int: Exit(Pointer(EngineContextValueConstInt_Create(AValue.vInt)));
+    dttp_Str: Exit(Pointer(EngineContextValueConstStr_Create(LString(AValue.vStr))));
+    dttp_Func:
+      case AValue.vId2 of
+        Id2_Func_Default:
+          Exit(Pointer(EngineContextValueConstFun_Create(AValue.vFn)));
+      end;
+    dttp_Array: Exit(Pointer(EngineContextValueConstArray_Create(AValue.vArr)));
+  end;
+  raise EInternalError.Create('7E35619920C4401D8420606A58649849');
 end;
 
 end.

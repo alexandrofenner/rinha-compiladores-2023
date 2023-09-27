@@ -267,49 +267,49 @@ asm
 
 @eq_bool_bool:
     mov al, [rdi + TFennerData.vBool]
-    mov ah, [rsi + TFennerData.vBool]
+    mov ah, [rdi + TFennerData.vBool + SizeOf(TFennerData)]
     cmp al, ah
     je @ret_true
     jmp @ret_false
 @neq_bool_bool:
     mov al, [rdi + TFennerData.vBool]
-    mov ah, [rsi + TFennerData.vBool]
+    mov ah, [rdi + TFennerData.vBool + SizeOf(TFennerData)]
     cmp al, ah
     jne @ret_true
     jmp @ret_false
 @lt_bool_bool:
     mov al, [rdi + TFennerData.vBool]
-    mov ah, [rsi + TFennerData.vBool]
+    mov ah, [rdi + TFennerData.vBool + SizeOf(TFennerData)]
     cmp al, ah
     jb @ret_true
     jmp @ret_false
 @gt_bool_bool:
     mov al, [rdi + TFennerData.vBool]
-    mov ah, [rsi + TFennerData.vBool]
+    mov ah, [rdi + TFennerData.vBool + SizeOf(TFennerData)]
     cmp al, ah
     ja @ret_true
     jmp @ret_false
 @lte_bool_bool:
     mov al, [rdi + TFennerData.vBool]
-    mov ah, [rsi + TFennerData.vBool]
+    mov ah, [rdi + TFennerData.vBool + SizeOf(TFennerData)]
     cmp al, ah
     jbe @ret_true
     jmp @ret_false
 @gte_bool_bool:
     mov al, [rdi + TFennerData.vBool]
-    mov ah, [rsi + TFennerData.vBool]
+    mov ah, [rdi + TFennerData.vBool + SizeOf(TFennerData)]
     cmp al, ah
     jbe @ret_true
     jmp @ret_false
 @and_bool_bool:
     mov al, [rdi + TFennerData.vBool]
-    mov ah, [rsi + TFennerData.vBool]
+    mov ah, [rdi + TFennerData.vBool + SizeOf(TFennerData)]
     and al, ah
     jz @ret_false
     jmp @ret_true
 @or_bool_bool:
     mov al, [rdi + TFennerData.vBool]
-    mov ah, [rsi + TFennerData.vBool]
+    mov ah, [rdi + TFennerData.vBool + SizeOf(TFennerData)]
     or al, ah
     jz @ret_false
     jmp @ret_true
@@ -321,7 +321,7 @@ asm
     jmp FennerData_SetAsInteger
 @sub_int_int:
     mov rcx, [rdi + TFennerData.vInt]
-    add rcx, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
+    sub rcx, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
     mov rdi, rsi
     mov rsi, rcx
     jmp FennerData_SetAsInteger
@@ -347,32 +347,32 @@ asm
     jmp FennerData_SetAsInteger
 @eq_int_int:
     mov rax, [rdi + TFennerData.vInt]
-    cmp rax, [rsi + TFennerData.vInt]
+    cmp rax, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
     je @ret_true
     jmp @ret_false
 @neq_int_int:
     mov rax, [rdi + TFennerData.vInt]
-    cmp rax, [rsi + TFennerData.vInt]
+    cmp rax, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
     jne @ret_true
     jmp @ret_false
 @lt_int_int:
     mov rax, [rdi + TFennerData.vInt]
-    cmp rax, [rsi + TFennerData.vInt]
+    cmp rax, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
     jl @ret_true
     jmp @ret_false
 @gt_int_int:
     mov rax, [rdi + TFennerData.vInt]
-    cmp rax, [rsi + TFennerData.vInt]
-    jl @ret_true
+    cmp rax, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
+    jg @ret_true
     jmp @ret_false
 @lte_int_int:
     mov rax, [rdi + TFennerData.vInt]
-    cmp rax, [rsi + TFennerData.vInt]
+    cmp rax, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
     jle @ret_true
     jmp @ret_false
 @gte_int_int:
     mov rax, [rdi + TFennerData.vInt]
-    cmp rax, [rsi + TFennerData.vInt]
+    cmp rax, [rdi + TFennerData.vInt + SizeOf(TFennerData)]
     jge @ret_true
     jmp @ret_false
 

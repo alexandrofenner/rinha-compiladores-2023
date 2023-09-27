@@ -53,7 +53,8 @@ uses
   engine.recursivecache_n,
 
   engine.optimize, engine.optimize_op2, engine.runner.executecontext,
-  engine.contextvalues, engine.validatefunc, engine.context;
+  engine.contextvalues, engine.validatefunc, engine.context, engine.decompiler,
+  engine.closureconvertion;
 
 procedure AppRun;
 var
@@ -64,6 +65,8 @@ begin
     LFileName := '/var/rinha/source.rinha';
 
   Scanner_Initialize(SysLoadStringFromFile(LFileName));
+//  WriteLn(TokenStack_ToString(gvTokens));
+
   EngineGlobal_Execute;
 end;
 

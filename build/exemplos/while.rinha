@@ -9,4 +9,4 @@ let teste_while = fn(n) =>
   r;
 };
 
-print(teste_while(10));  // Imprime 55
+print("while: ", teste_while(10));  // Imprime 55

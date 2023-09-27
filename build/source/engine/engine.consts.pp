@@ -59,6 +59,7 @@ const
   EngCtxFnFlgId_Recursive = 1;
   EngCtxFnFlgId_Prohibited_Cache = 2;
   EngCtxFnFlgId_Native = 4;
+  EngCtxFnFlgId_UseContextN = 8;
 
   {
     EngCtxFnFlgId_Recursive -> Indica que é uma função recursiva

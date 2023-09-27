@@ -56,6 +56,7 @@ uses
 function Scanner_TryRead(var AToken: TToken): Boolean; forward;
 procedure Validate_AutoTokens(var ATokens: TTokenStack); forward;
 procedure Validate_AutoTokensQuestion(var ATokens: TTokenStack); forward;
+procedure Validate_AutoTokens_p_Fn(var ATokens: TTokenStack); forward;
 
 var
   gvSource: PAnsiChar;
@@ -256,6 +257,7 @@ begin
   Scanner_ReadTokens;
   Validate_AutoTokensQuestion(gvTokens);
   Validate_AutoTokens(gvTokens);
+  Validate_AutoTokens_p_Fn(gvTokens);
 end;
 
 type
@@ -1388,6 +1390,71 @@ begin
       else
         Inc(i);
     end;
+end;
+
+procedure Validate_AutoTokens_p_Fn(var ATokens: TTokenStack);
+label lbNext;
+var
+  i, j, b, p: Integer;
+  Tk: PToken;
+  IdTk: Byte;
+  CanRemoveTks: Boolean;
+begin
+  i := (ATokens.Count - 1);
+  while (i > 0) do
+  begin
+    if ((ATokens.DynArray[i].Id = tk_pClose) and
+      (ATokens.DynArray[i - 1].Id = tk_bClose)) then
+    begin
+      j := (i - 2);
+      b := 1;
+      p := 1;
+      while (j >= 1) do
+      begin
+        Tk := ATokens.DynArray[j];
+        case Tk.Id of
+          tk_pOpen: Dec(p);
+          tk_bOpen: Dec(b);
+          tk_pClose: Inc(p);
+          tk_bClose: Inc(b);
+          tkrw_Function:
+            if ((p = 1) and (b = 0)) then
+            begin
+              IdTk := ATokens.DynArray[j - 1].Id;
+              if (IdTk = tk_pOpen) then
+              begin
+                if (j >= 2) then
+                  case ATokens.DynArray[j - 2].Id of
+                    tk_Identifier,
+                    tk_bClose,
+                    tk_Assign: CanRemoveTks := False;
+                    else
+                      CanRemoveTks := True;
+                  end
+                else
+                  CanRemoveTks := True;
+
+                if CanRemoveTks then
+                begin
+                  TokenStack_Delete(ATokens, i, 1);
+                  TokenStack_Delete(ATokens, (j - 1), 1);
+                end;
+                i := (j - 1);
+                goto lbNext;
+              end else
+              begin
+                i := (j - 1);
+                goto lbNext;
+              end;
+            end;
+        end;
+        Dec(j);
+      end;
+      i := j;
+    end else
+      Dec(i);
+lbNext: ;
+  end;
 end;
 
 procedure ValidateToken_Is(var AToken: TToken; const AId: Byte);

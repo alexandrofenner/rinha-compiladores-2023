@@ -198,7 +198,7 @@ begin
           _P^.LContextFunction.FMaxParamsCount);
 
       _P^.LTypeId := _P^.LContextFunction.FTypeId;
-      if (_P^.LTypeId = Id2_Func_Default) then
+      if (_P^.LTypeId = EngCtxFnTpId_None) then
       begin
         if (not EngineFunction_TryOptimize(_P^.LContextFunction^)) then
           EngineFunction_SetTypeId(_P^.LContextFunction^, EngCtxFnTpId_AST);

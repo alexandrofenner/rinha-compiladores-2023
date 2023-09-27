@@ -40,6 +40,7 @@ type
     FCount_Recursive: Integer;
     FCount_OtherFunctions: Integer;
     FCount_VarsN: Integer;
+    FCount_VarsRef: Integer;
     FCount_VarsGlobal: Integer;
 
     FCount_FnByVariable: Integer;
@@ -243,8 +244,14 @@ procedure efv_Value_ConstFunction(var ARObj: TEngineFunctionValidate;
 //@a:
 //    lea rax, [rdi + TEngineFunctionValidate.FCount_Recursive]
 //    inc dword ptr [rax]
+var
+  LFunction: PEngineContextFunction;
 begin
-  efv_Function(ARObj, PEngineContextValueFunction(AValue).FFunction);
+  LFunction := PEngineContextValueFunction(AValue).FFunction;
+  efv_Function(ARObj, LFunction);
+
+  if (LFunction.FFlags and EngCtxFnFlgId_UseContextN) <> 0 then
+    ARObj.FFlags := (ARObj.FFlags or EngCtxFnFlgId_UseContextN);
 end;
 
 procedure efv_Value_ConstArray(var ARObj: TEngineFunctionValidate;
@@ -279,9 +286,9 @@ begin
 end;
 
 procedure efv_Value_VariableRef(var ARObj: TEngineFunctionValidate;
-  AValue: PEngineContextValue); assembler; nostackframe;
-asm
-    { nop }
+  AValue: PEngineContextValue); //assembler; nostackframe;
+begin
+  Inc(ARObj.FCount_VarsRef);
 end;
 
 procedure efv_Value_Array(var ARObj: TEngineFunctionValidate;
@@ -438,8 +445,6 @@ procedure EngineFunctionValidate_Value(
   var ARObj: TEngineFunctionValidate; AValue: PEngineContextValue);
   assembler; nostackframe;
 asm
-    ret
-
     test rsi, rsi
     jz  AsmRet
 
@@ -494,9 +499,10 @@ begin
   LFlags := LRObj.FFlags;
   if (LRObj.FCount_Recursive > 0) then
     LFlags := (LFlags or EngCtxFnFlgId_Recursive);
-
   if (LRObj.FCount_VarsGlobal > 0) then
     LFlags := (LFlags or EngCtxFnFlgId_Prohibited_Cache);
+  if (LRObj.FCount_VarsRef > 0) then
+    LFlags := (LFlags or EngCtxFnFlgId_UseContextN);
 
   AFunction.FFlags := LFlags;
 end;

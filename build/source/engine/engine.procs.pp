@@ -85,6 +85,9 @@ function EngineContextValue_IsConst(var This: TEngineContextValue): Boolean;
 function EngineContextValue_StackIndex(var This: TEngineContextValue;
   var AItem: TEngineRunnerItem): Integer; assembler;
 
+function EngineContextValueConstFunction_Create(
+  const AFunction: PEngineContextFunction): PEngineContextValueFunction;
+
 function EngineContextValueFunction_Create(
   const AFunction: PEngineContextFunction;
   const AParams: TArray<PEngineContextValue>): PEngineContextValueFunction;
@@ -153,7 +156,7 @@ function EngineRunner_AddContext(var This: TEngineRunner;
   const AContext: PEngineContext; const ARunningId: Int64): Boolean;
 { </EngineRunner> }
 
-function ClosureVarsFirst: PEngineContextFunctionRefClosureVar; assembler;
+function ClosureVarsFirst: PEngineContextFunctionRefClosureVar; //assembler;
 
 procedure ClosureVarsAdd(const AItem: PEngineContextFunctionRefClosureVar);
 procedure ClosureVarsRemove(const AItem: PEngineContextFunctionRefClosureVar);
@@ -171,6 +174,7 @@ uses
   engine.checkrecursive,
   engine.recursivecache,
   engine.validatefunc,
+  engine.closureconvertion,
   engine.runner.executecontext;
 
 type
@@ -234,10 +238,8 @@ var
   gvClosureVarsLast: PEngineContextFunctionRefClosureVar;
 
 function ClosureVarsFirst: PEngineContextFunctionRefClosureVar;
-  assembler; nostackframe;
-asm
-    mov rax, Offset gvClosureVarsFirst
-    mov rax, [rax]
+begin
+  Exit(gvClosureVarsFirst);
 end;
 
 procedure ClosureVarsAdd(const AItem: PEngineContextFunctionRefClosureVar);
@@ -515,6 +517,7 @@ lb_P0: ;
     Inc(rCount);
   until False;
 
+  rCount := (LIndex - LStart);
   TokenStack_CopyBy(ASubTkStack, ATkStack, LStart, rCount);
   while ((ASubTkStack.Count > 0) and
     (ASubTkStack.DynArray[ASubTkStack.Count-1].Id = tk_SemiColon)) do
@@ -719,6 +722,13 @@ begin
   LTk := ATokenStack.DynArray[0];
   if (LTk.Id <> tk_RefValue_) then Exit(False);
   LValue := LTk.p;
+
+  if (LValue.FTypeId = EngCtxValueTpId_ConstArray) then
+  begin
+    TokenStack_Delete(ATokenStack, 0, 1);
+    AReturnValue := LValue;
+    Exit(True);
+  end;
 
   if (ATokenStack.Count < 2) then Exit(False);
 
@@ -2268,22 +2278,10 @@ procedure EngineContextValue_Execute_Op2(
   var AItem: TEngineRunnerItem; var AResult: TFennerData);
 var
   LPars: PFennerData;
-  LV: PEngineContextValue;
-  LVCS: PEngineContextValueConstString absolute LV;
 begin
   LPars := AuxStackVarsFrameBegin(2);
   try
     EngineContextValue_Execute(This.FLeft^, AItem, LPars[0]);
-
-    if (LPars[0].vId = dttp_Str) then
-    begin
-      if (Length(LString(LPars[0].vStr)) > 1000) then
-      begin
-        LV := This.FLeft;
-        EngineContextValue_Execute(LV^, AItem, LPars[0]);
-      end;
-    end;
-
     EngineContextValue_Execute(This.FRight^, AItem, LPars[1]);
     cInvkOp(LPars, AResult,
       This.FIndexOp + Word(LPars[0].vId) * 6 + Word(LPars[1].vId));
@@ -2587,6 +2585,21 @@ asm
     dq Offset AsmRet_Neg_1        // Function By Value
     dq Offset AsmRet_Neg_1        // Function (Closure)
     dq Offset AsmRet_Neg_1        // If
+end;
+
+function EngineContextValueConstFunction_Create(
+  const AFunction: PEngineContextFunction): PEngineContextValueFunction;
+var
+  R: PEngineContextValueConstFunction absolute Result;
+begin
+  Result := Pointer(AFunction.FConstDeclr);
+  if (Result = nil) then
+  begin
+    R := AllocMem(SizeOf(TEngineContextValueConstFunction));
+    R.FConstValue := AFunction;
+    R.FBase.FTypeId := EngCtxValueTpId_ConstFunction;
+    AFunction.FConstDeclr := R;
+  end;
 end;
 
 function EngineContextValueFunction_Create(
@@ -2913,11 +2926,32 @@ begin
   EngineContextValue_Execute(This.FValue^, AItem, AItem.FResult^);
 end;
 
+procedure EngineContextFunction_ValidateReturn_Function(
+  var AItem: TEngineRunnerItem; const AContextFunction: PEngineContextFunction;
+  var AResult: TFennerData);
+var
+  LResFunction, LNewFunction: PEngineContextFunction;
+begin
+  if (AResult.vId2 <> Id2_Func_Default) then Exit;
+
+  LResFunction := AResult.vFn;
+  if ((LResFunction.FFlags and EngCtxFnFlgId_UseContextN) = 0) then Exit;
+
+  LNewfunction := Engine_ClosureConvertion(AItem,
+    AContextFunction, LResFunction, 0);
+  if (LNewFunction <> nil) then
+    AResult.vFn := LNewFunction;
+end;
+
 procedure EngineContextBlockItem_Return(
   var This: TEngineContextBlockItemReturn;
   var AItem: TEngineRunnerItem);
 begin
   EngineContextValue_Execute(This.FSourceValue^, AItem, AItem.FResult^);
+  if (AItem.FResult^.vId = dttp_Func) then
+    EngineContextFunction_ValidateReturn_Function(AItem,
+      Pointer(This.FBase.FContext), AItem.FResult^);
+
   AItem.FIsTerminated := True;
 end;
 
