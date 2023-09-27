@@ -60,7 +60,7 @@ function tc_bool_bool_eq(const l, r: PEngineContextValueConstBool):
   PEngineContextValueConstBool; assembler; nostackframe;
 asm
     mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
-    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    mov ch, [rsi.TEngineContextValueConstBool.FConstValue]
     cmp cl, ch
     je  _AsmRet_ecvcb_True
     jmp _AsmRet_ecvcb_False
@@ -70,7 +70,7 @@ function tc_bool_bool_neq(const l, r: PEngineContextValueConstBool):
   PEngineContextValueConstBool; assembler; nostackframe;
 asm
     mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
-    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    mov ch, [rsi.TEngineContextValueConstBool.FConstValue]
     cmp cl, ch
     je  _AsmRet_ecvcb_False
     jmp _AsmRet_ecvcb_True
@@ -80,9 +80,9 @@ function tc_bool_bool_lt(const l, r: PEngineContextValueConstBool):
   PEngineContextValueConstBool; assembler; nostackframe;
 asm
     mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
-    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    mov ch, [rsi.TEngineContextValueConstBool.FConstValue]
     cmp cl, ch
-    jl  _AsmRet_ecvcb_True
+    jb  _AsmRet_ecvcb_True
     jmp _AsmRet_ecvcb_False
 end;
 
@@ -90,9 +90,9 @@ function tc_bool_bool_gt(const l, r: PEngineContextValueConstBool):
   PEngineContextValueConstBool; assembler; nostackframe;
 asm
     mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
-    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    mov ch, [rsi.TEngineContextValueConstBool.FConstValue]
     cmp cl, ch
-    jg  _AsmRet_ecvcb_True
+    ja  _AsmRet_ecvcb_True
     jmp _AsmRet_ecvcb_False
 end;
 
@@ -100,9 +100,9 @@ function tc_bool_bool_lte(const l, r: PEngineContextValueConstBool):
   PEngineContextValueConstBool; assembler; nostackframe;
 asm
     mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
-    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    mov ch, [rsi.TEngineContextValueConstBool.FConstValue]
     cmp cl, ch
-    jle _AsmRet_ecvcb_True
+    jbe _AsmRet_ecvcb_True
     jmp _AsmRet_ecvcb_False
 end;
 
@@ -110,9 +110,9 @@ function tc_bool_bool_gte(const l, r: PEngineContextValueConstBool):
   PEngineContextValueConstBool; assembler; nostackframe;
 asm
     mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
-    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
+    mov ch, [rsi.TEngineContextValueConstBool.FConstValue]
     cmp cl, ch
-    jge _AsmRet_ecvcb_True
+    jae _AsmRet_ecvcb_True
     jmp _AsmRet_ecvcb_False
 end;
 
@@ -120,8 +120,8 @@ function tc_bool_bool_and(const l, r: PEngineContextValueConstBool):
   PEngineContextValueConstBool; assembler; nostackframe;
 asm
     mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
-    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
-    and cl, dh
+    mov ch, [rsi.TEngineContextValueConstBool.FConstValue]
+    and cl, ch
     jnz _AsmRet_ecvcb_True
     jmp _AsmRet_ecvcb_False
 end;
@@ -130,8 +130,8 @@ function tc_bool_bool_or(const l, r: PEngineContextValueConstBool):
   PEngineContextValueConstBool; assembler; nostackframe;
 asm
     mov cl, [rdi.TEngineContextValueConstBool.FConstValue]
-    mov dh, [rsi.TEngineContextValueConstBool.FConstValue]
-    or  cl, dh
+    mov ch, [rsi.TEngineContextValueConstBool.FConstValue]
+    or  cl, ch
     jnz _AsmRet_ecvcb_True
     jmp _AsmRet_ecvcb_False
 end;
@@ -331,6 +331,8 @@ asm
     sub dl, 4
     cmp dl, 13
     ja  AsmRet_0
+
+    xor rcx, rcx
 
     mov cl, [rdi + TEngineContextValue.FTypeId]
     dec cl

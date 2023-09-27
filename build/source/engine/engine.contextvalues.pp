@@ -29,11 +29,11 @@ uses
   engine.types;
 
 function EngineContextValueConstBool_Create(
-  const AValue: Boolean): PEngineContextValueConstBool; assembler;
+  const AValue: Boolean): PEngineContextValueConstBool; //assembler;
 function EngineContextValueConstInt_Create(
   const AValue: Int64): PEngineContextValueConstInt; assembler;
 function EngineContextValueConstStr_Create(
-  const AValue: LString): PEngineContextValueConstString; assembler;
+  const AValue: LString): PEngineContextValueConstString; //assembler;
 
 function EngineContextValueConstFun_Create(
   const AValue: PEngineContextFunction): PEngineContextValueConstFunction;
@@ -253,14 +253,19 @@ const
   );
 
 function EngineContextValueConstBool_Create(
-  const AValue: Boolean): PEngineContextValueConstBool; assembler; nostackframe;
-asm
-    test rdi, rdi
-    jz @false
-    mov rax, Offset c_EngCtxValueConstTrue
-    ret
-@false:
-    mov rax, Offset c_EngCtxValueConstFalse
+  const AValue: Boolean): PEngineContextValueConstBool; //assembler; nostackframe;
+//asm
+//    or rdi, rdi
+//    jz @false
+//    mov rax, Offset c_EngCtxValueConstTrue
+//    ret
+//@false:
+//    mov rax, Offset c_EngCtxValueConstFalse
+begin
+  if AValue then
+    Exit(@c_EngCtxValueConstTrue)
+  else
+    Exit(@c_EngCtxValueConstFalse);
 end;
 
 function EngineContextValueConstInt_Create(
@@ -289,17 +294,21 @@ end;
 
 function EngineContextValueConstStr_Create(
   const AValue: LString): PEngineContextValueConstString;
-  assembler; nostackframe;
-asm
-    push rdi
-    mov rdi, SizeOf(TEngineContextValueConstString)
-    call AllocMem
-    mov [rax + TEngineContextValue.FTypeId], EngCtxValueTpId_ConstString
-    pop rsi
-    lea rdi, [rax + TEngineContextValueConstInt.FConstValue]
-    push rax
-    call LStrCpy
-    pop rax
+  //assembler; nostackframe;
+//asm
+//    push rdi
+//    mov rdi, SizeOf(TEngineContextValueConstString)
+//    call AllocMem
+//    mov [rax + TEngineContextValue.FTypeId], EngCtxValueTpId_ConstString
+//    pop rsi
+//    lea rdi, [rax + TEngineContextValueConstInt.FConstValue]
+//    push rax
+//    call LStrCpy
+//    pop rax
+begin
+  Result := AllocMem(SizeOf(TEngineContextValueConstString));
+  Result.FBase.FTypeId := EngCtxValueTpId_ConstString;
+  Result.FConstValue := AValue;
 end;
 
 function EngineContextValueConstFun_Create(

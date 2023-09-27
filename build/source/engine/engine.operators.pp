@@ -299,7 +299,7 @@ asm
     mov al, [rdi + TFennerData.vBool]
     mov ah, [rdi + TFennerData.vBool + SizeOf(TFennerData)]
     cmp al, ah
-    jbe @ret_true
+    jae @ret_true
     jmp @ret_false
 @and_bool_bool:
     mov al, [rdi + TFennerData.vBool]

@@ -10,7 +10,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="50"/>
         <CursorPos X="3" Y="67"/>
-        <UsageCount Value="109"/>
+        <UsageCount Value="111"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_8.pp"/>
@@ -18,7 +18,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <CursorPos X="41" Y="42"/>
-        <UsageCount Value="106"/>
+        <UsageCount Value="108"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_9.pp"/>
@@ -26,15 +26,15 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="113"/>
         <CursorPos X="52" Y="124"/>
-        <UsageCount Value="106"/>
+        <UsageCount Value="108"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.optimize_op2.pp"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="28"/>
-        <CursorPos X="31" Y="28"/>
-        <UsageCount Value="105"/>
+        <TopLine Value="282"/>
+        <CursorPos X="23" Y="300"/>
+        <UsageCount Value="107"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="source/scanner/scanner.tostring.pp"/>
@@ -42,7 +42,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="100"/>
         <CursorPos X="10" Y="119"/>
-        <UsageCount Value="100"/>
+        <UsageCount Value="102"/>
       </Unit>
       <Unit>
         <Filename Value="source/sys/sys.stringbuilder.pp"/>
@@ -50,7 +50,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="48"/>
         <CursorPos X="48" Y="73"/>
-        <UsageCount Value="100"/>
+        <UsageCount Value="102"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_10.pp"/>
@@ -58,7 +58,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="118"/>
         <CursorPos X="66" Y="128"/>
-        <UsageCount Value="98"/>
+        <UsageCount Value="100"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_11.pp"/>
@@ -66,7 +66,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="123"/>
         <CursorPos X="38" Y="135"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_12.pp"/>
@@ -74,7 +74,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <CursorPos X="26" Y="42"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_13.pp"/>
@@ -82,7 +82,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="135"/>
         <CursorPos Y="163"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_14.pp"/>
@@ -90,7 +90,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="140"/>
         <CursorPos Y="168"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_15.pp"/>
@@ -98,7 +98,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="145"/>
         <CursorPos X="48" Y="152"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_16.pp"/>
@@ -106,7 +106,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="151"/>
         <CursorPos X="49" Y="158"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_17.pp"/>
@@ -114,7 +114,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="90"/>
         <CursorPos X="49" Y="99"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_18.pp"/>
@@ -122,7 +122,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="98"/>
         <CursorPos X="24" Y="110"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_19.pp"/>
@@ -130,7 +130,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="152"/>
         <CursorPos X="30" Y="162"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_20.pp"/>
@@ -138,7 +138,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="172"/>
         <CursorPos Y="200"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_21.pp"/>
@@ -146,7 +146,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="62"/>
         <CursorPos X="15" Y="76"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_22.pp"/>
@@ -154,7 +154,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="72"/>
         <CursorPos Y="76"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_23.pp"/>
@@ -162,7 +162,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="27"/>
         <CursorPos X="81" Y="42"/>
-        <UsageCount Value="96"/>
+        <UsageCount Value="98"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_n.pp"/>
@@ -170,7 +170,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="75"/>
         <CursorPos X="67" Y="95"/>
-        <UsageCount Value="96"/>
+        <UsageCount Value="98"/>
       </Unit>
       <Unit>
         <Filename Value="source/data/data.procs.pp"/>
@@ -178,7 +178,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="318"/>
         <CursorPos Y="341"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_6.pp"/>
@@ -186,7 +186,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <CursorPos X="24" Y="42"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/data/data.stack.pp"/>
@@ -194,7 +194,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="119"/>
         <CursorPos Y="143"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_7.pp"/>
@@ -202,7 +202,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="102"/>
         <CursorPos X="50" Y="113"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/sys/sys.utils.pp"/>
@@ -210,54 +210,55 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="303"/>
         <CursorPos Y="331"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="40" Y="17"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.procs.pp"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="2366"/>
-        <CursorPos X="19" Y="2390"/>
-        <UsageCount Value="88"/>
+        <TopLine Value="2667"/>
+        <CursorPos X="48" Y="2681"/>
+        <UsageCount Value="90"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.consts.pp"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="78"/>
-        <CursorPos Y="105"/>
-        <UsageCount Value="88"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="82"/>
+        <CursorPos X="38" Y="111"/>
+        <UsageCount Value="90"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.optimize.pp"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="88"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="90"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.checkrecursive.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="51" Y="13"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.types.pp"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="332"/>
         <CursorPos Y="347"/>
-        <UsageCount Value="88"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/scanner/scanner.procs.pp"/>
@@ -265,15 +266,16 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1432"/>
         <CursorPos Y="1446"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="source/scanner/scanner.types.pp"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="35"/>
-        <CursorPos X="3" Y="51"/>
-        <UsageCount Value="87"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="21"/>
+        <CursorPos X="137" Y="42"/>
+        <UsageCount Value="89"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="source/sys/sys.funcs.pp"/>
@@ -281,46 +283,46 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="18"/>
         <CursorPos X="10" Y="33"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="source/sys/sys.procs.pp"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="29"/>
-        <CursorPos Y="44"/>
-        <UsageCount Value="87"/>
+        <CursorPos Y="49"/>
+        <UsageCount Value="89"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="source/data/data.types.pp"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="7"/>
         <CursorPos Y="35"/>
-        <UsageCount Value="88"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/scanner/scanner.reswords.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="47"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.operators.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="361"/>
-        <CursorPos X="59" Y="375"/>
-        <UsageCount Value="88"/>
+        <TopLine Value="283"/>
+        <CursorPos X="8" Y="302"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_1.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="29" Y="15"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_2.pp"/>
@@ -328,7 +330,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="92"/>
         <CursorPos X="62" Y="100"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_3.pp"/>
@@ -336,19 +338,19 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="42"/>
         <CursorPos X="60" Y="64"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_4.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.recursivecache_5.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="source/err/err.classes.pp"/>
@@ -356,26 +358,26 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="77"/>
         <CursorPos X="36" Y="77"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="source/err/err.osmsgs.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="24" Y="5"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="source/sys/sys.func_combination.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="source/sys/sys.types.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.runner.executecontext.pp"/>
@@ -383,15 +385,15 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="255"/>
         <CursorPos Y="284"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.contextvalues.pp"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="29"/>
-        <CursorPos X="10" Y="43"/>
-        <UsageCount Value="55"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="17"/>
+        <CursorPos X="59" Y="32"/>
+        <UsageCount Value="57"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -400,16 +402,31 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="233"/>
         <CursorPos Y="255"/>
-        <UsageCount Value="54"/>
+        <UsageCount Value="56"/>
       </Unit>
       <Unit>
         <Filename Value="source/engine/engine.context.pp"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos Y="16"/>
-        <UsageCount Value="35"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="37"/>
+      </Unit>
+      <Unit>
+        <Filename Value="source/engine/engine.decompiler.pp"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="8"/>
+        <CursorPos Y="37"/>
+        <UsageCount Value="31"/>
+      </Unit>
+      <Unit>
+        <Filename Value="source/engine/engine.closureconvertion.pp"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="418"/>
+        <CursorPos X="30" Y="431"/>
+        <UsageCount Value="30"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/objpas/objpas.pp"/>
@@ -433,142 +450,127 @@
         <CursorPos X="36" Y="329"/>
         <UsageCount Value="23"/>
       </Unit>
-      <Unit>
-        <Filename Value="source/engine/engine.decompiler.pp"/>
-        <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="8"/>
-        <CursorPos Y="37"/>
-        <UsageCount Value="29"/>
-      </Unit>
-      <Unit>
-        <Filename Value="source/engine/engine.closureconvertion.pp"/>
-        <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="418"/>
-        <CursorPos Y="423"/>
-        <UsageCount Value="28"/>
-        <Loaded Value="True"/>
-      </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="source/engine/engine.closureconvertion.pp"/>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="293" TopLine="276"/>
       </Position>
       <Position>
         <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="1911" Column="10" TopLine="1903"/>
+        <Caret Line="2689" TopLine="2667"/>
       </Position>
       <Position>
         <Filename Value="source/engine/engine.procs.pp"/>
+        <Caret Line="2691" TopLine="2667"/>
       </Position>
       <Position>
         <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="122" Column="21" TopLine="98"/>
+        <Caret Line="2674" TopLine="2667"/>
       </Position>
       <Position>
         <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="123" Column="78" TopLine="99"/>
+        <Caret Line="2676" TopLine="2667"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="329" TopLine="314"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="331" TopLine="314"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="332" TopLine="314"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="333" TopLine="314"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="335" TopLine="314"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="337" TopLine="314"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="338" TopLine="314"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="339" TopLine="315"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="340" TopLine="316"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="341" TopLine="317"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="342" TopLine="318"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="343" TopLine="319"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="344" TopLine="320"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="346" TopLine="322"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="347" TopLine="323"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="348" TopLine="324"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="350" TopLine="327"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="351" TopLine="327"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="352" TopLine="328"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="354" TopLine="330"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="355" TopLine="331"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="356" TopLine="332"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="297" TopLine="282"/>
+      </Position>
+      <Position>
+        <Filename Value="source/engine/engine.optimize_op2.pp"/>
+        <Caret Line="300" Column="23" TopLine="282"/>
       </Position>
       <Position>
         <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="124" Column="78" TopLine="100"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="125" Column="22" TopLine="101"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="152" Column="82" TopLine="128"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="159" Column="53" TopLine="135"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="161" Column="64" TopLine="137"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="162" Column="67" TopLine="138"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="237" Column="48" TopLine="213"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="238" Column="47" TopLine="214"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="240" Column="53" TopLine="216"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="245" Column="64" TopLine="221"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="257" Column="67" TopLine="233"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2180" Column="42" TopLine="2156"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2182" Column="37" TopLine="2158"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2188" Column="37" TopLine="2164"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2189" Column="19" TopLine="2165"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2192" Column="56" TopLine="2168"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2194" Column="31" TopLine="2170"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2373" Column="42" TopLine="2349"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2384" Column="48" TopLine="2360"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2385" Column="32" TopLine="2361"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.procs.pp"/>
-        <Caret Line="2390" Column="19" TopLine="2366"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.closureconvertion.pp"/>
-        <Caret Line="308" Column="41" TopLine="298"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.closureconvertion.pp"/>
-        <Caret Line="411" Column="15" TopLine="398"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.closureconvertion.pp"/>
-        <Caret Line="344" Column="3" TopLine="327"/>
-      </Position>
-      <Position>
-        <Filename Value="source/engine/engine.closureconvertion.pp"/>
-        <Caret Line="419" Column="61" TopLine="399"/>
+        <Caret Line="2689" TopLine="2667"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -647,6 +649,20 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="source/engine/engine.closureconvertion.pp"/>
         <Line Value="448"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="source/engine/engine.optimize_op2.pp"/>
+        <Line Value="316"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="source/engine/engine.optimize_op2.pp"/>
+        <Line Value="322"/>
       </Item>
     </BreakPoints>
   </Debugging>

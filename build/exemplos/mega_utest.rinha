@@ -1,0 +1,86 @@
+let err_count = 0;
+
+let b_true = true;
+let b_false = false;
+
+let i_0 = 0;
+let i_1 = 1;
+let i_2 = 2;
+let i_3 = 3;
+let i_4 = 4;
+
+let chk_true = fn(test_res, test_name)
+{
+  if (test_res) true;
+  err_count = err_count + 1;
+  print("o teste: '", test_name, "' falhou!. r: ", test_res);
+  false;
+};
+
+let chk_false = fn(test_res, test_name)
+{
+  if (test_res == false) true;
+  err_count = err_count + 1;
+  print("o teste: '", test_name, "' falhou!. r: ", test_res);
+  false;
+};
+
+let check_bool = fn()
+{
+  let _ = chk_true((true == true), "true == true");
+  let _ = chk_true((b_true == true), "b_true == true");
+  let _ = chk_true((true == b_true), "true == b_true");
+  let _ = chk_true((b_true == b_true), "b_true == b_true");
+  let _ = chk_true((true > false), "true > false");
+  let _ = chk_true((true >= false), "true >= false");
+  let _ = chk_true((b_true > false), "b_true > false");
+  let _ = chk_true((true > b_false), "true > b_false");
+  let _ = chk_true((true >= b_false), "true >= b_false");
+  let _ = chk_true((false < true), "false < true");
+  let _ = chk_true((false <= true), "false <= true");
+  let _ = chk_true((b_false < true), "b_false < true");
+  let _ = chk_true((b_false < b_true), "b_false < b_true");
+
+  let _ = chk_true((false == false), "false == false");
+  let _ = chk_true((b_false == false), "b_false == false");
+  let _ = chk_true((false == b_false), "false == b_false");
+  let _ = chk_true((b_false == b_false), "b_false == b_false");
+};
+
+let check_int = fn()
+{
+  let _ = chk_true((0 == 0), "0 == 0");
+  let _ = chk_true((i_0 == 0), "i_0 == 0");
+  let _ = chk_true((i_1 > i_0), "i_1 > i_0");
+  let _ = chk_true((i_0 < i_1), "i_0 < i_1");
+  let _ = chk_true((i_1 > 0), "i_1 > 0");
+  let _ = chk_false((i_1 > i_2), "i_1 > i_2");
+};
+
+let check_str = fn()
+{
+  let _ = chk_true(("a" == "a"), "'a' == 'a'");
+  let _ = chk_true(("a" != "b"), "'a' != 'b'");
+
+  let _ = chk_false(("a" != "a"), "'a' != 'a'");
+};
+
+let fib = fn (n) => {
+  if (n < 2) {
+    n
+  } else {
+    fib(n - 1) + fib(n - 2)
+  }
+};
+
+let check_fib = fn()
+{
+  let _ = chk_true((fib(35) == 9227465), "fib(35) == 9227465");
+};
+
+print(":: inicio dos testes ::");
+print();
+//check_bool();
+//check_int();
+check_str();
+//check_fib();
