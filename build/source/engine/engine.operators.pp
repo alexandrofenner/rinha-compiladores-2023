@@ -89,6 +89,18 @@ begin
     LString(APars[0].vStr) + LString(APars[1].vStr));
 end;
 
+procedure cInvAdd_Str_Print(APars: PFennerData; var AResult: TFennerData);
+begin
+  FennerData_SetAsString(AResult,
+    LString(APars[0].vStr) + FennerData_Print(APars[1]));
+end;
+
+procedure cInvAdd_Print_Str(APars: PFennerData; var AResult: TFennerData);
+begin
+  FennerData_SetAsString(AResult,
+    FennerData_Print(APars[0]) + LString(APars[1].vStr));
+end;
+
 procedure cInvAdd_Array_Array(APars: PFennerData; var AResult: TFennerData);
 var
   c0, c1, i, j: Integer;
@@ -407,14 +419,14 @@ asm
     dq Offset cInvAdd_Str_Bool,         //  019 -> Str + Bool
     dq Offset cInvAdd_Str_Int,          //  020 -> Str + Int
     dq Offset cInvAdd_Str_Str,          //  021 -> Str + Str
-    dq Offset @inv_op_add               //  022 -> Str + Func
-    dq Offset @inv_op_add               //  023 -> Str + Array
+    dq Offset cInvAdd_Str_Print         //  022 -> Str + Func
+    dq Offset cInvAdd_Str_Print         //  023 -> Str + Array
 
   { Func -> }
     dq Offset @inv_op_add               //  024 -> Func + None
     dq Offset @inv_op_add               //  025 -> Func + Bool
     dq Offset @inv_op_add               //  026 -> Func + Int
-    dq Offset @inv_op_add               //  027 -> Func + Str
+    dq Offset cInvAdd_Print_Str         //  027 -> Func + Str
     dq Offset @inv_op_add               //  028 -> Func + Func
     dq Offset @inv_op_add               //  029 -> Func + Array
 
@@ -422,7 +434,7 @@ asm
     dq Offset @inv_op_add               //  030 -> Array + None
     dq Offset @inv_op_add               //  031 -> Array + Bool
     dq Offset @inv_op_add               //  032 -> Array + Int
-    dq Offset @inv_op_add               //  033 -> Array + Str
+    dq Offset cInvAdd_Print_Str         //  033 -> Array + Str
     dq Offset @inv_op_add               //  034 -> Array + Func
     dq Offset cInvAdd_Array_Array       //  035 -> Array + Array
 
