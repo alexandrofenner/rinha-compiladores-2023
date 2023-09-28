@@ -1,8 +1,0 @@
-let teste = fn(cb) => {
-  40 + cb(2);
-};
-
-print(teste(fn(i)=>{i*100}));  // Imprime 240
-print(teste(fn(i)=>{i*10}));   // Imprime 60
-print(teste(fn(i)=>{i*30}));   // Imprime 100
-print(teste(fn(i)=>{i**3}));   // Imprime 48
