@@ -274,7 +274,9 @@ begin
 
     StackVarsRemove(AContext.FVarsCount);
 
-    if _P^.LAdded then Dec(This.FCrCount);
+    //if _P^.LAdded then Dec(This.FCrCount);
+    if _P^.LAdded then
+      EngineRunner_RemoveContext(This, AContext, _P^.LRunningId);
   finally
     TEngineRunner_ExecuteContext_Params_Destroy(_P);
   end;

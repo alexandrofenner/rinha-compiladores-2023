@@ -102,6 +102,9 @@ function EngineContextValueNegative_Create(
 
 function EngineContextValueByVariableLocal_Create(
   const AVarIndex: Integer): PEngineContextValueByVariable;
+function EngineContextValueByVariableCntxtN_Create(
+  const AVarIndex, ARelContextIndex, ARefContextId: Integer): PEngineContextValueByVariable;
+
 function EngineContextValueByVariableGlobal_Create(
   const AVarIndex: Integer): PEngineContextValueByVariable;
 
@@ -153,6 +156,8 @@ procedure EngineRunner_Initialize(var This: TEngineRunner);
 //  var AResult: TFennerData);
 
 function EngineRunner_AddContext(var This: TEngineRunner;
+  const AContext: PEngineContext; const ARunningId: Int64): Boolean;
+function EngineRunner_RemoveContext(var This: TEngineRunner;
   const AContext: PEngineContext; const ARunningId: Int64): Boolean;
 { </EngineRunner> }
 
@@ -566,6 +571,7 @@ begin
   R.FBase.FVarIndex := AVarRef.FVariable.FIndex;
   R.FBase.FRelContextIndex := ARelContextIndex;
   R.FIndexRefClosureVar := AVarRef.FIndex;
+  R.FRefContextId := AVarRef.FRelativeContextId;
   Exit(Pointer(R));
 end;
 
@@ -586,18 +592,12 @@ begin
   if (LRelIndex < 0) then
     raise EInternalError.Create('A80049BD22EE4837A5C314E4D30C7ECE');
 
-//  R0 := AllocMem(SizeOf(TMyEngineContextValueByVariable));
-//  R0.FVarIndex := AVariable.FIndex;
-//
-//  if (LRelIndex <> 0) then
-//  begin
-//    R0.FBase.FTypeId := TMyEngineContextValueTypeId.eVariableN;
-//    R0.FRelContextIndex := LRelIndex;
-//  end else
-//    R0.FBase.FTypeId := TMyEngineContextValueTypeId.eVariable0;
-
   if (LRelIndex = 0) then
     Exit(Pointer(EngineContextValueByVariableLocal_Create(AVariable.FIndex)));
+
+//  if (LRelIndex = 0) then
+    //Exit(Pointer(EngineContextValueByVariableCntxtN_Create(
+    //  AVariable.FIndex, LRelIndex, AVariable.FContext.FGlobalId)));
 
   Exit(CreateContextValueByVariableRef(AContext,
     EngineContext_FindOrDeclrVarRef(AContext^, AVariable, LRelIndex), LRelIndex));
@@ -772,6 +772,7 @@ begin
       end;
     end;
   end;
+
   Exit(False);
 end;
 
@@ -1461,7 +1462,11 @@ lb_Block: ;
 
     repeat
       if (i >= ATokenStack.Count) then
-        raise EBuilderUnexpectedEof.Create(ATokenStack.DynArray[i - 1]);
+      begin
+        AIndex := i;
+        Exit(LBlock);
+//        raise EBuilderUnexpectedEof.Create(ATokenStack.DynArray[i - 1]);
+      end;
 
       Tk := ATokenStack.DynArray[i];
       if (Tk.Id = tk_bClose) then
@@ -1515,6 +1520,9 @@ begin
   LFunction := AllocMem(SizeOf(TEngineContextFunction));
   LFunction.FBase.FTypeId := EngCtxTp_Function;
   LFunction.FBase.FOwner := AContext;
+
+  Inc(gv_ContextId);
+  LFunction.FBase.FGlobalId := gv_ContextId;
 
   if AByLet then
   begin
@@ -2014,6 +2022,7 @@ begin
     LVarRef.FContext := @This;
     LVarRef.FVariable := AVariable;
     LVarRef.FRelativeContextIndex := ARelativeContextIndex;
+    LVarRef.FRelativeContextId := AVariable.FContext.FGlobalId;
     This.FVarRefsFirst := LVarRef;
     Inc(This.FVarRefsCount);
     Exit(LVarRef);
@@ -2029,6 +2038,7 @@ begin
       LNext.FContext := @This;
       LNext.FVariable := AVariable;
       LNext.FRelativeContextIndex := ARelativeContextIndex;
+      LNext.FRelativeContextId := AVariable.FContext.FGlobalId;
       LNext.FIndex := This.FVarRefsCount;
       LVarRef.FNext := LNext;
       Inc(This.FVarRefsCount);
@@ -2093,6 +2103,10 @@ function EngineContextGlobal_Create: PEngineContextGlobal;
 begin
   Result := SysAllocMem(SizeOf(TEngineContextGlobal));
   Result.FBase.FTypeId := EngCtxTp_Global;
+
+  Inc(gv_ContextId);
+  Result.FBase.FGlobalId := gv_ContextId;
+
   EngineContext_CreateSysFuncs(Result^);
 end;
 
@@ -2158,12 +2172,26 @@ procedure EngineContextValue_Execute_VariableN(
   var This: TEngineContextValueByVariable;
   var AItem: TEngineRunnerItem; var AResult: TFennerData);
 var
-  LIndex, LStackBase: Integer;
+  LIndex, LStackBase, LCrCount: Integer;
   LRunner: PEngineRunner;
 begin
   LRunner := AItem.FRunner;
+
+  LCrCount := LRunner.FCrCount;
+  LIndex := (LCrCount - 1);
+  while (LIndex >= 0) do
+  begin
+    if (LRunner.FCrStack[LIndex].FContext.FGlobalId = This.FRefContextId) then
+    begin
+      LStackBase := LRunner.FCrStack[LIndex].FStackBase;
+      FennerData_Assign(AResult, StackVarsItem(LStackBase + This.FVarIndex));
+      Exit;
+    end;
+    Dec(LIndex);
+  end;
+
   LIndex := This.FRelContextIndex;
-  if (Cardinal(LIndex) < Cardinal(LRunner.FCrCount)) then
+  if (Cardinal(LIndex) < Cardinal(LCrCount)) then
   begin
     LStackBase := LRunner.FCrStack[LIndex].FStackBase;
     FennerData_Assign(AResult, StackVarsItem(LStackBase + This.FVarIndex));
@@ -2178,7 +2206,7 @@ procedure EngineContextValue_Execute_VariableRef(
   var AItem: TEngineRunnerItem; var AResult: TFennerData);
 var
   LFunctionRef: PEngineContextFunctionRef;
-  LIndex, LStackBase: Integer;
+  LCrCount, LIndex, LStackBase: Integer;
   RefCVar: PEngineContextFunctionRefClosureVar;
   LVarRef: PEngineContextVariableRef;
   LRunner: PEngineRunner;
@@ -2209,6 +2237,25 @@ begin
       Exit;
     end;
   end;
+
+//  AItem.FRunningId:=;
+
+  //LCrCount := LRunner.FCrCount;
+  //LIndex := (LCrCount - 1);
+  //while (LIndex >= 0) do
+  //begin
+  //  if (LRunner.FCrStack[LIndex].FRunningId = AItem.FRunningId) then
+  //  begin
+  //    Dec(LIndex);
+  //    while (LIndex >= 0) do
+  //    begin
+  //      LStackBase := LRunner.FCrStack[LIndex].FStackBase;
+  //      FennerData_Assign(AResult, StackVarsItem(LStackBase + This.FBase.FVarIndex));
+  //      Dec(LIndex);
+  //    end;
+  //  end;
+  //  Dec(LIndex);
+  //end;
 
   LIndex := This.FBase.FRelContextIndex;
   if (Cardinal(LIndex) < Cardinal(LRunner.FCrCount)) then
@@ -2654,6 +2701,16 @@ begin
   Result := AllocMem(SizeOf(TEngineContextValueByVariable));
   Result.FBase.FTypeId := EngCtxValueTpId_Variable0;
   Result.FVarIndex := AVarIndex;
+end;
+
+function EngineContextValueByVariableCntxtN_Create(
+  const AVarIndex, ARelContextIndex, ARefContextId: Integer): PEngineContextValueByVariable;
+begin
+  Result := AllocMem(SizeOf(TEngineContextValueByVariable));
+  Result.FBase.FTypeId := EngCtxValueTpId_VariableN;
+  Result.FVarIndex := AVarIndex;
+  Result.FRelContextIndex := ARelContextIndex;
+  Result.FRefContextId := ARefContextId;
 end;
 
 function EngineContextValueByVariableGlobal_Create(
@@ -3675,6 +3732,24 @@ begin
   Inc(This.FCrCount);
 
   Exit(True);
+end;
+
+function EngineRunner_RemoveContext(var This: TEngineRunner;
+  const AContext: PEngineContext; const ARunningId: Int64): Boolean;
+var
+  I: Integer;
+begin
+  for I := (This.FCrCount - 1) downto 0 do
+    if (This.FCrStack[I].FContext = AContext) then
+      if (This.FCrStack[I].FRunningId = ARunningId) then
+      begin
+        Dec(This.FCrCount);
+        if (This.FCrCount > I) then
+          System.Move(This.FCrStack[I + 1], This.FCrStack[I],
+            (This.FCrCount - I) * SizeOf(TEngineRunnerContextRecord));
+        Exit(True);
+      end;
+  Exit(False);
 end;
 
 { TEngineCaller }

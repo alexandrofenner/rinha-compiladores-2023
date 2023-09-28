@@ -255,8 +255,8 @@ begin
   gvTokens.Capacity := 0;
   gvTokens.DynArray := nil;
   Scanner_ReadTokens;
-  Validate_AutoTokensQuestion(gvTokens);
-  Validate_AutoTokens(gvTokens);
+  //Validate_AutoTokensQuestion(gvTokens);
+  //Validate_AutoTokens(gvTokens);
   Validate_AutoTokens_p_Fn(gvTokens);
 end;
 

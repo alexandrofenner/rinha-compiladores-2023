@@ -140,6 +140,7 @@ type
     FVarRefsFirst: PEngineContextVariableRef;
     FReadingVar: PEngineContextVariable;
     FBlocks: PEngineContextBlock;
+    FGlobalId: Integer;
   end;
 
   TEngineContextGlobal = record
@@ -291,6 +292,7 @@ type
     FNext: PEngineContextVariableRef;
     FVariable: PEngineContextVariable;
     FRelativeContextIndex: Integer;
+    FRelativeContextId: Integer;
   end;
 
   TEngineContextValue = record
@@ -333,12 +335,14 @@ type
     FBase: TEngineContextValue;
     FVarIndex: Integer;
     FRelContextIndex: Integer;
+    FRefContextId: Integer;
   end;
 
   TEngineContextValueByVariableRef = record
   public
     FBase: TEngineContextValueByVariable;
     FIndexRefClosureVar: Integer;
+    FRefContextId: Integer;
   end;
 
   TEngineContextValueArray = record
@@ -408,6 +412,9 @@ const
   c_EngCtxValueConstArrayEmpty: TEngineContextValueConstArray = (
     FBase: (FTypeId: EngCtxValueTpId_ConstArray);
     FConstValue: nil);
+
+var
+  gv_ContextId: Integer;
 
 implementation
 

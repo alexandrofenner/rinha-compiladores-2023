@@ -65,7 +65,7 @@ begin
     LFileName := '/var/rinha/source.rinha';
 
   Scanner_Initialize(SysLoadStringFromFile(LFileName));
-//  WriteLn(TokenStack_ToString(gvTokens));
+  //WriteLn(TokenStack_ToString(gvTokens));
 
   EngineGlobal_Execute;
 end;
